@@ -1,21 +1,8 @@
-defmodule EshopRWeb.AddressView do
+defmodule EshopRWeb.CategoryView do
   use EshopRWeb, :view
-  alias EshopRWeb.AddressView
+  alias EshopRWeb.CategoryView
 
-  def render("index.json", %{addresses: addresses}) do
-    %{data: render_many(addresses, AddressView, "address.json")}
-  end
-
-  def render("show.json", %{address: address}) do
-    %{data: render_one(address, AddressView, "address.json")}
-  end
-
-  def render("address.json", %{address: address}) do
-    %{id: address.id,
-      street: address.street,
-      city: address.city,
-      state: address.state,
-      country: address.country,
-      pincode: address.pincode}
+  def render("index.json", %{categories: categories}) do
+    %{data: categories}
   end
 end

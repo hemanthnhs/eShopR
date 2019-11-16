@@ -9,8 +9,21 @@ defmodule EshopRWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :ajax do
+    plug :accepts, ["json"]
+    plug :fetch_session
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/ajax", EshopRWeb do
+    pipe_through :ajax
+
+    get "/categories", CategoryController, :index
   end
 
   scope "/", EshopRWeb do

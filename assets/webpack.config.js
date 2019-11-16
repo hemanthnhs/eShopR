@@ -36,6 +36,16 @@ module.exports = (env, options) => ({
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
+      {
+        test: /\.(svg|png|jpg|jpeg|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: '/images'
+          }
+        }
+      }
     ]
   },
   devtool: 'cheap-module-source-map',

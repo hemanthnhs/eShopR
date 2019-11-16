@@ -1,18 +1,15 @@
-defmodule EshopR.Repo.Migrations.CreateAddresses do
+defmodule EshopR.Repo.Migrations.CreateCategories do
   use Ecto.Migration
 
   def change do
-    create table(:addresses) do
-      add :street, :text
-      add :city, :string
-      add :state, :string
-      add :country, :string
-      add :pincode, :string
+    create table(:categories) do
+      add :name, :string
+      add :parent, :integer, default: 0
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:addresses, [:user_id])
+    create index(:categories, [:user_id])
   end
 end
