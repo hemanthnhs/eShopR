@@ -5,7 +5,9 @@ import {Navbar, Nav, Col, Button} from 'react-bootstrap';
 import {Provider, connect} from 'react-redux';
 import LandingPage from './landing_page';
 import NavigationBar from '../components/navigation_bar';
+import CreateProduct from './create_product';
 import HeaderBar from '../components/header_bar';
+import LoginPage from './login_page';
 import store from '../store';
 
 export default function init_page(root) {
@@ -30,10 +32,12 @@ function Page() {
                         <LandingPage/>
                     </Route>
 
-                    <Route exact path="/new">
-                        <div>Please login to use the applicmdkn
-                            ation
-                        </div>
+                    <Route exact path="/login">
+                        <LoginPage />
+                    </Route>
+
+                    <Route exact path="/newProduct">
+                        <CreateProduct />
                     </Route>
                 </Switch>
             </Router>

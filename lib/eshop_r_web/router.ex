@@ -22,14 +22,23 @@ defmodule EshopRWeb.Router do
 
   scope "/ajax", EshopRWeb do
     pipe_through :ajax
-
+    resources "/sessions", SessionController, only: [:create], singleton: true
     get "/categories", CategoryController, :index
   end
 
   scope "/", EshopRWeb do
     pipe_through :browser
+    get "/googleSignIn", AuthController, :index
+    get "/*path", PageController, :index
 
-    get "/", PageController, :index
+  end
+
+  scope "/auth", EshopRWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :index
+    get "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
   end
 
   # Other scopes may use custom stacks.

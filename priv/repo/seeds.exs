@@ -15,6 +15,7 @@ alias EshopR.Categories.Category
 alias EshopR.Repo
 
 Repo.insert!(%User{email: "hemanth@example.com", password_hash: Argon2.add_hash("password").password_hash, type: 0, firstname: "Hemanth", lastname: "Nhs"})
+Repo.insert!(%User{email: "satya@example.com", password_hash: Argon2.add_hash("password").password_hash, type: 1, firstname: "Satya", lastname: "Vyt"})
 Repo.insert!(%Category{name: "Clothing", user_id: 1})
 Repo.insert!(%Category{name: "Electronics", user_id: 1})
 Repo.insert!(%Category{name: "Home and Kitchen", user_id: 1})

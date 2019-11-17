@@ -7,3 +7,14 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 .nav-categories .dropdown-toggle::after{
   display: none;
 }
+
+.account-menu{
+  left: auto;
+  right: -103px;
+}
+
+.header-icons, .header-icons:hover, .header-icons:active, .header-icons:focus{
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+}

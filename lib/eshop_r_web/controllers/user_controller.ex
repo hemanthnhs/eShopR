@@ -4,6 +4,8 @@ defmodule EshopRWeb.UserController do
   alias EshopR.Users
   alias EshopR.Users.User
 
+  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :update, :delete]
+
   action_fallback EshopRWeb.FallbackController
 
   def index(conn, _params) do

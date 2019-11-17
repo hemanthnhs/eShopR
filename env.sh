@@ -1,0 +1,3 @@
+export GOOGLE_CLIENT_ID=644329242609-349qc03s0f8rqe6lm5l94nn80voco6l3.apps.googleusercontent.com
+export GOOGLE_CLIENT_SECRET=O1CBB_AwL0JT1dJ0F9HEXCW1
+export GOOGLE_REDIRECT_URI=http://localhost:4000/users/auth/google_oauth2/callback
