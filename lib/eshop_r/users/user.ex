@@ -8,6 +8,7 @@ defmodule EshopR.Users.User do
     field :lastname, :string
     field :password_hash, :string
     field :type, :integer
+    field :wallet, :float
 
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule EshopR.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password_hash, :firstname, :lastname, :type])
+    |> cast(attrs, [:email, :password_hash, :firstname, :lastname, :type, :wallet])
     |> validate_required([:email, :password_hash, :firstname, :lastname, :type])
   end
 end

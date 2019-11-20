@@ -13,11 +13,12 @@ defmodule EshopRWeb.ProductView do
   def render("product.json", %{product: product}) do
     %{id: product.id,
       name: product.name,
+      brand: product.brand,
       description: product.description,
-      filename: product.filename,
+      images: product.images,
       attributes: product.attributes,
       tags: product.tags,
-      catalogue: product.catalogue,
+      options: product.options,
       marked_price: product.marked_price,
       selling_price: product.selling_price}
   end

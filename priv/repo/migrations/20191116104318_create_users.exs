@@ -8,6 +8,7 @@ defmodule EshopR.Repo.Migrations.CreateUsers do
       add :firstname, :string
       add :lastname, :string
       add :type, :integer
+      add :wallet, :float
 
       timestamps()
     end

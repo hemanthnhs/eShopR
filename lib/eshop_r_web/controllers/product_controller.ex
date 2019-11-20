@@ -11,8 +11,10 @@ defmodule EshopRWeb.ProductController do
     render(conn, "index.json", products: products)
   end
 
-  def create(conn, %{"product" => product_params}) do
+  def create(conn, %{"data" => product_params}) do
     with {:ok, %Product{} = product} <- Products.create_product(product_params) do
+      IO.puts("=========================================")
+      IO.inspect(product)
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.product_path(conn, :show, product))

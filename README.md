@@ -9,7 +9,8 @@ Attributions
 Icons from https://material.io/resources/icons/?style=baseline
 https://stackoverflow.com/questions/37671342/how-to-load-image-files-with-webpack-file-loader
 https://react-bootstrap.github.io/
-Reffered http://www.binarywebpark.com/google-oauth-authentication-phoenix-elixir/ for google login``
+Reffered http://www.binarywebpark.com/google-oauth-authentication-phoenix-elixir/ for google login
+https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
 --------
 
 TODO

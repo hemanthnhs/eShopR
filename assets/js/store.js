@@ -1,10 +1,85 @@
-import { createStore, combineReducers } from 'redux';
+import {createStore, combineReducers} from 'redux';
 import deepFreeze from 'deep-freeze-strict';
 
 function login(st0 = {email: "", password: "", errors: null}, action) {
-    switch(action.type) {
+    switch (action.type) {
         case 'CHANGE_LOGIN':
             return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
+function new_product(st0 = {
+    name: "",
+    category: "",
+    marked_price: 0,
+    selling_price: 0,
+    files: [],
+    errors: null,
+    num_of_tasks: 1,
+    num_of_attributes: 1,
+    options: new Map([[1, {option_name: "", quantity: 0}]]),
+    attributes: new Map([[1, {attribute_name: "", attribute_description: ""}]])
+}, action) {
+    switch (action.type) {
+        case 'CREATE_PRODUCT':
+            return Object.assign({}, st0, action.data);
+        case 'ADD_IMAGE':
+            let newFiles = st0.files.slice(0);
+            newFiles.push(action.data)
+            return Object.assign({}, st0, {files: newFiles});
+        case 'ADD_OPTION':
+            var curr_row = st0.num_of_tasks + 1
+            var updated_rows = new Map(st0.options);
+            updated_rows.set(curr_row, {option_name: "", quantity: 0})
+            return Object.assign({}, st0, {num_of_tasks: st0.num_of_tasks + 1, options: updated_rows});
+        case 'REMOVE_OPTION':
+            var updated_rows = st0.options
+            updated_rows.delete(st0.num_of_tasks)
+            return Object.assign({}, st0, {num_of_tasks: st0.num_of_tasks - 1, options: updated_rows});
+        case 'ADD_ATTRIBUTE':
+            var curr_row = st0.num_of_attributes + 1
+            var updated_rows = new Map(st0.attributes);
+            updated_rows.set(curr_row, {attribute_name: "", attribute_description: ""})
+            return Object.assign({}, st0, {num_of_attributes: st0.num_of_attributes + 1, attributes: updated_rows});
+        case 'REMOVE_ATTRIBUTE':
+            var updated_rows = st0.attributes
+            updated_rows.delete(st0.num_of_tasks)
+            return Object.assign({}, st0, {num_of_attributes: st0.num_of_attributes - 1, attributes: updated_rows});
+        case 'CHANGE_OPTIONS_DATA':
+            var parsedId = parseInt(action.id)
+            var updated_rows = new Map(st0.options);
+            var changing_row = updated_rows.get(parsedId);
+            switch (action.updated_key) {
+                case 'option_name':
+                    changing_row.option_name = action.data
+                    break;
+                case 'quantity':
+                    changing_row.quantity = action.data
+                    break;
+                default:
+                    changing_row = changing_row
+            }
+            updated_rows.set(parsedId, changing_row)
+            return Object.assign({}, st0, {options: updated_rows});
+        case 'CHANGE_ATTRIBUTES_DATA':
+            var parsedId = parseInt(action.id)
+            var updated_rows = new Map(st0.attributes);
+            var changing_row = updated_rows.get(parsedId);
+            switch (action.updated_key) {
+                case 'attribute_name':
+                    changing_row.attribute_name = action.data
+                    break;
+                case 'attribute_description':
+                    changing_row.attribute_description = action.data
+                    break;
+                default:
+                    changing_row = changing_row
+            }
+            updated_rows.set(parsedId, changing_row)
+            return Object.assign({}, st0, {attributes: updated_rows});
+
         default:
             return st0;
     }
@@ -15,6 +90,17 @@ function categories(st0 = {}, action) {
         case 'ADD_CATEGORIES':
             var st1 = {}
             st1 = action.data
+            return st1;
+        default:
+            return st0;
+    }
+}
+
+function products(st0 = {}, action) {
+    switch (action.type) {
+        case 'ADD_PRODUCT':
+            var st1 = _.clone(st0)
+            st1[action.data.id] = action.data
             return st1;
         default:
             return st0;
@@ -39,6 +125,7 @@ function alerts(st0 = [], action) {
 function forms(st0, action) {
     let reducer = combineReducers({
         login,
+        new_product,
     });
     return reducer(st0, action);
 }
@@ -47,6 +134,7 @@ let session0 = localStorage.getItem('session');
 if (session0) {
     session0 = JSON.parse(session0);
 }
+
 function session(st0 = session0, action) {
     switch (action.type) {
         case 'LOG_IN':
@@ -58,11 +146,26 @@ function session(st0 = session0, action) {
     }
 }
 
+function cart(st0 = new Map(), action) {
+    switch (action.type) {
+        case 'ADD_TO_CART':
+            let st1 = new Map(st0);
+            for (let obj of action.data) {
+                st1.set(""+obj.product_id+"_"+obj.option_selected, obj);
+            }
+            return st1;
+        default:
+            return st0;
+    }
+}
+
 function root_reducer(st0, action) {
     let reducer = combineReducers({
         forms,
+        products,
         session,
         categories,
+        cart,
         alerts,
     });
     return deepFreeze(reducer(st0, action));

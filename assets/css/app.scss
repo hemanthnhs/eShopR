@@ -1,20 +1,97 @@
-
 /* This file is for your main application css. */
 
 $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
 
-.nav-categories .dropdown-toggle::after{
+.nav-categories .dropdown-toggle::after {
   display: none;
 }
 
-.account-menu{
+.account-menu {
   left: auto;
   right: -103px;
 }
 
-.header-icons, .header-icons:hover, .header-icons:active, .header-icons:focus{
+.header-icons, .header-icons:hover, .header-icons:active, .header-icons:focus {
   border: none !important;
   box-shadow: none !important;
   background: none !important;
+}
+
+//https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
+#uploadImage {
+  display: none;
+}
+
+#uploadImage + label {
+  padding: 10px;
+  color: white;
+  background-color: #3b4165;
+}
+
+#uploadImage:focus + label, #uploadImage + label:hover {
+  background-color: #2b2f49;
+}
+
+.product-images{
+  max-height: 700px;
+}
+
+.product-container{
+  margin-top: 30px;
+}
+
+.options{
+  padding: 5px 15px 5px 15px;
+  margin-right: 20px;
+  background-color: #7a778a;
+  border: 1px solid grey
+}
+
+.option-active{
+  border: 2px solid black;
+}
+
+.add-btn{
+  font-size: x-large;
+  margin-right: 10px;
+}
+
+.wishlist-btn{
+  font-size: x-large;
+}
+
+.dropdown-menu{
+  background: #4f4e52;
+  padding-left: 5px;
+  padding-right: 50px;
+}
+
+.dropdown-item{
+  color: white;
+}
+
+.dropdown-item .nav-link{
+  padding: 0px;
+}
+
+.dropdown-item:hover{
+  background: #5e5d61;
+  color: white;
+}
+
+.dropdown-menu .dropdown-item {
+  border-bottom: 2px solid #565656;
+}
+
+.dropdown-menu .dropdown-item:last-of-type {
+  border-bottom: none;
+}
+
+.product-listing{
+  margin: 10px;
+  border: 1px solid black;
+  width: 300px;
+  height: 400px;
+  padding:20px;
 }

@@ -24,6 +24,11 @@ defmodule EshopRWeb.Router do
     pipe_through :ajax
     resources "/sessions", SessionController, only: [:create], singleton: true
     get "/categories", CategoryController, :index
+    resources "/categories", CategoryController, only: [:show]
+    post "/createProduct", ProductController, :create
+    resources "/products", ProductController,only: [:show, :index]
+    resources "/shoppingcarts", ShoppingCartController, except: [:new, :edit]
+    get "/viewCart", ShoppingCartController, :show
   end
 
   scope "/", EshopRWeb do

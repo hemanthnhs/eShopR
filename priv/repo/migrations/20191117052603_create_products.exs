@@ -3,12 +3,13 @@ defmodule EshopR.Repo.Migrations.CreateProducts do
 
   def change do
     create table(:products) do
-      add :name, :string
+      add :name, :string, null: false
+      add :brand, :string, default: ""
       add :description, :text
-      add :images, {:array, :string}
-      add :attributes, :map
+      add :images, :map
+      add :attributes, {:array, :map}
       add :tags, :text
-      add :catalogue, :integer
+      add :options, :map
       add :marked_price, :float
       add :selling_price, :float
       add :sub_category, references(:categories, on_delete: :nothing)

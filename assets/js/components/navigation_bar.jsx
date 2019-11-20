@@ -38,30 +38,30 @@ class NavigationBar extends React.Component {
             );
         }
         else{
-        if (Object.keys(categories).length == 0) {
-            list_categories()
-        }
-        let nav_items = []
-        _.map(categories, function (values, main_category) {
-            let nav_sub_categories = []
-            _.each(values, function (sub_category) {
-                nav_sub_categories.push(<NavDropdown.Item eventKey="4.1">{sub_category}</NavDropdown.Item>)
-            })
-            nav_items.push(
-                <Nav.Item key={main_category}>
-                    <NavDropdown title={main_category}>
-                        {nav_sub_categories}
-                    </NavDropdown>
-                </Nav.Item>
-            )
-        });
-        return (
-            <Navbar className="nav-categories" id="nav-header" bg="dark" variant="dark">
-                <Nav>
-                    {nav_items}
-                </Nav>
-            </Navbar>
-        );
+            if (Object.keys(categories).length == 0) {
+                list_categories()
+            }
+            let nav_items = []
+            _.map(categories, function (values, main_category) {
+                let nav_sub_categories = []
+                _.each(values.sub, function (sub_category) {
+                    nav_sub_categories.push(<NavDropdown.Item><NavLink to={"/category/"+sub_category[0]} exact activeClassName="active" className="nav-link">{sub_category[1]}</NavLink></NavDropdown.Item>)
+                })
+                nav_items.push(
+                    <Nav.Item key={main_category}>
+                        <NavDropdown title={main_category}>
+                            {nav_sub_categories}
+                        </NavDropdown>
+                    </Nav.Item>
+                )
+            });
+            return (
+                <Navbar className="nav-categories" id="nav-header" bg="dark" variant="dark">
+                    <Nav>
+                        {nav_items}
+                    </Nav>
+                </Navbar>
+            );
         }
     }
 }
