@@ -46,6 +46,7 @@ defmodule EshopR.MixProject do
       {:httpoison, "~> 1.5"},
       {:jason, "~> 1.1"},
       {:oauth2, "~> 2.0"},
+      {:elasticsearch, "~> 1.0.0"},
     ]
   end
 

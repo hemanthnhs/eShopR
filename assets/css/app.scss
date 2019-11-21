@@ -95,3 +95,19 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   height: 400px;
   padding:20px;
 }
+
+#search_bar{
+  border-radius: 50px 0px 0px 50px;
+  font-style: italic;
+}
+
+
+#search_bar:focus {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}
+
+.search-button{
+  border-radius: 0px 50px 50px 0px;
+  background-color: lightskyblue;
+}

@@ -121,7 +121,6 @@ export function list_cart_items() {
 
 export function list_products(id, resolve){
     get('/categories/'+id).then((resp) => {
-        console.log("carddt", resp)
         if (resp.data) {
             resolve(resp.data)
         }
@@ -160,6 +159,12 @@ export function submit_create_product(form) {
             }
         });
     });
+}
 
-
+export function search(query,resolve){
+    get('/search?query='+query)
+        .then((resp) => {
+            console.log(resp)
+            resolve(resp.data)
+        });
 }

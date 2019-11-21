@@ -8,6 +8,8 @@ defmodule EshopRWeb.CategoryController do
   action_fallback EshopRWeb.FallbackController
 
   def index(conn, _params) do
+    IO.puts("============================================================")
+    IO.inspect(Elasticsearch.get(EshopR.ElasticsearchCluster, ""))
     categories = Categories.list_categories()
     render(conn, "index.json", categories: categories)
   end

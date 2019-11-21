@@ -21,6 +21,10 @@ defmodule EshopR.Products do
     Repo.all(Product)
   end
 
+  def get_products(ids) do
+    Repo.all(from(p in Product, where: p.id in ^ids))
+  end
+
   @doc """
   Gets a single product.
 

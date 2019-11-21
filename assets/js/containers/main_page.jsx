@@ -11,6 +11,7 @@ import LoginPage from './login_page';
 import ShowProduct from './show_product';
 import ShowCart from './show_cart';
 import ShowCategory from './show_category';
+import ShowSearchResults from './show_results';
 import store from '../store';
 
 export default function init_page(root) {
@@ -51,6 +52,11 @@ function Page(props) {
                     <Route exact path="/category/:id" render={
                         (props) =>
                             <ShowCategory id={props.match.params.id} />
+                    } />
+
+                    <Route exact path="/search/:query" render={
+                        (props) =>
+                            <ShowSearchResults query={props.match.params.query} />
                     } />
 
                     <Route exact path="/viewCart">

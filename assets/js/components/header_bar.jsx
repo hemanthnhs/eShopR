@@ -4,9 +4,9 @@ import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
 import {Navbar, Form, Overlay, Col, Button, InputGroup, Popover, ButtonToolbar, Dropdown} from 'react-bootstrap';
 import AccountOverlay from './account_popover'
+import {search} from '../api/ajax';
 
 function state2props(state) {
-    console.log(state)
     return {categories: state.categories, cart_id: state.session ? state.session.user_id : null};
 }
 
@@ -21,8 +21,13 @@ class HeaderBar extends React.Component {
 
         this.state = {
             show_login: false,
+            search_query: ""
         };
 
+    }
+
+    searchBoxChanged(ev){
+        this.setState({search_query: ev.target.value})
     }
 
     render(props) {
@@ -37,17 +42,9 @@ class HeaderBar extends React.Component {
                 </Col>
                 <Col sm={5}>
                     <InputGroup>
-                        <Form.Control size="lg" type="text" id="search" placeholder="Search for item......."/>
+                        <Form.Control size="md" type="text" id="search_bar" placeholder="Search..." onChange={(ev) => this.searchBoxChanged(ev)}/>
                         <InputGroup.Append>
-                            <Form.Control as="select" size="lg">
-                                <option>All</option>
-                                {_.map(categories, function (_sub, main_category) {
-                                    return <option key={main_category}>{main_category}</option>
-                                })}
-                            </Form.Control>
-                        </InputGroup.Append>
-                        <InputGroup.Append>
-                            <InputGroup.Text><img src={require("../../static/images/search.svg")}/></InputGroup.Text>
+                            <InputGroup.Text className={"search-button"}><NavLink to={"/search/"+this.state.search_query} ><img src={require("../../static/images/search.svg")}/></NavLink></InputGroup.Text>
                         </InputGroup.Append>
                     </InputGroup>
                 </Col>

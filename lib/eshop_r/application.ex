@@ -11,9 +11,10 @@ defmodule EshopR.Application do
       # Start the Ecto repository
       EshopR.Repo,
       # Start the endpoint when the application starts
-      EshopRWeb.Endpoint
+      EshopRWeb.Endpoint,
       # Starts a worker by calling: EshopR.Worker.start_link(arg)
       # {EshopR.Worker, arg},
+      EshopR.ElasticsearchCluster
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

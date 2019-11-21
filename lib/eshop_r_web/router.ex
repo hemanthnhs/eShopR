@@ -29,6 +29,7 @@ defmodule EshopRWeb.Router do
     resources "/products", ProductController,only: [:show, :index]
     resources "/shoppingcarts", ShoppingCartController, except: [:new, :edit]
     get "/viewCart", ShoppingCartController, :show
+    get "/search", ProductController, :search
   end
 
   scope "/", EshopRWeb do
