@@ -1,6 +1,6 @@
 /* This file is for your main application css. */
 
-$body-bg: lavender; // With scss, Bootstrap lets us override colors and stuff.
+$body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
 
 .nav-categories .dropdown-toggle::after {
@@ -8,7 +8,7 @@ $body-bg: lavender; // With scss, Bootstrap lets us override colors and stuff.
 }
 
 .navbar{
-  background-color: lightsteelblue;
+  background-color: #f1f1f1;
 }
 
 .display-create-product{
@@ -227,4 +227,29 @@ $body-bg: lavender; // With scss, Bootstrap lets us override colors and stuff.
 
 .add-rem-btn {
   margin-left: 2rem;
+}
+
+.cart-container{
+  width: 85%
+}
+
+.place-order{
+  font-size: x-large;
+  margin-right: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #e0881c;
+  border-color: #403f3f3b;
+  box-shadow: 1px 1px #888888;
+  border-radius: 0px;
+}
+
+.place-order:hover{
+  background-color: #da811d !important;
+  border-color: #403f3f3b !important;
+  box-shadow: none !important;
+}
+
+.order-container{
+  margin-top: 25px;
 }

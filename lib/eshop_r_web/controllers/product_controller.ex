@@ -6,12 +6,15 @@ defmodule EshopRWeb.ProductController do
 
   action_fallback EshopRWeb.FallbackController
 
+  plug EshopRWeb.Plugs.RequireAuth when action in [:create]
+
   def index(conn, _params) do
     products = Products.list_products()
     render(conn, "index.json", products: products)
   end
 
   def create(conn, %{"data" => product_params}) do
+    product_params = Map.put(product_params, "owner_id", conn.assigns[:current_user].id)
     with {:ok, %Product{} = product} <- Products.create_product(product_params) do
       Elasticsearch.put_document(EshopR.ElasticsearchCluster, product, "products")
       conn

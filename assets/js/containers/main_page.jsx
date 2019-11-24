@@ -10,6 +10,8 @@ import CreateLandingPage from './create_landing_page';
 import HeaderBar from '../components/header_bar';
 import LoginPage from './login_page';
 import ShowProduct from './show_product';
+import ShowOrder from './show_order';
+import ShowOrders from './show_orders';
 import ShowCart from './show_cart';
 import ShowCategory from './show_category';
 import ShowSearchResults from './show_results';
@@ -48,6 +50,15 @@ function Page(props) {
                     <Route exact path="/newProduct">
                         <CreateProduct />
                     </Route>
+
+                    <Route exact path="/orders">
+                        <ShowOrders />
+                    </Route>
+
+                    <Route exact path="/order/:id" render={
+                        (props) =>
+                            <ShowOrder id={props.match.params.id} />
+                    } />
 
                     <Route exact path="/product/:id" render={
                         (props) =>

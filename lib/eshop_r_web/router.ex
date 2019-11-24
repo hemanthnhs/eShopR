@@ -25,12 +25,15 @@ defmodule EshopRWeb.Router do
     resources "/sessions", SessionController, only: [:create], singleton: true
     get "/categories", CategoryController, :index
     resources "/categories", CategoryController, only: [:show]
+    resources "/orders", OrderController, only: [:index, :show, :update]
     post "/createProduct", ProductController, :create
     resources "/products", ProductController,only: [:show, :index]
     resources "/shoppingcarts", ShoppingCartController, except: [:new, :edit]
     get "/viewCart", ShoppingCartController, :show
     get "/search", ProductController, :search
     resources "/adminconfigs", AdminConfigController, only: [:create, :show]
+    post "/placeOrder", OrderController, :create
+    get "/status", StatusController, :index
   end
 
   scope "/", EshopRWeb do

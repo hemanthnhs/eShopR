@@ -206,11 +206,39 @@ function cart(st0 = new Map(), action) {
     }
 }
 
+function orders(st0 = new Map(), action) {
+    switch (action.type) {
+        case 'ORDERS_DATA':
+            let st1 = new Map(st0);
+            for (let obj of action.data) {
+                st1.set(obj.id, obj);
+            }
+            return st1;
+        default:
+            return st0;
+    }
+}
+
+function status(st0 = new Map(), action) {
+    switch (action.type) {
+        case 'ORDER_STATUS':
+            let st1 = new Map(st0);
+            for (let obj of action.data) {
+                st1.set(obj.id, obj.title);
+            }
+            return st1;
+        default:
+            return st0;
+    }
+}
+
 function root_reducer(st0, action) {
     let reducer = combineReducers({
         forms,
         products,
         session,
+        orders,
+        status,
         landing_page,
         categories,
         cart,

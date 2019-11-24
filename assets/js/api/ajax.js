@@ -19,6 +19,23 @@ export function post(path, body) {
     }).then((resp) => resp.json());
 }
 
+export function put(path, body) {
+    let state = store.getState();
+    let token = state.session ? state.session.token || "" : "";
+
+    return fetch('/ajax' + path, {
+        method: 'put',
+        credentials: 'same-origin',
+        headers: new Headers({
+            'x-csrf-token': window.csrf_token,
+            'content-type': "application/json; charset=UTF-8",
+            'accept': 'application/json',
+            'x-auth': token || "",
+        }),
+        body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+}
+
 export function get(path) {
     let state = store.getState();
     let token = state.session ? state.session.token || "" : "";
@@ -195,4 +212,48 @@ export function search(query, resolve) {
             console.log(resp)
             resolve(resp.data)
         });
+}
+
+export function list_orders() {
+    get('/orders')
+        .then((resp) => {
+            console.log(resp)
+            store.dispatch({
+                type: 'ORDERS_DATA',
+                data: resp.data,
+            });
+        });
+}
+
+export function place_order(){
+    post('/placeOrder', {})
+        .then((resp) => {
+            console.log(resp);
+            });
+}
+
+export function get_statuses(){
+    get('/status')
+        .then((resp) => {
+            console.log(resp)
+            store.dispatch({
+                type: 'ORDER_STATUS',
+                data: resp.data,
+            });
+        });
+}
+
+export function update_order_status(id, status_id, tracking_num){
+    if(status_id = 4){
+        put('/orders/'+id, {id: id, status_id: status_id, tracking: tracking_num})
+            .then((resp) => {
+                console.log(resp);
+            });
+    }
+    else{
+    put('/orders/'+id, {id: id, status_id: status_id})
+        .then((resp) => {
+            console.log(resp);
+        });
+    }
 }

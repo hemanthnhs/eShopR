@@ -17,8 +17,12 @@ defmodule EshopR.Orders do
       [%Order{}, ...]
 
   """
-  def list_orders do
-    Repo.all(Order)
+  def list_orders(id) do
+    Repo.all(from(o in Order, where: o.buyer_id == ^id, preload: [:status], order_by: {:desc, o.inserted_at}))
+  end
+
+  def sold_orders(id) do
+    Repo.all(from(o in Order, where: o.seller_id == ^id, preload: [:status], order_by: {:desc, o.inserted_at}))
   end
 
   @doc """

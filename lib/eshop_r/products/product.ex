@@ -23,7 +23,7 @@ defmodule EshopR.Products.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:name, :brand, :description, :highlights, :images, :attributes, :tags, :options, :marked_price, :selling_price, :main_category, :sub_category])
+    |> cast(attrs, [:name, :brand, :description, :highlights, :images, :attributes, :tags, :options, :owner_id, :marked_price, :selling_price, :main_category, :sub_category])
 #    |> validate_required([:name, :description, :images, :attributes, :tags, :catalogue, :marked_price, :selling_price])
   end
 end

@@ -4,18 +4,18 @@ defmodule EshopR.Repo.Migrations.CreateOrders do
   def change do
     create table(:orders) do
       add :tracking, :string
-      add :payment_total, :float
+      add :order_items, :map
       add :buyer_id, references(:users, on_delete: :nothing)
       add :seller_id, references(:users, on_delete: :nothing)
-      add :status, references(:statuses, on_delete: :nothing)
-      add :address, references(:addresses, on_delete: :nothing)
+      add :status_id, references(:statuses, on_delete: :nothing)
+      add :address_id, references(:addresses, on_delete: :nothing)
 
       timestamps()
     end
 
     create index(:orders, [:buyer_id])
     create index(:orders, [:seller_id])
-    create index(:orders, [:status])
-    create index(:orders, [:address])
+    create index(:orders, [:status_id])
+    create index(:orders, [:address_id])
   end
 end

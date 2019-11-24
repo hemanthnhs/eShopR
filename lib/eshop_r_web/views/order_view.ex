@@ -13,6 +13,10 @@ defmodule EshopRWeb.OrderView do
   def render("order.json", %{order: order}) do
     %{id: order.id,
       tracking: order.tracking,
-      payment_total: order.payment_total}
+      status_id: order.status.id,
+      status: order.status.title,
+      inserted_at: order.inserted_at,
+      updated_at: order.updated_at,
+      order_items: order.order_items}
   end
 end

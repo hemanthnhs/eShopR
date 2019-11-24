@@ -9,7 +9,7 @@ function state2props(state) {
 
 class AccountOverlay extends React.Component {
 
-    handleClick(){
+    handleClick() {
         localStorage.removeItem('session');
         this.props.dispatch({
             type: 'LOG_OUT',
@@ -24,11 +24,11 @@ class AccountOverlay extends React.Component {
                 <Dropdown.Menu show className={"account-menu"}>
                     <div>Hi, Satya</div>
                     <Dropdown.Divider/>
-                    <Dropdown.Item eventKey="1">Your Account</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">Your Orders</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">Manage Address</Dropdown.Item>
+                    <Dropdown.Item>Your Account</Dropdown.Item>
+                    <Dropdown.Item><NavLink to={"/orders"}>Your Orders</NavLink></Dropdown.Item>
+                    <Dropdown.Item>Manage Address</Dropdown.Item>
                     <Dropdown.Divider/>
-                    <Dropdown.Item eventKey="4" onClick={() => this.handleClick()}>Logout</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.handleClick()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
             </div>)
         } else {

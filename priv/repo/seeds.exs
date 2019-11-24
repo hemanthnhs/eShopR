@@ -12,6 +12,7 @@
 
 alias EshopR.Users.User
 alias EshopR.Categories.Category
+alias EshopR.Statuses.Status
 alias EshopR.Repo
 
 Repo.insert!(%User{email: "hemanth@example.com", password_hash: Argon2.add_hash("password").password_hash, type: 0, firstname: "Hemanth", lastname: "Nhs"})
@@ -32,3 +33,8 @@ Repo.insert!(%Category{name: "Accessories", user_id: 1, parent: 1})
 Repo.insert!(%Category{name: "Cell phones", user_id: 1, parent: 2})
 Repo.insert!(%Category{name: "Laptops", user_id: 1, parent: 2})
 Repo.insert!(%Category{name: "Gaming Consoles", user_id: 1, parent: 2})
+Repo.insert!(%Status{title: "Order Placed"})
+Repo.insert!(%Status{title: "Order Confirmed"})
+Repo.insert!(%Status{title: "Preparing for Dispatch"})
+Repo.insert!(%Status{title: "Dispatched"})
+Repo.insert!(%Status{title: "Delivered"})

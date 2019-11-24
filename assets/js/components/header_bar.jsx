@@ -37,7 +37,7 @@ class HeaderBar extends React.Component {
                 {/*TODO Logo*/}
                 <Col sm={2}>
                     <NavLink to="/" activeClassName="selected">
-                        <h1>e-ShopR</h1>
+                        <img src={require("../../static/images/logo.png")} with="100px" height="50px" />
                     </NavLink>
                 </Col>
                 <Col sm={5}>

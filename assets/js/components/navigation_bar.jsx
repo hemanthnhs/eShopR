@@ -24,7 +24,7 @@ class NavigationBar extends React.Component {
                             </NavLink>
                         </Nav.Item>
                         <Nav.Item>
-                            <NavLink to="/manageOrders" exact activeClassName="active" className="nav-link">
+                            <NavLink to="/orders" exact activeClassName="active" className="nav-link">
                                 Manage Orders
                             </NavLink>
                         </Nav.Item>

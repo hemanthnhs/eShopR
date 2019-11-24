@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, get_product, list_cart_items, add_to_cart} from '../api/ajax';
+import {list_categories, get_product, list_cart_items, place_order} from '../api/ajax';
 import {connect} from 'react-redux';
 import {Carousel, Row, Col, Container, Button, Form, Box, Table} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
@@ -31,19 +31,19 @@ class ShowCart extends React.Component {
 
     renderCartItems(cart) {
         let renderElements = []
-        console.log(cart)
         cart.forEach(function (val, key) {
-            //renderElements.push(<div>{val.product_name} - {val.option_selected}</div>)
-            renderElements.push(<div className= "display-cart-border"><Row><img
-                height={300} width={225}
+            renderElements.push(<tr className= "display-cart-border"><td><Row><img
+                height={200} width={150}
                 src={val.images[Object.keys(val.images)[0]]}/>
                 <span className="offset-1">
                 <div className="product-name">{val.product_name} </div>
-                    <div className="font-italic"><h5>brand: {val.brand}</h5></div>
-                    <div><h5>Price: ${val.selling_price}</h5></div>
-                    <div><h5>Size Selected: ${val.option_selected}</h5></div>
+                    <div className="font-italic"><h5>Brand: {val.brand}</h5></div>
+                    <div><h5>Option Selected: {val.option_selected}</h5></div>
                 </span>
-            </Row></div>)
+            </Row>
+            </td>
+                <td>${val.selling_price}</td>
+            </tr>)
         })
         return renderElements
     }
@@ -59,17 +59,18 @@ class ShowCart extends React.Component {
         if (!cart) {
             return (<div>Getting Cart Details</div>)
         } else {
-            return (<div>
-                <Row className="offset-2 display-cart-border">
-
-                    <Col md={8} className="headings-display"><Form.Label>Your Cart</Form.Label></Col>
-                    <Col md={4} className="headings-display"><Form.Label>Price</Form.Label></Col>
-
-                </Row>
-                <div className="offset-2">{this.renderCartItems(cart)}</div>
-                <Row className="offset-7 headings-display"> <Form.Label>Subtotal: $</Form.Label></Row>
-
-            </div>)
+            return (<Table className={"offset-1 cart-container"}>
+                <thead className="display-cart-border">
+                    <tr>
+                        <th md={10} className="headings-display">Your Cart</th>
+                        <th md={2} className="headings-display">Price</th>
+                    </tr>
+                </thead>
+                <tbody>{this.renderCartItems(cart)}
+                <tr><td></td><td><h5>Subtotal: $</h5></td></tr>
+                <tr><td></td><td><Button className={"place-order"} onClick={() => place_order()}>PLACE ORDER</Button></td></tr>
+                </tbody>
+            </Table>)
         }
     }
 }
