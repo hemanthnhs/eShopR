@@ -5,7 +5,8 @@ defmodule EshopR.Repo.Migrations.CreateProducts do
     create table(:products) do
       add :name, :string, null: false
       add :brand, :string, default: ""
-      add :description, :text
+      add :description, :string
+      add :highlights, :string
       add :images, :map
       add :attributes, {:array, :map}
       add :tags, :text

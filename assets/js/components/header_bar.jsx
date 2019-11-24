@@ -48,10 +48,12 @@ class HeaderBar extends React.Component {
                         </InputGroup.Append>
                     </InputGroup>
                 </Col>
+
                 <Col md={{span: 1, offset: 2}}>
                     {/*Cart*/}
                     <NavLink to={"/viewCart"} activeClassName="selected">
                         <img src={require("../../static/images/basket.svg")} width="50px" height="50px"/>
+                        <label className="display-cart-count">3</label>
                     </NavLink>
                 </Col>
                 <Col md={{span: 1}}>

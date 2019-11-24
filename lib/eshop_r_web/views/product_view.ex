@@ -15,6 +15,7 @@ defmodule EshopRWeb.ProductView do
       name: product.name,
       brand: product.brand,
       description: product.description,
+      highlights: product.highlights,
       images: product.images,
       attributes: product.attributes,
       tags: product.tags,

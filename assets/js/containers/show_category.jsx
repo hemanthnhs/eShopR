@@ -54,7 +54,7 @@ class ShowCategory extends React.Component {
                 console.log("Came in")
                 display.push(<ProductListing product={product} />)
             })
-            return (<div>{display}</div>)
+            return (<div><Row className={"offset-1"}>{display}</Row></div>)
         }
 
     }

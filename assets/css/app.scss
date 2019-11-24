@@ -1,12 +1,30 @@
 /* This file is for your main application css. */
 
-$body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
+$body-bg: lavender; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
 
 .nav-categories .dropdown-toggle::after {
   display: none;
 }
 
+.navbar{
+  background-color: lightsteelblue;
+}
+
+.display-create-product{
+  width: 450px;
+  display: inline;
+  margin-right: 3rem;
+}
+
+.display-block{
+  display: block;
+}
+
+.attributes-table{
+  color: #fff;
+  background-color: #7a778a;
+}
 .account-menu {
   left: auto;
   right: -103px;
@@ -44,7 +62,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 .options{
   padding: 5px 15px 5px 15px;
   margin-right: 20px;
-  background-color: #7a778a;
+  background-color: #47747d;
   border: 1px solid grey
 }
 
@@ -55,12 +73,57 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 .add-btn{
   font-size: x-large;
   margin-right: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: #29946d;
+  border-color: #403f3f3b;
+  box-shadow: 1px 1px #888888;
+  border-radius: 0px;
 }
 
 .wishlist-btn{
   font-size: x-large;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: OrangeRed;
+  border-color: #403f3f3b;
+  box-shadow: 1px 1px #888888;
+  border-radius: 0px;
 }
 
+.add-btn:hover{
+  background-color: #247b59 !important;
+  border-color: #403f3f3b !important;
+  box-shadow: none !important;
+}
+
+.wishlist-btn:hover{
+  background-color: #ce3700 !important;
+  border-color: #403f3f3b !important;
+  box-shadow: none !important;
+}
+
+.add-btn:focus, .add-btn:active{
+  background-color: #29946d !important;
+  border-color: #403f3f3b !important;
+  box-shadow: none !important;
+}
+
+.wishlist-btn:active, .wishlist-btn:focus{
+  background-color: OrangeRed !important;
+  border-color: #403f3f3b !important;
+  box-shadow: none !important;
+}
+/*attribution : https://stackoverflow.com/questions/29313879/shopping-cart-number-of-items-in-cart-css*/
+.display-cart-count {
+  font-size: 14px;
+  font-weight: bolder;
+  border-radius: 50px 50px 50px 50px;
+  background: #ff0000;
+  color: #fff;
+  padding: 0 5px;
+  vertical-align: top;
+}
 .dropdown-menu{
   background: #4f4e52;
   padding-left: 5px;
@@ -90,10 +153,60 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 
 .product-listing{
   margin: 10px;
-  border: 1px solid black;
-  width: 300px;
+  width: 20%;
   height: 400px;
   padding:20px;
+  padding-right: 50px;
+  padding-left: 50px;
+  border-right: 1px solid #d8d8dd;
+  text-align: center;
+}
+.display-subTotal{
+  text-align: right;
+  border-bottom: 1px solid #d8d8dd;
+}
+.display-cart-border{
+  border-bottom: 1px solid darkslategray;
+  margin-bottom: 10px;
+  width: 75%;
+}
+.headings-display{
+
+  margin-bottom: 2px;
+  margin-top: 10px;
+  font-size: xx-large;
+  color: #080101;
+}
+.display-brand{
+  background-color: #3b7c79;
+  border-radius: 0px 50px 50px 0px;
+  color: white;
+  font-weight: 700;
+  width: fit-content;
+  margin-bottom: 10px;
+  padding: 5px;
+  box-shadow: 2px 2px #888888, inset 0 0 3px #000000;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.display-price{
+  color:black;
+  font-size: larger;
+}
+.display-markedprice{
+  color:grey;
+  font-size: smaller;
+}
+.display-discount{
+  color:green;
+  font-size:  15px;
+  font-style: italic;
+}
+
+.product-name{
+  font-size: x-large;
+  color: darkslategray;
+  font-weight: bold;
 }
 
 #search_bar{
@@ -110,4 +223,8 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 .search-button{
   border-radius: 0px 50px 50px 0px;
   background-color: lightskyblue;
+}
+
+.add-rem-btn {
+  margin-left: 2rem;
 }
