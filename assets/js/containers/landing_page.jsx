@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import {list_categories} from '../api/ajax';
+import {get_landing_page_config} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Form, Button, Table, Alert} from 'react-bootstrap';
+import {Col, Row, Table, Alert} from 'react-bootstrap';
 
 function state2props(state) {
-    console.log(state)
-    return {logged: !(state.session==null)};
+    console.log("===================================");
+    console.log(state.landing_page)
+    return {landing_page: state.landing_page};
 }
 
 class LandingPage extends React.Component {
@@ -18,6 +19,7 @@ class LandingPage extends React.Component {
             redirect: null,
         }
 
+        get_landing_page_config()
     }
 
     redirect(path) {
@@ -29,11 +31,26 @@ class LandingPage extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />;
         }
+        let {landing_page, dispatch} = this.props
+        if(!landing_page){
         return (
             <div>
-                Test
+                Loading......
             </div>
-        );
+        );}
+        else{
+            let row_data = []
+            for(let i=1;i<= landing_page.num_of_rows; i++){
+                console.log("=>",landing_page)
+                let col_data = []
+                for(let j=1; j<= landing_page.row_data[i].num_of_cols; j++){
+                    let col = landing_page.row_data[i].col_data[j]
+                    col_data.push(<Col md={6}><img src={col.banner_img} /></Col>)
+                }
+                row_data.push(<Row>{col_data}</Row>)
+            }
+           return(<div>{row_data}</div>)
+        }
     }
 }
 

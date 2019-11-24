@@ -10,6 +10,43 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
     }
 }
 
+function new_landing_page(st0={num_of_rows: 1, row_data: new Map([[1, {num_of_cols:1, col_data: new Map([[1,{banner_img: null, width: 0, navigate_to: ""}]])}]])}, action) {
+    switch (action.type) {
+        case 'ADD_ROW':
+            var curr_row = st0.num_of_rows + 1
+            var updated_rows = new Map(st0.row_data);
+            updated_rows.set(curr_row, {num_of_cols:1, col_data: new Map([[1,{banner_img: "", width: 0, navigate_to: ""}]])})
+            return Object.assign({}, st0, {num_of_rows: st0.num_of_rows + 1, row_data: updated_rows});
+        case 'REMOVE_ROW':
+            var updated_rows = st0.row_data
+            updated_rows.delete(st0.num_of_rows)
+            return Object.assign({}, st0, {num_of_rows: st0.num_of_rows - 1, row_data: updated_rows});
+        case 'ADD_COLUMN':
+            var parsedId = parseInt(action.row_id)
+            var updated_rows = new Map(st0.row_data);
+            var changing_row = updated_rows.get(parsedId);
+            var curr_col = changing_row.num_of_cols + 1
+            var updated_cols = new Map(changing_row.col_data);
+            updated_cols.set(curr_col, {banner_img: "", width: 0, navigate_to: ""})
+            updated_rows.set(parsedId, {num_of_cols: changing_row.num_of_cols + 1, col_data: updated_cols})
+            return Object.assign({}, st0, {num_of_rows: st0.num_of_rows, row_data: updated_rows});
+        case 'CHANGE_LANDING_DATA':
+            var rowId = parseInt(action.row_id)
+            var updated_rows = new Map(st0.row_data);
+            var changing_row = updated_rows.get(rowId);
+            var colId = parseInt(action.col_id)
+            var updated_cols = new Map(changing_row.col_data);
+            var changing_col = updated_cols.get(colId);
+            changing_col = Object.assign({}, changing_col, action.data)
+            updated_cols.set(colId, changing_col)
+            changing_row = Object.assign({}, changing_row, {col_data: updated_cols})
+            updated_rows.set(rowId, changing_row)
+            return Object.assign({}, st0, {row_data: updated_rows});
+        default:
+            return st0;
+    }
+}
+
 function new_product(st0 = {
     name: "",
     category: "",
@@ -126,6 +163,7 @@ function forms(st0, action) {
     let reducer = combineReducers({
         login,
         new_product,
+        new_landing_page,
     });
     return reducer(st0, action);
 }
@@ -141,6 +179,15 @@ function session(st0 = session0, action) {
             return action.data;
         case 'LOG_OUT':
             return null;
+        default:
+            return st0;
+    }
+}
+
+function landing_page(st0 = session0, action) {
+    switch (action.type) {
+        case 'LANDING_PAGE_CONFIG':
+            return action.data;
         default:
             return st0;
     }
@@ -164,6 +211,7 @@ function root_reducer(st0, action) {
         forms,
         products,
         session,
+        landing_page,
         categories,
         cart,
         alerts,

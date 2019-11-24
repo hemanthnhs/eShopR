@@ -6,6 +6,7 @@ import {Provider, connect} from 'react-redux';
 import LandingPage from './landing_page';
 import NavigationBar from '../components/navigation_bar';
 import CreateProduct from './create_product';
+import CreateLandingPage from './create_landing_page';
 import HeaderBar from '../components/header_bar';
 import LoginPage from './login_page';
 import ShowProduct from './show_product';
@@ -38,6 +39,10 @@ function Page(props) {
 
                     <Route exact path="/login">
                         <LoginPage />
+                    </Route>
+
+                    <Route exact path="/createLandingPage">
+                        <CreateLandingPage />
                     </Route>
 
                     <Route exact path="/newProduct">

@@ -49,7 +49,7 @@ export function list_categories() {
 }
 
 export function get_product(id) {
-    get('/products/'+id)
+    get('/products/' + id)
         .then((resp) => {
             console.log(resp)
             store.dispatch({
@@ -82,7 +82,7 @@ export function submit_login(form) {
         });
 }
 
-function parseOptions(options){
+function parseOptions(options) {
     let res = {}
     options.forEach(function (value, key) {
         res[value.option_name] = value.quantity
@@ -90,7 +90,7 @@ function parseOptions(options){
     return res;
 }
 
-function parseAttributes(options){
+function parseAttributes(options) {
     let res = []
     options.forEach(function (value, key) {
         res.push({attribute_name: value.attribute_name, attribute_description: value.attribute_description})
@@ -119,8 +119,8 @@ export function list_cart_items() {
     });
 }
 
-export function list_products(id, resolve){
-    get('/categories/'+id).then((resp) => {
+export function list_products(id, resolve) {
+    get('/categories/' + id).then((resp) => {
         if (resp.data) {
             resolve(resp.data)
         }
@@ -134,15 +134,15 @@ export function submit_create_product(form) {
         return;
     }
     data.options = parseOptions(data.options)
-    console.log("-",data.options)
+    console.log("-", data.options)
     data.attributes = parseAttributes(data.attributes)
     let parsedImages = {}
-    var promise1 = new Promise(function(resolve, reject) {
+    var promise1 = new Promise(function (resolve, reject) {
         _.forEach(data.files, function (file) {
             let reader = new FileReader();
             reader.addEventListener("load", () => {
                 parsedImages[file.name] = reader.result
-                if(data.files.length == Object.keys(parsedImages).length){
+                if (data.files.length == Object.keys(parsedImages).length) {
                     resolve();
                 }
             });
@@ -150,7 +150,7 @@ export function submit_create_product(form) {
         })
     });
 
-    promise1.then(function() {
+    promise1.then(function () {
         data["images"] = parsedImages
         console.log("data", data)
         post('/createProduct', {data}).then((resp) => {
@@ -161,8 +161,36 @@ export function submit_create_product(form) {
     });
 }
 
-export function search(query,resolve){
-    get('/search?query='+query)
+export function submit_landing_page(form) {
+    let state = store.getState();
+    let data = _.clone(state.forms.new_landing_page);
+    // Attribution: https://stackoverflow.com/questions/43704904/how-to-stringify-objects-containing-es5-sets-and-maps
+    Map.prototype.toJSON = function () {
+        var obj = {}
+        for (let [key, value] of this)
+            obj[key] = value
+        return obj
+    }
+    post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)}).then((resp) => {
+        if (resp.data) {
+            console.log("Submitted")
+        }
+    });
+}
+
+export function get_landing_page_config(){
+    get('/adminconfigs/LANDING_PAGE')
+        .then((resp) => {
+            console.log(resp)
+            store.dispatch({
+                type: 'LANDING_PAGE_CONFIG',
+                data: JSON.parse(resp.data.value),
+            });
+        });
+}
+
+export function search(query, resolve) {
+    get('/search?query=' + query)
         .then((resp) => {
             console.log(resp)
             resolve(resp.data)
