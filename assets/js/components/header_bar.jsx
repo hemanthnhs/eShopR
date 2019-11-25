@@ -4,10 +4,10 @@ import {NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
 import {Navbar, Form, Overlay, Col, Button, InputGroup, Popover, ButtonToolbar, Dropdown} from 'react-bootstrap';
 import AccountOverlay from './account_popover'
-import {search} from '../api/ajax';
+import {list_cart_items, search} from '../api/ajax';
 
 function state2props(state) {
-    return {categories: state.categories, cart_id: state.session ? state.session.user_id : null};
+    return {categories: state.categories, cart_id: state.session ? state.session.user_id : null, cart_count: state.session ? state.cart.size : null};
 }
 
 class HeaderBar extends React.Component {
@@ -18,6 +18,8 @@ class HeaderBar extends React.Component {
         this.handleClick = ({target}) => {
             this.setState(s => ({target, show_login: !s.show_login}));
         };
+
+        list_cart_items()
 
         this.state = {
             show_login: false,
@@ -31,13 +33,13 @@ class HeaderBar extends React.Component {
     }
 
     render(props) {
-        let {categories, cart_id, _dispatch} = this.props
+        let {categories, cart_id, cart_count, _dispatch} = this.props
         return (
             <Navbar>
                 {/*TODO Logo*/}
                 <Col sm={2}>
                     <NavLink to="/" activeClassName="selected">
-                        <img src={require("../../static/images/logo.png")} with="100px" height="50px" />
+                        <img src={require("../../static/images/logo.png")} with="80px" height="40px" />
                     </NavLink>
                 </Col>
                 <Col sm={5}>
@@ -52,18 +54,18 @@ class HeaderBar extends React.Component {
                 <Col md={{span: 1, offset: 2}}>
                     {/*Cart*/}
                     <NavLink to={"/viewCart"} activeClassName="selected">
-                        <img src={require("../../static/images/basket.svg")} width="50px" height="50px"/>
-                        <label className="display-cart-count">3</label>
+                        <img src={require("../../static/images/basket.svg")} width="40px" height="40px"/>
+                        <label className="display-cart-count">{cart_count}</label>
                     </NavLink>
                 </Col>
                 <Col md={{span: 1}}>
                     {/*Wishlist*/}
-                    <img src={require("../../static/images/wishlist.svg")} width="50px" height="50px"/>
+                    <img src={require("../../static/images/wishlist.svg")} width="40px" height="40px"/>
                 </Col>
                 <Col md={{span: 1}}>
                     <ButtonToolbar>
                         <Button className={"header-icons"} onClick={this.handleClick}><img
-                            src={require("../../static/images/account.svg")} width="50px" height="50px"/></Button>
+                            src={require("../../static/images/account.svg")} width="40px" height="40px"/></Button>
                         <Overlay
                             show={this.state.show_login}
                             target={this.state.target}

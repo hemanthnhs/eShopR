@@ -123,6 +123,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   color: #fff;
   padding: 0 5px;
   vertical-align: top;
+  position: absolute;
 }
 .dropdown-menu{
   background: #4f4e52;
@@ -171,7 +172,6 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   width: 75%;
 }
 .headings-display{
-
   margin-bottom: 2px;
   margin-top: 10px;
   font-size: xx-large;
@@ -252,4 +252,63 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 
 .order-container{
   margin-top: 25px;
+}
+
+.loading{
+  background-color: ghostwhite;
+  left: 40%;
+  top: 40%;
+  position: fixed;
+  padding: 33px;
+  border-radius: 25px;
+  box-shadow: 1px 1px #888888;
+}
+
+.container {
+  max-width: 90%;
+  margin-top: 20px;
+}
+
+.order-listing{
+  margin-bottom: 30px;
+  background: ghostwhite
+}
+
+.order-header{
+  background-color: #4d6884;
+  color: white;
+}
+
+.order-detail-btn{
+  background-color: #075007;
+  color: white;
+  padding: 10px 20px 10px 20px;
+  margin-top: 20px;
+  border: 1px solid #ffffff47;
+  box-shadow: 1px 1px #8888884a;
+}
+
+.order-detail-btn:hover{
+  background-color: #105f10;
+  text-decoration: none;
+  color: white;
+}
+
+.sub-headings-display{
+  margin-bottom: 2px;
+  margin-top: 10px;
+  font-size: large;
+  color: #080101;
+}
+
+.btn-qty{
+  width: 35px;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border:1px solid black;
+}
+
+.btn-qty:hover{
+  background-color: #6c757d;
 }

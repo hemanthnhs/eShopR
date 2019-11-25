@@ -2,9 +2,10 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {list_categories, get_product, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Carousel, Row, Col, Container, Button, Table, Form} from 'react-bootstrap';
+import {Carousel, Row, Col, Alert, Button, Table, Form, Spinner} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
+import store from "../store";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
@@ -20,6 +21,7 @@ class ShowProduct extends React.Component {
         this.state = {
             redirect: null,
             option_selected: null,
+            alert: null,
         }
 
     }
@@ -42,23 +44,33 @@ class ShowProduct extends React.Component {
     renderAttributes(attributes) {
         let attributeElements = []
         _.each(attributes, function (attribute) {
-            console.log("ss")
             attributeElements.push(
-                        <tr>
-                            <td>{attribute.attribute_name}</td>
-                            <td> {attribute.attribute_description}</td>
-                        </tr>
+                <tr>
+                    <td>{attribute.attribute_name}</td>
+                    <td> {attribute.attribute_description}</td>
+                </tr>
             )
         })
         return (<Table bordered className="attributes-table">{attributeElements}</Table>);
     }
 
     addToCart(product_id) {
-        add_to_cart({product_id: product_id, option_selected: this.state.option_selected, quantity: 1})
-        // this.props.dispatch({
-        //     type: 'ADD_TO_CART',
-        //     data: {product_id: product_id, option_selected: this.state.option_selected, quantity: 1},
-        // });
+        var that = this
+        var promise1 = new Promise(function (resolve, reject) {
+            add_to_cart({product_id: product_id, option_selected: that.state.option_selected, quantity: 1}, resolve)
+        });
+
+        promise1.then(function (resp) {
+            console.log("resp", resp)
+            if (resp.data) {
+                that.setState({alert: <Alert variant="success">Item added to cart</Alert>}, function () {
+                    store.dispatch({
+                        type: 'ADD_TO_CART',
+                        data: [resp.data],
+                    });
+                })
+            }
+        })
     }
 
     render() {
@@ -73,7 +85,10 @@ class ShowProduct extends React.Component {
         }
 
         if (!product) {
-            return (<div>Getting Product Details</div>)
+            return (<div className={"loading"}>
+                <Spinner animation="grow" role="status" size="md"/>
+                Fetching product information...
+            </div>)
         } else {
             let images = []
             _.forEach(product.images, function (image, name) {
@@ -104,7 +119,7 @@ class ShowProduct extends React.Component {
                                 <h5><Form.Label>Highlights:</Form.Label>&nbsp;
                                 </h5>
                             </Row>
-                                <h6>{product.highlights}&nbsp;</h6>
+                            <h6>{product.highlights}&nbsp;</h6>
                         </Form.Group>
                         <Row>
                             <Form.Group controlId="attributes">
@@ -120,6 +135,9 @@ class ShowProduct extends React.Component {
                         </Row>
 
                         <Form.Group controlId="actions">
+                            <Row>
+                                {this.state.alert}
+                            </Row>
                             <Row>
                                 <Button className="add-btn" onClick={() => this.addToCart(product.id)}>Add to
                                     Cart</Button>

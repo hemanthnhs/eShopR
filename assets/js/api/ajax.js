@@ -36,6 +36,23 @@ export function put(path, body) {
     }).then((resp) => resp.json());
 }
 
+export function del(path, body) {
+    let state = store.getState();
+    let token = state.session ? state.session.token || "" : "";
+
+    return fetch('/ajax' + path, {
+        method: 'delete',
+        credentials: 'same-origin',
+        headers: new Headers({
+            'x-csrf-token': window.csrf_token,
+            'content-type': "application/json; charset=UTF-8",
+            'accept': 'application/json',
+            'x-auth': token || "",
+        }),
+        body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+}
+
 export function get(path) {
     let state = store.getState();
     let token = state.session ? state.session.token || "" : "";
@@ -115,11 +132,9 @@ function parseAttributes(options) {
     return res;
 }
 
-export function add_to_cart(data) {
+export function add_to_cart(data, resolve) {
     post('/shoppingcarts', {data}).then((resp) => {
-        if (resp.success) {
-            console.log(resp.success)
-        }
+        resolve(resp);
     });
 }
 
@@ -195,7 +210,7 @@ export function submit_landing_page(form) {
     });
 }
 
-export function get_landing_page_config(){
+export function get_landing_page_config() {
     get('/adminconfigs/LANDING_PAGE')
         .then((resp) => {
             console.log(resp)
@@ -225,14 +240,14 @@ export function list_orders() {
         });
 }
 
-export function place_order(){
+export function place_order() {
     post('/placeOrder', {})
         .then((resp) => {
             console.log(resp);
-            });
+        });
 }
 
-export function get_statuses(){
+export function get_statuses() {
     get('/status')
         .then((resp) => {
             console.log(resp)
@@ -243,17 +258,41 @@ export function get_statuses(){
         });
 }
 
-export function update_order_status(id, status_id, tracking_num){
-    if(status_id = 4){
-        put('/orders/'+id, {id: id, status_id: status_id, tracking: tracking_num})
+export function update_order_status(id, status_id, tracking_num) {
+    if (status_id = 4) {
+        put('/orders/' + id, {id: id, status_id: status_id, tracking: tracking_num})
+            .then((resp) => {
+                console.log(resp);
+            });
+    } else {
+        put('/orders/' + id, {id: id, status_id: status_id})
             .then((resp) => {
                 console.log(resp);
             });
     }
-    else{
-    put('/orders/'+id, {id: id, status_id: status_id})
+}
+
+export function update_quantity(id, cartid, product_id, option_selected, quantity) {
+    put('/shoppingcarts/' + id, {quantity: quantity})
         .then((resp) => {
-            console.log(resp);
+            if (resp.data) {
+                store.dispatch({
+                    type: 'ADD_TO_CART',
+                    data: [resp.data],
+                });
+            }
         });
-    }
+}
+
+export function delete_item(id, key) {
+    del('/shoppingcarts/' + id, {})
+        .then((resp) => {
+            console.log("RESP", resp)
+            if (resp.success) {
+                store.dispatch({
+                    type: 'REMOVE_ITEM',
+                    data: key,
+                });
+            }
+        });
 }

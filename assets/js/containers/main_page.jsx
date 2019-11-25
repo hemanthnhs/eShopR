@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route, NavLink, Link} from 'react-route
 import {Navbar, Nav, Col, Button} from 'react-bootstrap';
 import {Provider, connect} from 'react-redux';
 import LandingPage from './landing_page';
+import SellerLandingPage from './seller_landing_page';
 import NavigationBar from '../components/navigation_bar';
 import CreateProduct from './create_product';
 import CreateLandingPage from './create_landing_page';
@@ -36,50 +37,58 @@ function Page(props) {
 
                 <Switch>
                     <Route exact path="/">
-                        <LandingPage/>
+                        <LandingManager/>
                     </Route>
 
                     <Route exact path="/login">
-                        <LoginPage />
+                        <LoginPage/>
                     </Route>
 
                     <Route exact path="/createLandingPage">
-                        <CreateLandingPage />
+                        <CreateLandingPage/>
                     </Route>
 
                     <Route exact path="/newProduct">
-                        <CreateProduct />
+                        <CreateProduct/>
                     </Route>
 
                     <Route exact path="/orders">
-                        <ShowOrders />
+                        <ShowOrders/>
                     </Route>
 
                     <Route exact path="/order/:id" render={
                         (props) =>
-                            <ShowOrder id={props.match.params.id} />
-                    } />
+                            <ShowOrder id={props.match.params.id}/>
+                    }/>
 
                     <Route exact path="/product/:id" render={
                         (props) =>
-                            <ShowProduct id={props.match.params.id} />
-                    } />
+                            <ShowProduct id={props.match.params.id}/>
+                    }/>
 
                     <Route exact path="/category/:id" render={
                         (props) =>
-                            <ShowCategory id={props.match.params.id} />
-                    } />
+                            <ShowCategory id={props.match.params.id}/>
+                    }/>
 
                     <Route exact path="/search/:query" render={
                         (props) =>
-                            <ShowSearchResults query={props.match.params.query} />
-                    } />
+                            <ShowSearchResults query={props.match.params.query}/>
+                    }/>
 
                     <Route exact path="/viewCart">
-                            <ShowCart />
+                        <ShowCart/>
                     </Route>
                 </Switch>
             </Router>
         </div>
     );
 }
+
+let LandingManager = connect(({session}) => ({session}))(({session}) => {
+    if (session && session.type == 1) {
+        return (<SellerLandingPage/>)
+    } else {
+        return (<LandingPage/>)
+    }
+});

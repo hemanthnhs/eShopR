@@ -10,12 +10,18 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
     }
 }
 
-function new_landing_page(st0={num_of_rows: 1, row_data: new Map([[1, {num_of_cols:1, col_data: new Map([[1,{banner_img: null, width: 0, navigate_to: ""}]])}]])}, action) {
+function new_landing_page(st0 = {
+    num_of_rows: 1,
+    row_data: new Map([[1, {num_of_cols: 1, col_data: new Map([[1, {banner_img: null, width: 0, navigate_to: ""}]])}]])
+}, action) {
     switch (action.type) {
         case 'ADD_ROW':
             var curr_row = st0.num_of_rows + 1
             var updated_rows = new Map(st0.row_data);
-            updated_rows.set(curr_row, {num_of_cols:1, col_data: new Map([[1,{banner_img: "", width: 0, navigate_to: ""}]])})
+            updated_rows.set(curr_row, {
+                num_of_cols: 1,
+                col_data: new Map([[1, {banner_img: "", width: 0, navigate_to: ""}]])
+            })
             return Object.assign({}, st0, {num_of_rows: st0.num_of_rows + 1, row_data: updated_rows});
         case 'REMOVE_ROW':
             var updated_rows = st0.row_data
@@ -184,7 +190,7 @@ function session(st0 = session0, action) {
     }
 }
 
-function landing_page(st0 = session0, action) {
+function landing_page(st0 = {}, action) {
     switch (action.type) {
         case 'LANDING_PAGE_CONFIG':
             return action.data;
@@ -196,10 +202,14 @@ function landing_page(st0 = session0, action) {
 function cart(st0 = new Map(), action) {
     switch (action.type) {
         case 'ADD_TO_CART':
-            let st1 = new Map(st0);
+            var st1 = new Map(st0);
             for (let obj of action.data) {
-                st1.set(""+obj.product_id+"_"+obj.option_selected, obj);
+                st1.set("" + obj.product_id + "_" + obj.option_selected, obj);
             }
+            return st1;
+        case 'REMOVE_ITEM':
+            var st1 = new Map(st0);
+            st1.delete(action.data)
             return st1;
         default:
             return st0;

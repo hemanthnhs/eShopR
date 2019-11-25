@@ -22,11 +22,11 @@ class AccountOverlay extends React.Component {
             //https://v4-alpha.getbootstrap.com/components/dropdowns/#menu-alignment
             return (<div>
                 <Dropdown.Menu show className={"account-menu"}>
-                    <div>Hi, Satya</div>
+                    <div>{session.user_name}</div>
                     <Dropdown.Divider/>
-                    <Dropdown.Item>Your Account</Dropdown.Item>
-                    <Dropdown.Item><NavLink to={"/orders"}>Your Orders</NavLink></Dropdown.Item>
-                    <Dropdown.Item>Manage Address</Dropdown.Item>
+                    <Dropdown.Item>My Account</Dropdown.Item>
+                    <Dropdown.Item><NavLink to={"/orders"}>My Orders</NavLink></Dropdown.Item>
+                    <Dropdown.Item>My Address</Dropdown.Item>
                     <Dropdown.Divider/>
                     <Dropdown.Item onClick={() => this.handleClick()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

@@ -37,6 +37,10 @@ defmodule EshopR.ShoppingCarts do
   """
   def get_shopping_cart!(id), do: Repo.all(from(c in ShoppingCart, where: c.cartid == ^id, preload: [:product]))
 
+  def get_shopping_cart_by_id!(id),
+      do: Repo.get!(ShoppingCart, id)
+          |> Repo.preload([:product])
+
   @doc """
   Creates a shopping_cart.
 
@@ -50,9 +54,12 @@ defmodule EshopR.ShoppingCarts do
 
   """
   def create_shopping_cart(attrs \\ %{}) do
-    %ShoppingCart{}
-    |> ShoppingCart.changeset(attrs)
-    |> Repo.insert()
+    {:ok, shopping_cart} = %ShoppingCart{}
+                           |> ShoppingCart.changeset(attrs)
+                           |> Repo.insert()
+    shopping_cart = shopping_cart
+                    |> Repo.preload([:product])
+    {:ok, shopping_cart}
   end
 
   @doc """

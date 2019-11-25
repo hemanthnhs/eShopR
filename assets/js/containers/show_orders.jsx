@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {list_products, get_product, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Card, Row, Col, Badge, Button} from 'react-bootstrap';
+import {Card, Row, Col, Badge, Button, Container} from 'react-bootstrap';
 import {list_orders} from '../api/ajax';
 import {Link} from "react-router-dom";
 import ProductListing from "./../components/product_listing"
@@ -41,27 +41,35 @@ class ShowOrders extends React.Component {
             let items=[]
             if(value.order_items != null){
                 _.each((value.order_items),function (item_key, val) {
-                    items.push(<div>{item_key.name}</div>)
+                    items.push(<Row><Col md={3}><img
+                        height={180} width={140}
+                        src={item_key.display_img}/></Col><Col>{item_key.name}</Col></Row>)
                 })
             }
             order_rows.push(
-                <Card>
-                    <Card.Body>
-                        <Card.Title><h3>Order id: {key}</h3></Card.Title>
+                <Card className={"order-listing"}>
+                    <Card.Header className={"order-header"}>
+                        <Row>
+                            <Col md={9}><Card.Title><h4>Order: {key}</h4></Card.Title></Col>
+                            <Col><Link className={"order-detail-btn"} to={"/order/"+key}>{type == 1 ? "Manage Order" : "View Order"}</Link></Col>
+                        </Row>
+                        <Card.Subtitle><h6>Placed on: {value.inserted_at.split("T")[0]}</h6></Card.Subtitle>
                         <Card.Subtitle className="mb-2">
-                            <h3>
-                                <Badge variant={value.status_id == 1 ? "warning" : (value.status_id == 5 ? "success" : "primary")}>{value.status}</Badge></h3></Card.Subtitle>
-                        <Card.Subtitle className="mb-2">Ordered on: {value.inserted_at.split("T")[0]}</Card.Subtitle>
-                        <Card.Subtitle className="mb-2 text-muted">Order Details</Card.Subtitle>
+                            <h4>
+                                <Badge variant={value.status_id == 1 ? "warning" : (value.status_id == 5 ? "success" : "primary")}>{value.status}</Badge>
+                            </h4>
+                        </Card.Subtitle>
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Subtitle className="mb-2 text-muted">Items</Card.Subtitle>
                         <Card.Text>
                             {items}
                         </Card.Text>
-                        <Card.Link href={"/order/"+key}>{type == 1 ? "Manage Order" : "View Order"}</Card.Link>
                     </Card.Body>
                 </Card>
             )
         })
-        return (<div className={"offset-1 col-md-10"}>{order_rows}</div>)
+        return (<Container>{order_rows}</Container>)
     }
 }
 
