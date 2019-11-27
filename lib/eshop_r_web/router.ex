@@ -34,6 +34,7 @@ defmodule EshopRWeb.Router do
     resources "/adminconfigs", AdminConfigController, only: [:create, :show]
     post "/placeOrder", OrderController, :create
     get "/status", StatusController, :index
+    get "/trackingStatus", OrderController, :tracking_status
   end
 
   scope "/", EshopRWeb do

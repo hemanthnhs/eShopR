@@ -2,12 +2,12 @@ defmodule EshopRWeb.ShoppingCartView do
   use EshopRWeb, :view
   alias EshopRWeb.ShoppingCartView
 
-  def render("index.json", %{shoppingcarts: shoppingcarts}) do
-    %{data: render_many(shoppingcarts, ShoppingCartView, "shopping_cart.json")}
+  def render("show.json", %{shopping_cart: shopping_cart, total_val: total_val}) do
+    %{data: render_one(shopping_cart, ShoppingCartView, "shopping_cart.json"), total_val: total_val}
   end
 
-  def render("show.json", %{shopping_cart: shopping_cart}) do
-    %{data: render_many(shopping_cart, ShoppingCartView, "shopping_cart.json")}
+  def render("index.json", %{shopping_cart: shopping_cart, total_val: total_val}) do
+    %{data: render_many(shopping_cart, ShoppingCartView, "shopping_cart.json"), total_val: total_val}
   end
 
   def render("cart_item.json", %{shopping_cart: shopping_cart}) do

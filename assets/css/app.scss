@@ -154,7 +154,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 
 .product-listing{
   margin: 10px;
-  width: 20%;
+  width: 300px;
   height: 400px;
   padding:20px;
   padding-right: 50px;
@@ -311,4 +311,23 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 
 .btn-qty:hover{
   background-color: #6c757d;
+}
+
+.empty-cart{
+  background-color: ghostwhite;
+  padding: 15%;
+  border-radius: 25px;
+  box-shadow: 1px 1px #888888;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.header-bottom-none{
+  margin-bottom: 0px;
 }

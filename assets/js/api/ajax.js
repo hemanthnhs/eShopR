@@ -147,6 +147,10 @@ export function list_cart_items() {
                 type: 'ADD_TO_CART',
                 data: resp.data,
             });
+            store.dispatch({
+                type: 'CART_PRICE',
+                data: resp.total_val
+            })
         }
     });
 }
@@ -275,10 +279,15 @@ export function update_order_status(id, status_id, tracking_num) {
 export function update_quantity(id, cartid, product_id, option_selected, quantity) {
     put('/shoppingcarts/' + id, {quantity: quantity})
         .then((resp) => {
+            console.log("l", resp)
             if (resp.data) {
                 store.dispatch({
                     type: 'ADD_TO_CART',
                     data: [resp.data],
+                });
+                store.dispatch({
+                    type: 'CART_PRICE',
+                    data: resp.total_val
                 });
             }
         });
@@ -293,6 +302,17 @@ export function delete_item(id, key) {
                     type: 'REMOVE_ITEM',
                     data: key,
                 });
+                store.dispatch({
+                    type: 'CART_PRICE',
+                    data: resp.total_val
+                });
             }
+        });
+}
+
+export function get_tracking_status(order_id) {
+    get('/trackingStatus?tracking_order=' + order_id)
+        .then((resp) => {
+            console.log("resp", resp)
         });
 }

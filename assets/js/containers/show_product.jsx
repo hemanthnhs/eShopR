@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {list_categories, get_product, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Carousel, Row, Col, Alert, Button, Table, Form, Spinner} from 'react-bootstrap';
+import {Carousel, Row, Col, Alert, Button, Table, Form, Spinner, Badge, Container} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
 import store from "../store";
@@ -61,7 +61,6 @@ class ShowProduct extends React.Component {
         });
 
         promise1.then(function (resp) {
-            console.log("resp", resp)
             if (resp.data) {
                 that.setState({alert: <Alert variant="success">Item added to cart</Alert>}, function () {
                     store.dispatch({
@@ -69,6 +68,8 @@ class ShowProduct extends React.Component {
                         data: [resp.data],
                     });
                 })
+            } else if (resp.warning) {
+                that.setState({alert: <Alert variant="warning">{resp.warning}</Alert>})
             }
         })
     }
@@ -94,7 +95,7 @@ class ShowProduct extends React.Component {
             _.forEach(product.images, function (image, name) {
                 images.push(<Carousel.Item><img className={"product-images"} src={image}/></Carousel.Item>)
             })
-            return (<div className="product-container">
+            return (<Container>
                 <Row>
                     <Col xs={12} md={{span: 3, offset: 1}}>
                         <Carousel className="product-images" indicators={true}>
@@ -103,7 +104,8 @@ class ShowProduct extends React.Component {
                     </Col>
                     <Col md={{offset: 2}}>
                         <Row><h2>{product.name}</h2></Row>
-                        <Row className="font-italic"><h5><Form.Label>Brand:</Form.Label> {product.brand}</h5></Row>
+                        <Row className="font-italic"><Badge variant="warning"><h6
+                            className={"header-bottom-none"}>{product.brand}</h6></Badge></Row>
                         <hr/>
                         <Form.Group controlId="price">
                             <Row>
@@ -151,7 +153,7 @@ class ShowProduct extends React.Component {
                     Here attributes
                 </Row>
 
-            </div>)
+            </Container>)
         }
     }
 }

@@ -108,4 +108,8 @@ defmodule EshopR.ShoppingCarts do
   def change_shopping_cart(%ShoppingCart{} = shopping_cart) do
     ShoppingCart.changeset(shopping_cart, %{})
   end
+
+  def check_if_exist(cartid, product_id, option_selected) do
+    Repo.exists?(from(c in ShoppingCart, where: c.cartid == ^cartid and c.product_id == ^product_id and c.option_selected == ^option_selected))
+  end
 end

@@ -1,9 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, update_order_status, get_statuses, list_orders} from '../api/ajax';
+import {get_tracking_status, update_order_status, get_statuses, list_orders} from '../api/ajax';
 import {connect} from 'react-redux';
 import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container} from 'react-bootstrap';
-import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
 
 function state2props(state, props) {
@@ -39,6 +38,9 @@ class ShowOrder extends React.Component {
         if (!order) {
             return (<div>Getting Order Details</div>)
         } else {
+            if(order.status_id == 4 ){
+                get_tracking_status(order.id)
+            }
             let items = []
             _.each((order.order_items), function (item_key, val) {
                 items.push(<tr>

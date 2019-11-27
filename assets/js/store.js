@@ -170,6 +170,7 @@ function forms(st0, action) {
         login,
         new_product,
         new_landing_page,
+        cart_total,
     });
     return reducer(st0, action);
 }
@@ -199,9 +200,12 @@ function landing_page(st0 = {}, action) {
     }
 }
 
-function cart(st0 = new Map(), action) {
+function cart(st0 = null, action) {
     switch (action.type) {
         case 'ADD_TO_CART':
+            if(!st0){
+                st0 = new Map()
+            }
             var st1 = new Map(st0);
             for (let obj of action.data) {
                 st1.set("" + obj.product_id + "_" + obj.option_selected, obj);
@@ -211,6 +215,15 @@ function cart(st0 = new Map(), action) {
             var st1 = new Map(st0);
             st1.delete(action.data)
             return st1;
+        default:
+            return st0;
+    }
+}
+
+function cart_total(st0 = 0, action){
+    switch (action.type) {
+        case 'CART_PRICE':
+            return action.data;
         default:
             return st0;
     }

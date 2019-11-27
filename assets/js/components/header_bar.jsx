@@ -7,7 +7,12 @@ import AccountOverlay from './account_popover'
 import {list_cart_items, search} from '../api/ajax';
 
 function state2props(state) {
-    return {categories: state.categories, cart_id: state.session ? state.session.user_id : null, cart_count: state.session ? state.cart.size : null};
+    return {
+        categories: state.categories,
+        cart_id: state.session ? state.session.user_id : null,
+        cart_count: state.session ? (state.cart ? state.cart.size : null) : null,
+        type: state.session ? state.session.type : null
+    };
 }
 
 class HeaderBar extends React.Component {
@@ -28,40 +33,46 @@ class HeaderBar extends React.Component {
 
     }
 
-    searchBoxChanged(ev){
+    searchBoxChanged(ev) {
         this.setState({search_query: ev.target.value})
     }
 
     render(props) {
-        let {categories, cart_id, cart_count, _dispatch} = this.props
+        let {categories, cart_id, cart_count, type, _dispatch} = this.props
         return (
             <Navbar>
                 {/*TODO Logo*/}
                 <Col sm={2}>
                     <NavLink to="/" activeClassName="selected">
-                        <img src={require("../../static/images/logo.png")} with="80px" height="40px" />
+                        <img src={require("../../static/images/logo.png")} with="80px" height="40px"/>
                     </NavLink>
                 </Col>
                 <Col sm={5}>
                     <InputGroup>
-                        <Form.Control size="md" type="text" id="search_bar" placeholder="Search..." onChange={(ev) => this.searchBoxChanged(ev)}/>
+                        <Form.Control size="md" type="text" id="search_bar" placeholder="Search..."
+                                      onChange={(ev) => this.searchBoxChanged(ev)}/>
                         <InputGroup.Append>
-                            <InputGroup.Text className={"search-button"}><NavLink to={"/search/"+this.state.search_query} ><img src={require("../../static/images/search.svg")}/></NavLink></InputGroup.Text>
+                            <InputGroup.Text className={"search-button"}><NavLink
+                                to={"/search/" + this.state.search_query}><img
+                                src={require("../../static/images/search.svg")}/></NavLink></InputGroup.Text>
                         </InputGroup.Append>
                     </InputGroup>
                 </Col>
-
+                {type == 0 ?
                 <Col md={{span: 1, offset: 2}}>
                     {/*Cart*/}
                     <NavLink to={"/viewCart"} activeClassName="selected">
                         <img src={require("../../static/images/basket.svg")} width="40px" height="40px"/>
                         <label className="display-cart-count">{cart_count}</label>
                     </NavLink>
-                </Col>
+                </Col> : null}
+                {type == 0 ?
                 <Col md={{span: 1}}>
                     {/*Wishlist*/}
                     <img src={require("../../static/images/wishlist.svg")} width="40px" height="40px"/>
                 </Col>
+                    : null}
+                {type != 0 ? <span className={"offset-3"}></span> : null}
                 <Col md={{span: 1}}>
                     <ButtonToolbar>
                         <Button className={"header-icons"} onClick={this.handleClick}><img

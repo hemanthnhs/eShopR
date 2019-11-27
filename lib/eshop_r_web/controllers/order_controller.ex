@@ -74,4 +74,12 @@ defmodule EshopRWeb.OrderController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def tracking_status(conn, %{"tracking_order" => order_id}) do
+    IO.puts("==================---------5788888")
+#    url = "https://api.aftership.com/v4"
+#    url = "https://jsonplaceholder.typicode.com/todos/1"
+#    IO.inspect(HTTPoison.get(url, [{:"aftership-api-key", "05e3a14c-c328-4546-abb0-e8a8739bd748"}], [ ssl: [{:versions, [:'tlsv1.2']}] ]))
+    IO.puts("==================---------5788888")
+  end
 end

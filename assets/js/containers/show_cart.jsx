@@ -2,14 +2,14 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {list_categories, update_quantity, delete_item, list_cart_items, place_order} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Carousel, Row, Col, Container, Button, Form, Box, Table} from 'react-bootstrap';
+import {Carousel, Row, Col, Container, Button, Form, Box, Table, Spinner} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
 
-    return {id: props.id, cart: state.cart};
+    return {id: props.id, cart: state.cart, total: state.forms.cart_total};
 }
 
 class ShowCart extends React.Component {
@@ -66,12 +66,17 @@ class ShowCart extends React.Component {
         }
 
 
-        let {id, cart, dispatch} = this.props
-
+        let {id, cart, total, dispatch} = this.props
         if (!cart) {
-            return (<div>Getting Cart Details</div>)
+            return (<div className={"loading"}>
+                <Spinner animation="grow" role="status" size="md"/>
+                Fetching your items....!!!
+            </div>)
         } else {
-            return (<Table className={"offset-1 cart-container"}>
+            if(cart.size == 0){
+                return (<Container className={"empty-cart"}> No items added to cart.. </Container>)
+            }
+            return (<Container><Table>
                 <thead className="display-cart-border">
                 <tr>
                     <th md={8} className="sub-headings-display">Your Cart</th>
@@ -85,7 +90,7 @@ class ShowCart extends React.Component {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><h5>Subtotal: $</h5></td>
+                    <td><h5>Cart Value: ${total}</h5></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -94,7 +99,7 @@ class ShowCart extends React.Component {
                     <td><Button className={"place-order"} onClick={() => place_order()}>PLACE ORDER</Button></td>
                 </tr>
                 </tbody>
-            </Table>)
+            </Table></Container>)
         }
     }
 }
