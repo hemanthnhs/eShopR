@@ -17,8 +17,8 @@ defmodule EshopR.Products do
       [%Product{}, ...]
 
   """
-  def list_products do
-    Repo.all(Product)
+  def list_products(id) do
+    Repo.all(from(p in Product, where: p.owner_id == ^id))
   end
 
   def get_products(ids) do

@@ -150,6 +150,22 @@ function products(st0 = {}, action) {
     }
 }
 
+function seller_products(st0 = null, action) {
+        switch (action.type) {
+            case 'SELLER_LISTINGS':
+                if(!st0){
+                    st0 = new Map()
+                }
+                var st1 = new Map(st0);
+                for (let obj of action.data) {
+                    st1.set(obj.id, obj);
+                }
+            return st1;
+        default:
+            return st0;
+    }
+}
+
 function alerts(st0 = [], action) {
     switch (action.type) {
         case 'NEW_ALERTS':
@@ -259,6 +275,7 @@ function root_reducer(st0, action) {
     let reducer = combineReducers({
         forms,
         products,
+        seller_products,
         session,
         orders,
         status,

@@ -6,10 +6,10 @@ defmodule EshopRWeb.ProductController do
 
   action_fallback EshopRWeb.FallbackController
 
-  plug EshopRWeb.Plugs.RequireAuth when action in [:create]
+  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :index]
 
   def index(conn, _params) do
-    products = Products.list_products()
+    products = Products.list_products(conn.assigns[:current_user].id)
     render(conn, "index.json", products: products)
   end
 

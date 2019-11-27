@@ -16,6 +16,7 @@ import ShowOrders from './show_orders';
 import ShowCart from './show_cart';
 import ShowCategory from './show_category';
 import ShowSearchResults from './show_results';
+import ShowSellerProducts from './seller/show_products'
 import store from '../store';
 
 export default function init_page(root) {
@@ -79,6 +80,11 @@ function Page(props) {
                     <Route exact path="/viewCart">
                         <ShowCart/>
                     </Route>
+
+                    <Route exact path="/sellerProducts">
+                        <ShowSellerProducts/>
+                    </Route>
+
                 </Switch>
             </Router>
         </div>

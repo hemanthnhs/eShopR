@@ -1,8 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, update_quantity, delete_item, list_cart_items, place_order} from '../api/ajax';
+import {list_categories, update_quantity, delete_item, list_cart_items, place_order, list_products} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Carousel, Row, Col, Container, Button, Form, Box, Table, Spinner} from 'react-bootstrap';
+import {Alert, Row, Col, Container, Button, Form, Box, Table, Spinner} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
 
@@ -19,6 +19,7 @@ class ShowCart extends React.Component {
 
         this.state = {
             redirect: null,
+            errors: null
         }
 
         list_cart_items()
@@ -60,6 +61,28 @@ class ShowCart extends React.Component {
         return renderElements
     }
 
+    place_order(){
+        var that = this
+        var promise1 = new Promise(function(resolve, reject) {
+            place_order(resolve,reject)
+        })
+
+        promise1.then( function(result){
+            console.log('Fulfilled')
+        }).catch( function(error) {
+            that.setState({errors: error})
+        })
+
+    }
+
+    renderErrorList(items){
+        let errors = []
+        _.each(items, function(item){
+            errors.push(<p>{item}</p>)
+        })
+        return errors
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
@@ -76,7 +99,14 @@ class ShowCart extends React.Component {
             if(cart.size == 0){
                 return (<Container className={"empty-cart"}> No items added to cart.. </Container>)
             }
-            return (<Container><Table>
+            return (<Container>
+                { this.state.errors ? <Alert variant="danger">
+                        <p>{this.state.errors.error}</p>
+                        <hr />
+                        {this.renderErrorList(this.state.errors.items)}
+                    </Alert>
+                    : null}
+                <Table>
                 <thead className="display-cart-border">
                 <tr>
                     <th md={8} className="sub-headings-display">Your Cart</th>
@@ -96,7 +126,7 @@ class ShowCart extends React.Component {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><Button className={"place-order"} onClick={() => place_order()}>PLACE ORDER</Button></td>
+                    <td><Button className={"place-order"} onClick={() => this.place_order()}>PLACE ORDER</Button></td>
                 </tr>
                 </tbody>
             </Table></Container>)

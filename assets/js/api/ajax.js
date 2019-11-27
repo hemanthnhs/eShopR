@@ -244,10 +244,14 @@ export function list_orders() {
         });
 }
 
-export function place_order() {
+export function place_order(resolve, reject) {
     post('/placeOrder', {})
         .then((resp) => {
-            console.log(resp);
+            if (resp.success) {
+                resolve(resp.success)
+            }else{
+                reject(resp)
+            }
         });
 }
 
@@ -314,5 +318,15 @@ export function get_tracking_status(order_id) {
     get('/trackingStatus?tracking_order=' + order_id)
         .then((resp) => {
             console.log("resp", resp)
+        });
+}
+
+export function seller_products(){
+    get('/products')
+        .then((resp) => {
+            store.dispatch({
+                type: 'SELLER_LISTINGS',
+                data: resp.data
+            });
         });
 }

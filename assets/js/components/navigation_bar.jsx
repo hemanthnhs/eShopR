@@ -14,6 +14,9 @@ class NavigationBar extends React.Component {
 
     render(props) {
         let {categories, session, _dispatch} = this.props
+        if (Object.keys(categories).length == 0) {
+            list_categories()
+        }
         if(session && session.type == 1){
             return (
                 <Navbar className="nav-categories" id="nav-header" bg="dark" variant="dark">
@@ -33,14 +36,16 @@ class NavigationBar extends React.Component {
                                 Create New Product
                             </NavLink>
                         </Nav.Item>
+                        <Nav.Item>
+                            <NavLink to="/sellerProducts" exact activeClassName="active" className="nav-link">
+                                Your Listings
+                            </NavLink>
+                        </Nav.Item>
                     </Nav>
                 </Navbar>
             );
         }
         else{
-            if (Object.keys(categories).length == 0) {
-                list_categories()
-            }
             let nav_items = []
             _.map(categories, function (values, main_category) {
                 let nav_sub_categories = []

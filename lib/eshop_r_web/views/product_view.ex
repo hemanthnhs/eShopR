@@ -21,6 +21,9 @@ defmodule EshopRWeb.ProductView do
       tags: product.tags,
       options: product.options,
       marked_price: product.marked_price,
-      selling_price: product.selling_price}
+      selling_price: product.selling_price,
+      inserted_at: product.inserted_at,
+      main_category: product.main_category
+    }
   end
 end
