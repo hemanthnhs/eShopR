@@ -24,9 +24,9 @@ class AccountOverlay extends React.Component {
                 <Dropdown.Menu show className={"account-menu"}>
                     <div>{session.user_name}</div>
                     <Dropdown.Divider/>
-                    <Dropdown.Item>My Account</Dropdown.Item>
-                    <Dropdown.Item><NavLink to={"/orders"}>My Orders</NavLink></Dropdown.Item>
-                    <Dropdown.Item>My Address</Dropdown.Item>
+                    <Dropdown.Item>Your Account</Dropdown.Item>
+                    <Dropdown.Item><NavLink to={"/orders"}>Your Orders</NavLink></Dropdown.Item>
+                    <Dropdown.Item><NavLink to={"/manageAddress"}>Manage Address</NavLink></Dropdown.Item>
                     <Dropdown.Divider/>
                     <Dropdown.Item onClick={() => this.handleClick()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

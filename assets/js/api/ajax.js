@@ -214,7 +214,19 @@ export function submit_landing_page(form) {
     });
 }
 
-export function get_landing_page_config() {
+export function submit_add_address(form) {
+    let state = store.getState();
+    let data = _.clone(state.forms.address);
+    console.log("address data")
+    console.log(data)
+    post('/addAddress', {data}).then((resp) => {
+        if (resp.data) {
+            console.log("Submitted")
+        }
+    });
+}
+
+export function get_landing_page_config(){
     get('/adminconfigs/LANDING_PAGE')
         .then((resp) => {
             console.log(resp)
@@ -254,6 +266,18 @@ export function place_order(resolve, reject) {
             }
         });
 }
+
+export function list_address() {
+    get('/manageAddress')
+        .then((resp) => {
+            console.log(resp)
+            store.dispatch({
+                type: 'ADDRESS_DATA',
+                data: resp.data,
+            });
+        });
+}
+
 
 export function get_statuses() {
     get('/status')

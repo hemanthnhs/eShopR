@@ -39,13 +39,19 @@ class LandingPage extends React.Component {
             );
         } else {
             let row_data = []
-            for (let i = 1; i <= landing_page.num_of_rows; i++) {
+            for(let i=1;i<= landing_page.num_of_rows; i++){
+                let widthSum = 0;
                 let col_data = []
                 for (let j = 1; j <= landing_page.row_data[i].num_of_cols; j++) {
                     let col = landing_page.row_data[i].col_data[j]
-                    col_data.push(<Col md={6}><img src={col.banner_img}/></Col>)
+                    widthSum += parseInt(col.width)
                 }
-                row_data.push(<Row>{col_data}</Row>)
+                for(let j=1; j<= landing_page.row_data[i].num_of_cols; j++){
+                    let col = landing_page.row_data[i].col_data[j]
+                    let width = (col.width/widthSum) * 100
+                    col_data.push(<img width={width + "%"} src={col.banner_img}/>)
+                }
+                row_data.push(<Row height="10px">{col_data}</Row>)
             }
             return (<div>{row_data}</div>)
         }

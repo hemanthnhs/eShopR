@@ -80,6 +80,8 @@ defmodule EshopRWeb.OrderController do
       attrs = Map.put(attrs, "seller_id", seller_id)
       attrs = Map.put(attrs, "order_items", order_items)
       attrs = Map.put(attrs, "status_id", 1)
+      attrs = Map.put(attrs, "address_id", order_params["address_id"])
+
       order = Orders.create_order(attrs)
     end
     send_resp(conn, 200, json(conn, %{success: "Order placed."}))

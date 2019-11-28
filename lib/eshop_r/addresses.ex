@@ -50,6 +50,7 @@ defmodule EshopR.Addresses do
 
   """
   def create_address(attrs \\ %{}) do
+    IO.puts("insert")
     %Address{}
     |> Address.changeset(attrs)
     |> Repo.insert()

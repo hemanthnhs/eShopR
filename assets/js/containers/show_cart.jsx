@@ -55,7 +55,7 @@ class ShowCart extends React.Component {
                 <td><img src={require("./../../static/images/clear_cart.svg")} onClick={() => {
                     delete_item(val.id, key)
                 }}/></td>
-                <td>${val.selling_price}</td>
+                <td>${val.sellinlg_price}</td>
             </tr>)
         })
         return renderElements
@@ -88,7 +88,7 @@ class ShowCart extends React.Component {
             return <Redirect to={this.state.redirect}/>;
         }
 
-
+//<td><Button className={"place-order"} onClick={() => place_order()}>Move to Checkout</Button></td>
         let {id, cart, total, dispatch} = this.props
         if (!cart) {
             return (<div className={"loading"}>
@@ -126,7 +126,7 @@ class ShowCart extends React.Component {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><Button className={"place-order"} onClick={() => this.place_order()}>PLACE ORDER</Button></td>
+                    <td><Button className={"place-order"} onClick={() => this.setState({redirect: "/checkout"})}>Move to Checkout</Button></td>
                 </tr>
                 </tbody>
             </Table></Container>)

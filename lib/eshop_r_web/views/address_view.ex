@@ -16,6 +16,8 @@ defmodule EshopRWeb.AddressView do
       city: address.city,
       state: address.state,
       country: address.country,
-      pincode: address.pincode}
+      pincode: address.pincode,
+      full_name: address.full_name
+    }
   end
 end

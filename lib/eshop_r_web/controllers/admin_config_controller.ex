@@ -14,9 +14,25 @@ defmodule EshopRWeb.AdminConfigController do
   end
 
   def create(conn, admin_config_params) do
-    with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.create_admin_config(admin_config_params) do
-      send_resp(conn, 200, json(conn, %{success: "Config created"}))
+    IO.puts("gere")
+    IO.inspect(admin_config_params)
+    #admin_config = AdminConfigs.get_admin_config!("LANDING_PAGE")
+    IO.puts("config")
+    IO.puts("confid-==============================================")
+
+
+    try do
+      admin_config = AdminConfigs.get_admin_config!("LANDING_PAGE")
+      update(conn, %{"id"=>"LANDING_PAGE", "admin_config"=>admin_config_params})
+    rescue
+      Ecto.NoResultsError ->
+        {:not_found, "No result found"}
+      with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.create_admin_config(admin_config_params) do
+        send_resp(conn, 200, json(conn, %{success: "Config created"}))
     end
+
+    end
+
   end
 
   def show(conn, %{"id" => id}) do

@@ -26,6 +26,8 @@ defmodule EshopRWeb.Router do
     get "/categories", CategoryController, :index
     resources "/categories", CategoryController, only: [:show]
     resources "/orders", OrderController, only: [:index, :show, :update]
+    get "/manageAddress", AddressController, :index
+    post "/addAddress", AddressController, :create
     post "/createProduct", ProductController, :create
     resources "/products", ProductController,only: [:show, :index]
     resources "/shoppingcarts", ShoppingCartController, except: [:new, :edit]

@@ -6,12 +6,20 @@ defmodule EshopRWeb.AddressController do
 
   action_fallback EshopRWeb.FallbackController
 
+  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :index]
+
   def index(conn, _params) do
     addresses = Addresses.list_addresses()
+    IO.puts("index")
+    IO.inspect(addresses)
     render(conn, "index.json", addresses: addresses)
   end
 
-  def create(conn, %{"address" => address_params}) do
+  def create(conn, %{"data" => address_params}) do
+    IO.puts("create")
+    IO.inspect(address_params)
+    address_params = Map.put(address_params, "user_id", conn.assigns[:current_user].id)
+    IO.inspect(address_params)
     with {:ok, %Address{} = address} <- Addresses.create_address(address_params) do
       conn
       |> put_status(:created)

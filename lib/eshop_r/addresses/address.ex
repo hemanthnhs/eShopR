@@ -9,6 +9,7 @@ defmodule EshopR.Addresses.Address do
     field :state, :string
     field :street, :string
     field :user_id, :id
+    field :full_name, :string
 
     timestamps()
   end
@@ -16,7 +17,7 @@ defmodule EshopR.Addresses.Address do
   @doc false
   def changeset(address, attrs) do
     address
-    |> cast(attrs, [:street, :city, :state, :country, :pincode])
-    |> validate_required([:street, :city, :state, :country, :pincode])
+    |> cast(attrs, [:street, :city, :state, :country, :pincode, :full_name])
+    |> validate_required([:street, :city, :state, :country, :pincode, :full_name])
   end
 end

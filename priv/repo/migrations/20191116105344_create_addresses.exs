@@ -8,6 +8,7 @@ defmodule EshopR.Repo.Migrations.CreateAddresses do
       add :state, :string
       add :country, :string
       add :pincode, :string
+      add :full_name, :string
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()

@@ -18,6 +18,9 @@ import ShowCategory from './show_category';
 import ShowSearchResults from './show_results';
 import ShowSellerProducts from './seller/show_products'
 import store from '../store';
+import ShowAddress from "./show_address";
+import AddAddress from "./add_address";
+import ProcessCheckout from "./process_checkout";
 
 export default function init_page(root) {
     let tree = (
@@ -55,6 +58,18 @@ function Page(props) {
 
                     <Route exact path="/orders">
                         <ShowOrders/>
+                    </Route>
+
+                    <Route exact path="/manageAddress">
+                        <ShowAddress />
+                    </Route>
+
+                    <Route exact path="/checkout">
+                        <ProcessCheckout />
+                    </Route>
+
+                    <Route exact path="/addAddress">
+                        <AddAddress />
                     </Route>
 
                     <Route exact path="/order/:id" render={

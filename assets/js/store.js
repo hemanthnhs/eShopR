@@ -187,6 +187,7 @@ function forms(st0, action) {
         new_product,
         new_landing_page,
         cart_total,
+        address,
     });
     return reducer(st0, action);
 }
@@ -253,6 +254,15 @@ function orders(st0 = new Map(), action) {
                 st1.set(obj.id, obj);
             }
             return st1;
+        default:
+            return st0;
+    }
+}
+
+function address(st0 = new Map(), action) {
+    switch (action.type) {
+        case 'ADDRESS_DATA':
+            return Object.assign({}, st0, action.data);
         default:
             return st0;
     }
