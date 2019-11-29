@@ -18,6 +18,7 @@ defmodule EshopRWeb.ShoppingCartView do
     %{
       id: shopping_cart.id,
       product_id: shopping_cart.product_id,
+      product_quantity: shopping_cart.product.options,
       product_name: shopping_cart.product.name,
       option_selected: shopping_cart.option_selected,
       quantity: shopping_cart.quantity,

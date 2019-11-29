@@ -1,12 +1,11 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {Card, Row, Col, Badge, Button, Form, Table} from 'react-bootstrap';
+import {Card, Row, Col, Container, Button, Form, Table} from 'react-bootstrap';
 import {list_address} from '../api/ajax';
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function state2props(state, props) {
-    console.log(state.forms.address)
     return {address: state.forms.address};
 }
 
@@ -31,38 +30,33 @@ class ShowAddress extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-        console.log("props")
-        console.log(this.props)
         let {address, dispatch} = this.props
-        console.log(address)
         let address_rows = []
         if(!address){
-            address_rows.push(<Form.Text className="display-add-address"><NavLink to={"/addAddress"}>+</NavLink></Form.Text>)
+            address_rows.push(<Link to={"/addAddress"}><div className="display-add-address">+</div></Link>)
         }
         else
         {
-
-            address_rows.push(<Form.Text className="display-add-address"><NavLink to={"/addAddress"}>+</NavLink></Form.Text>)
-            console.log(address)
+            address_rows.push(<Link to={"/addAddress"}><div className="display-add-address">+</div></Link>)
             _.forEach(address,function (val, key) {
-                console.log(val)
-                console.log(key)
                 address_rows.push(
-                    <span><Table borderless className="display-address"><tr><td><Form.Label>{val.full_name}</Form.Label></td></tr>
-                    <tr><td><Form.Label>{val.street}</Form.Label></td></tr>
-                    <tr><td><Form.Label>{val.city}</Form.Label></td></tr>
-                    <tr><td><Form.Label>{val.state}</Form.Label></td></tr>
-                    <tr><td><Form.Label>zipcode: {val.pincode}</Form.Label></td></tr>
-                        <tr><td><Form.Label>{val.country}</Form.Label></td></tr></Table></span>)
+                    <Col>
+                        <Table borderless className="display-address"><tr><td><Form.Label>{val.full_name}</Form.Label></td></tr>
+                    <tr><td><div>{val.street}</div></td></tr>
+                    <tr><td><div>{val.city}</div></td></tr>
+                    <tr><td><div>{val.state}</div></td></tr>
+                    <tr><td><div>zipcode: {val.pincode}</div></td></tr>
+                        <tr><td><div>{val.country}</div></td></tr>
+                    </Table>
+                    </Col>
+                )
             })
-
         }
-        return (<div className={"offset-1"}>Your Address list
-            <Form.Label>Add/Remove Rows</Form.Label>
-            <span>
-                {address_rows}
-           </span>
-        </div>)
+        return (<Container>
+            <h3>Your Addresses</h3>
+            <hr />
+            <Row>{address_rows}</Row>
+        </Container>)
     }
 }
 

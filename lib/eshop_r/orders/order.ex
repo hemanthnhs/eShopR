@@ -4,9 +4,9 @@ defmodule EshopR.Orders.Order do
 
   schema "orders" do
     field :tracking, :string, default: ""
-    field :address_id, :id
     field :order_items, :map
 
+    belongs_to :address, EshopR.Addresses.Address
     belongs_to :status, EshopR.Statuses.Status
     belongs_to :buyer, EshopR.Users.User
     belongs_to :seller, EshopR.Users.User
@@ -16,6 +16,6 @@ defmodule EshopR.Orders.Order do
   @doc false
   def changeset(order, attrs) do
     order
-    |> cast(attrs, [:tracking, :order_items, :buyer_id, :seller_id, :status_id])
+    |> cast(attrs, [:tracking, :order_items, :buyer_id, :seller_id, :status_id, :address_id])
   end
 end

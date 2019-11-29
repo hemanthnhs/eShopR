@@ -11,7 +11,7 @@ export default function ProductListing(data) {
             <div className={"display-brand"}>{product.brand}</div>
             <div>
             <img
-                height={300} width={225}
+                height={300} width={200}
                 src={product.images[Object.keys(product.images)[0]]}/>
             </div>
         <div className={"product-name"}>{product.name}</div>

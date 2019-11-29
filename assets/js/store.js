@@ -188,6 +188,8 @@ function forms(st0, action) {
         new_landing_page,
         cart_total,
         address,
+        cart_errors,
+        cart_success
     });
     return reducer(st0, action);
 }
@@ -240,6 +242,24 @@ function cart(st0 = null, action) {
 function cart_total(st0 = 0, action){
     switch (action.type) {
         case 'CART_PRICE':
+            return action.data;
+        default:
+            return st0;
+    }
+}
+
+function cart_errors(st0 = null, action){
+    switch (action.type) {
+        case 'CART_ERRORS':
+            return action.data;
+        default:
+            return st0;
+    }
+}
+
+function cart_success(st0 = null, action){
+    switch (action.type) {
+        case 'CART_SUCCESS':
             return action.data;
         default:
             return st0;

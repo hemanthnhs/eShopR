@@ -5,6 +5,7 @@ defmodule EshopR.Repo.Migrations.CreateOrders do
     create table(:orders) do
       add :tracking, :string
       add :order_items, :map
+      add :order_total, :float
       add :buyer_id, references(:users, on_delete: :nothing)
       add :seller_id, references(:users, on_delete: :nothing)
       add :status_id, references(:statuses, on_delete: :nothing)

@@ -51,7 +51,6 @@ class ShowCategory extends React.Component {
             let products = this.state.products
             let display=[]
             _.each(products,function (product) {
-                console.log("Came in")
                 display.push(<ProductListing product={product} />)
             })
             return (<div><Row className={"offset-1"}>{display}</Row></div>)

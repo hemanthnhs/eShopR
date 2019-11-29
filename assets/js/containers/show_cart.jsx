@@ -5,24 +5,29 @@ import {connect} from 'react-redux';
 import {Alert, Row, Col, Container, Button, Form, Box, Table, Spinner} from 'react-bootstrap';
 import {submit_login} from '../api/ajax';
 import {Link} from "react-router-dom";
+import store from "../store";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
-
-    return {id: props.id, cart: state.cart, total: state.forms.cart_total};
+    return {id: props.id, cart: state.cart, total: state.forms.cart_total, errors: state.forms.cart_errors};
 }
 
 class ShowCart extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             redirect: null,
-            errors: null
         }
 
         list_cart_items()
+    }
+
+    componentWillUnmount() {
+        store.dispatch({
+            type: 'CART_ERRORS',
+            data: null,
+        });
     }
 
     redirect(path) {
@@ -43,7 +48,8 @@ class ShowCart extends React.Component {
                 </span>
                 </Row>
                 </td>
-                <td>
+                {val.product_quantity[val.option_selected] > 0 ?
+                    <td>
                     {val.quantity}
                     <Button variant={"btn btn-qty"} onClick={() => {
                         update_quantity(val.id, id, val.product_id, val.option_selected, val.quantity + 1)
@@ -52,27 +58,14 @@ class ShowCart extends React.Component {
                         update_quantity(val.id, id, val.product_id, val.option_selected, val.quantity - 1)
                     }}>-</Button>
                 </td>
+                    : <td>Out of stock</td>}
                 <td><img src={require("./../../static/images/clear_cart.svg")} onClick={() => {
                     delete_item(val.id, key)
                 }}/></td>
-                <td>${val.sellinlg_price}</td>
+                <td>${val.selling_price}</td>
             </tr>)
         })
         return renderElements
-    }
-
-    place_order(){
-        var that = this
-        var promise1 = new Promise(function(resolve, reject) {
-            place_order(resolve,reject)
-        })
-
-        promise1.then( function(result){
-            console.log('Fulfilled')
-        }).catch( function(error) {
-            that.setState({errors: error})
-        })
-
     }
 
     renderErrorList(items){
@@ -89,7 +82,7 @@ class ShowCart extends React.Component {
         }
 
 //<td><Button className={"place-order"} onClick={() => place_order()}>Move to Checkout</Button></td>
-        let {id, cart, total, dispatch} = this.props
+        let {id, cart, total, errors, dispatch} = this.props
         if (!cart) {
             return (<div className={"loading"}>
                 <Spinner animation="grow" role="status" size="md"/>
@@ -99,11 +92,12 @@ class ShowCart extends React.Component {
             if(cart.size == 0){
                 return (<Container className={"empty-cart"}> No items added to cart.. </Container>)
             }
-            return (<Container>
-                { this.state.errors ? <Alert variant="danger">
-                        <p>{this.state.errors.error}</p>
+            return (
+                <Container>
+                { errors ? <Alert variant="danger">
+                        <p>{errors.error}</p>
                         <hr />
-                        {this.renderErrorList(this.state.errors.items)}
+                        {this.renderErrorList(errors.items)}
                     </Alert>
                     : null}
                 <Table>
@@ -126,10 +120,11 @@ class ShowCart extends React.Component {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><Button className={"place-order"} onClick={() => this.setState({redirect: "/checkout"})}>Move to Checkout</Button></td>
+                    <td><Button className={"place-order"} onClick={() => this.setState({redirect: "/checkout"})}>Proceed to Checkout</Button></td>
                 </tr>
                 </tbody>
-            </Table></Container>)
+            </Table>
+                </Container>)
         }
     }
 }

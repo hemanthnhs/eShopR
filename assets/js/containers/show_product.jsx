@@ -148,7 +148,7 @@ class ShowProduct extends React.Component {
                         </Form.Group>
                     </Col>
                 </Row>
-
+                <hr />
                 <Row>
                     Here attributes
                 </Row>

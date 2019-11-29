@@ -256,8 +256,8 @@ export function list_orders() {
         });
 }
 
-export function place_order(resolve, reject) {
-    post('/placeOrder', {})
+export function place_order(resolve, reject, address_selected) {
+    post('/placeOrder', {address_id: address_selected})
         .then((resp) => {
             if (resp.success) {
                 resolve(resp.success)

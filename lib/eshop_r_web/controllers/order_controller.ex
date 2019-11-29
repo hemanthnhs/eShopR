@@ -29,6 +29,7 @@ defmodule EshopRWeb.OrderController do
       fn cart, acc ->
         product = Products.get_product!(cart.product.id)
         {:ok, current_stock} = Map.fetch(product.options, cart.option_selected)
+        {current_stock, _} = Integer.parse(current_stock)
         if(current_stock == 0) do
           acc ++ ["#{product.name} is out of stock"]
         else
@@ -40,51 +41,53 @@ defmodule EshopRWeb.OrderController do
         end
       end
     )
-    if(Enum.count(errors) > 0) do
+    if(!is_nil(errors) && Enum.count(errors) > 0) do
       send_resp(
         conn,
         200,
-        json(conn, %{error: "Some of the items are out of stock or have limited stock", items: errors})
+        Jason.encode!(%{error: "Some of the items are out of stock or have limited stock", items: errors})
       )
-    end
-    seller_ids = Enum.reduce shopping_cart, MapSet.new(), fn cart, acc ->
-      MapSet.put(acc, cart.product.owner_id)
-    end
-    Enum.each Enum.to_list(seller_ids), fn seller_id ->
-      order_items = Enum.reduce shopping_cart, Map.new(), fn cart, acc ->
-        if cart.product.owner_id == seller_id do
-          {display_name, display_img} = Enum.at(cart.product.images, 0)
-          Map.put(
-            acc,
-            "#{cart.product.id}_#{cart.option_selected}",
-            %{
-              name: cart.product.name,
-              display_img: display_img,
-              sold_price: cart.product.selling_price,
-              listed_price: cart.product.marked_price,
-              quantity: cart.quantity,
-              option_selected: cart.option_selected
-            }
-          )
-          product = Products.get_product!(cart.product.id)
-          options = product.options
-          #          Attribution https://dockyard.com/blog/2016/02/01/elixir-best-practices-deeply-nested-maps
-          options = update_in(options, [cart.option_selected], &(&1 - cart.quantity))
-          prd_attrs = %{}
-          prd_attrs = Map.put(prd_attrs, "options", options)
-          Products.update_product(product, prd_attrs)
-        end
+    else
+      seller_ids = Enum.reduce shopping_cart, MapSet.new(), fn cart, acc ->
+        MapSet.put(acc, cart.product.owner_id)
       end
-      attrs = %{}
-      attrs = Map.put(attrs, "buyer_id", conn.assigns[:current_user].id)
-      attrs = Map.put(attrs, "seller_id", seller_id)
-      attrs = Map.put(attrs, "order_items", order_items)
-      attrs = Map.put(attrs, "status_id", 1)
-      attrs = Map.put(attrs, "address_id", order_params["address_id"])
+      Enum.each Enum.to_list(seller_ids), fn seller_id ->
+        order_items = Enum.reduce shopping_cart, Map.new(), fn cart, acc ->
+          if cart.product.owner_id == seller_id do
+            {display_name, display_img} = Enum.at(cart.product.images, 0)
 
-      order = Orders.create_order(attrs)
+            product = Products.get_product!(cart.product.id)
+            options = product.options
+            {quantity, ""} = Integer.parse(get_in(options, [cart.option_selected]))
+            #Attribution https://dockyard.com/blog/2016/02/01/elixir-best-practices-deeply-nested-maps
+            options = put_in(options, [cart.option_selected], Integer.to_string(quantity - cart.quantity))
+            prd_attrs = %{}
+            prd_attrs = Map.put(prd_attrs, "options", options)
+            Products.update_product(product, prd_attrs)
+            Map.put(
+              acc,
+              "#{cart.product.id}_#{cart.option_selected}",
+              %{
+                name: cart.product.name,
+                display_img: display_img,
+                sold_price: cart.product.selling_price,
+                listed_price: cart.product.marked_price,
+                quantity: cart.quantity,
+                option_selected: cart.option_selected
+              }
+            )
+          end
+        end
+        attrs = %{}
+        attrs = Map.put(attrs, "buyer_id", conn.assigns[:current_user].id)
+        attrs = Map.put(attrs, "seller_id", seller_id)
+        attrs = Map.put(attrs, "order_items", order_items)
+        attrs = Map.put(attrs, "status_id", 1)
+        attrs = Map.put(attrs, "address_id", order_params["address_id"])
+        order = Orders.create_order(attrs)
+      end
+      send_resp(conn, 200, json(conn, %{success: "Order placed."}))
     end
-    send_resp(conn, 200, json(conn, %{success: "Order placed."}))
   end
 
   def show(conn, %{"id" => id}) do

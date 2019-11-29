@@ -139,8 +139,9 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   width: 320px;
   text-align: center;
   background-color: #f1f1f1;
-  padding-block-start: 155px;
-  padding-block-end: 155px;
+  padding-top: 130px;
+  padding-bottom: 130px;
+  font-size: 75px;
   border-color: lightslategray;
 }
 
@@ -173,11 +174,12 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 
 .product-listing{
   margin: 10px;
+  margin-bottom: 50px;
   width: 300px;
   height: 400px;
   padding:20px;
   padding-right: 50px;
-  padding-left: 50px;
+  padding-left: 35px;
   border-right: 1px solid #d8d8dd;
   text-align: center;
 }
@@ -253,14 +255,18 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 }
 
 .place-order{
-  font-size: x-large;
+  font-size: large;
   margin-right: 10px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
   background-color: #e0881c;
   border-color: #403f3f3b;
   box-shadow: 1px 1px #888888;
   border-radius: 0px;
+}
+
+hr{
+  margin-left: -13px;
 }
 
 .place-order:hover{
