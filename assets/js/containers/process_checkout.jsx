@@ -35,9 +35,13 @@ class ProcessCheckout extends React.Component {
             place_order(resolve,reject, address_selected)
         })
 
-        promise1.then( function(result){
-            console.log('Fulfilled')
-        }).catch( function(errors) {
+        promise1.then( function(success){
+            store.dispatch({
+                type: 'CART_ERRORS',
+                data: errors,
+            });
+            that.setState({redirect: "/orders"})
+                }).catch( function(errors) {
             store.dispatch({
                 type: 'CART_ERRORS',
                 data: errors,

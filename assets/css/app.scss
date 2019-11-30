@@ -145,6 +145,13 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border-color: lightslategray;
 }
 
+.display-shipping-address{
+  background-color: #c7aeae;
+  font-size:18px;
+}
+.display-products-placed{
+  background-color: #9a9595;
+}
 .dropdown-menu{
   background: #4f4e52;
   padding-left: 5px;

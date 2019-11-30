@@ -163,7 +163,7 @@ export function list_products(id, resolve) {
     });
 }
 
-export function submit_create_product(form) {
+export function submit_create_product(resolve2,reject2) {
     let state = store.getState();
     let data = _.clone(state.forms.new_product);
     if (data.files.length == 0) {
@@ -190,8 +190,13 @@ export function submit_create_product(form) {
         data["images"] = parsedImages
         console.log("data", data)
         post('/createProduct', {data}).then((resp) => {
-            if (resp.data) {
-                console.log(resp)
+            console.log("fhgjkj")
+            if (resp.success) {
+                console.log("success")
+                resolve2(resp.success)
+            }else{
+                console.log("faol")
+                reject2(resp)
             }
         });
     });
@@ -259,6 +264,7 @@ export function list_orders() {
 export function place_order(resolve, reject, address_selected) {
     post('/placeOrder', {address_id: address_selected})
         .then((resp) => {
+            console.log("resp", resp)
             if (resp.success) {
                 resolve(resp.success)
             }else{

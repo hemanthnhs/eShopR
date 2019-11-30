@@ -24,23 +24,26 @@ defmodule EshopRWeb.AuthController do
   """
   def callback(conn, %{"provider" => provider, "code" => code}) do
     client = get_token!(provider, code)
-
     user = get_user!(provider, client)
-    IO.inspect(user)
-
     conn
     |> put_session(:current_user, user)
     |> put_session(:access_token, client.token.access_token)
     |> redirect(to: "/")
   end
 
-  defp authorize_url!("google"),   do: Google.authorize_url!(scope: "https://www.googleapis.com/auth/userinfo.email")
+  defp authorize_url!("google"),   do:
+    Google.authorize_url!(scope: "email profile")
+
+#  Google.authorize_url!(scope: "https://www.googleapis.com/auth/userinfo.email")
   defp authorize_url!(_), do: raise "No matching provider available"
 
   defp get_token!("google", code),   do: Google.get_token!(code: code)
   defp get_token!(_, _), do: raise "No matching provider available"
 
+
   defp get_user!("google", client) do
+    IO.inspect(client)
+    user_url = "https://www.googleapis.com/plus/v1/people/me/openIdConnect"
     %{body: user, status_code: status} = OAuth2.Client.get!(client, "https://www.googleapis.com/plus/v1/people/me/openIdConnect")
     %{email: user["email"], domain: user["hd"], email_verified: user["email_verified"], avatar: user["picture"]}
   end

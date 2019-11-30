@@ -15,12 +15,14 @@ defmodule EshopRWeb.ProductController do
 
   def create(conn, %{"data" => product_params}) do
     product_params = Map.put(product_params, "owner_id", conn.assigns[:current_user].id)
+
     with {:ok, %Product{} = product} <- Products.create_product(product_params) do
       Elasticsearch.put_document(EshopR.ElasticsearchCluster, product, "products")
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.product_path(conn, :show, product))
-      |> render("show.json", product: product)
+      send_resp(
+        conn,
+        200,
+        Jason.encode!(%{success: "Product creation successful"})
+      )
     end
   end
 

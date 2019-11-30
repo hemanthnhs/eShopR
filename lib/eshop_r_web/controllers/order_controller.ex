@@ -32,12 +32,14 @@ defmodule EshopRWeb.OrderController do
         {:ok, current_stock} = Map.fetch(product.options, cart.option_selected)
         {current_stock, _} = Integer.parse(current_stock)
         if(current_stock == 0) do
-          acc ++ ["#{product.name} is out of stock"]
+          acc ++ ["#{product.name} (#{cart.option_selected}) is out of stock"]
         else
           if(current_stock - cart.quantity < 0) do
             acc ++ [
               "#{product.name} (#{cart.option_selected}) has only quantity of #{current_stock} available in stock"
             ]
+            else
+              acc
           end
         end
       end
@@ -87,7 +89,11 @@ defmodule EshopRWeb.OrderController do
         attrs = Map.put(attrs, "address_id", order_params["address_id"])
         order = Orders.create_order(attrs)
       end
-      send_resp(conn, 200, json(conn, %{success: "Order placed."}))
+      send_resp(
+        conn,
+        200,
+        Jason.encode!(%{success: "Order placed successfully"})
+      )
     end
   end
 

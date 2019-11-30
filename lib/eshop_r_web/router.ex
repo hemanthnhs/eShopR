@@ -40,13 +40,6 @@ defmodule EshopRWeb.Router do
     get "/seller_metrics", OrderController, :seller_metrics
   end
 
-  scope "/", EshopRWeb do
-    pipe_through :browser
-    get "/googleSignIn", AuthController, :index
-    get "/*path", PageController, :index
-
-  end
-
   scope "/auth", EshopRWeb do
     pipe_through :browser
 
@@ -55,6 +48,12 @@ defmodule EshopRWeb.Router do
     delete "/logout", AuthController, :delete
   end
 
+  scope "/", EshopRWeb do
+    pipe_through :browser
+    get "/googleSignIn", AuthController, :index
+    get "/*path", PageController, :index
+
+  end
   # Other scopes may use custom stacks.
   # scope "/api", EshopRWeb do
   #   pipe_through :api

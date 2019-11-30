@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {get_tracking_status, update_order_status, get_statuses, list_orders, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container, Spinner} from 'react-bootstrap';
+import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container, Spinner, Col} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
 function state2props(state, props) {
@@ -73,6 +73,8 @@ class ShowOrder extends React.Component {
             }
             let items = []
             _.each((order.order_items), function (item_key, val) {
+                console.log("item")
+                console.log(order)
                 items.push(<tr>
                     <td><img
                         height={200} width={150}
@@ -104,7 +106,19 @@ class ShowOrder extends React.Component {
                             </Accordion.Collapse>
                         </Card.Body>
                         : null}
-                    <Card.Body>
+                    <Card.Body className="display-shipping-address">
+                        <Card.Subtitle className="sub-headings-display"><h3>Shipping To</h3></Card.Subtitle>
+                        <Card.Text>
+                            <div>
+                                {order.address.full_name}</div>
+                            <div> {order.address.street}</div>
+                            <div>   {order.address.city}</div>
+                            <div>    {order.address.state}</div>
+                            <div>   {order.address.country}</div>
+                            <div>   {order.address.pincode} </div>
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Body className="display-products-placed">
                         <Card.Subtitle className="sub-headings-display">Items</Card.Subtitle>
                         <Card.Text>
                             <Table>

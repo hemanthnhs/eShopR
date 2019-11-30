@@ -22,7 +22,9 @@ defmodule Google do
   end
 
   def get_token!(params \\ [], headers \\ []) do
-    OAuth2.Client.get_token!(client(), Keyword.merge(params, client_secret: client().client_secret))
+#    OAuth2.Client.get_token!(client(), Keyword.merge(params, client_secret: client().client_secret))
+    OAuth2.Client.get_token!(client(), params, headers)
+
   end
 
   # Strategy Callbacks
