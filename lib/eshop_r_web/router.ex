@@ -37,6 +37,7 @@ defmodule EshopRWeb.Router do
     post "/placeOrder", OrderController, :create
     get "/status", StatusController, :index
     get "/trackingStatus", OrderController, :tracking_status
+    get "/seller_metrics", OrderController, :seller_metrics
   end
 
   scope "/", EshopRWeb do

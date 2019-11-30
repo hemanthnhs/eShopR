@@ -1,11 +1,25 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {get_landing_page_config} from '../api/ajax';
+import {get_seller_metrics} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Container, Jumbotron} from 'react-bootstrap';
+import {Container, Row, Col, Jumbotron} from 'react-bootstrap';
+import {
+    XYPlot,
+    XAxis,
+    YAxis,
+    VerticalGridLines,
+    HorizontalGridLines,
+    RadialChart,
+    VerticalBarSeries,
+    LabelSeries
+} from 'react-vis';
 
 function state2props(state) {
-    return {session: state.session};
+    return {
+        session: state.session,
+        status_metrics: state.seller_metrics.status_metrics,
+        order_metrics: state.seller_metrics.order_metrics
+    };
 }
 
 class SellerLandingPage extends React.Component {
@@ -16,8 +30,7 @@ class SellerLandingPage extends React.Component {
         this.state = {
             redirect: null,
         }
-
-        get_landing_page_config()
+        get_seller_metrics()
     }
 
     redirect(path) {
@@ -30,17 +43,44 @@ class SellerLandingPage extends React.Component {
             return <Redirect to={this.state.redirect}/>;
         }
         //https://react-bootstrap.github.io/components/jumbotron/
-        let {session, dispatch} = this.props
-        return (<div>
+        let {session, status_metrics, order_metrics, dispatch} = this.props
+        return (
             <Container>
-            <Jumbotron>
-                <h1>Hello, {session.user_name}!</h1>
-                <p>
-                    Welcome to your seller portal. Manage your store and process your orders....
-                </p>
-            </Jumbotron>
+                <Jumbotron>
+                    <h1>Hello, {session.user_name}!</h1>
+                    <p>
+                        Welcome to your seller portal. Manage your store and process your orders....
+                    </p>
+                </Jumbotron>
+                {status_metrics ?
+                    <div>
+                        <h4>Store Metrics</h4>
+                        <hr/>
+                        <Row>
+                            <Col>
+                                <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
+                                    <VerticalGridLines/>
+                                    <HorizontalGridLines/>
+                                    <XAxis/>
+                                    <YAxis title={"#orders"}/>
+                                    <VerticalBarSeries data={order_metrics}/>
+                                </XYPlot>
+                            </Col>
+                            <Col>
+                                < RadialChart
+                                    data={status_metrics}
+                                    width={300}
+                                    height={300}
+                                    colorType="literal"
+                                    labelsAboveChildren={false}
+                                    showLabels={true}
+                                />
+                            </Col>
+                        </Row>
+                    </div>
+                    : null}
             </Container>
-        </div>)
+        )
     }
 }
 

@@ -301,8 +301,18 @@ function status(st0 = new Map(), action) {
     }
 }
 
+function seller_metrics(st0 = {status_metrics: null}, action) {
+    switch (action.type) {
+        case 'SELLER_METRICS':
+            return action.data;
+        default:
+            return st0;
+    }
+}
+
 function root_reducer(st0, action) {
     let reducer = combineReducers({
+        seller_metrics,
         forms,
         products,
         seller_products,

@@ -25,6 +25,24 @@ defmodule EshopR.Orders do
     Repo.all(from(o in Order, where: o.seller_id == ^id, preload: [:status, :address], order_by: {:desc, o.inserted_at}))
   end
 
+  def compute_status_metrics(id) do
+    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: o.status_id,select: %{label: o.status_id, angle: count(o.status_id)}))
+  end
+
+  @doc "to_char function for formatting datetime as dd MON YYYY"
+  defmacro to_char(field, format) do
+#    Attribution: https://stackoverflow.com/questions/45520237/group-rows-by-day-week-month-till-date-in-elixir
+    quote do
+      fragment("to_char(?, ?)", unquote(field), unquote(format))
+    end
+  end
+
+  def compute_order_metrics(id) do
+#    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: fragment("date_part('month', ?)", o.inserted_at),select: %{x: fragment("date_part('month', ?)", o.inserted_at), y: count(o.id)}))
+    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: to_char(o.inserted_at, "dd Mon YYYY"),select: %{x: to_char(o.inserted_at, "dd Mon YYYY"), y: count(o.id)}))
+#    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: o.inserted_at,select: %{x: o.inserted_at, y: count(o.inserted_at)}))
+  end
+
   @doc """
   Gets a single order.
 

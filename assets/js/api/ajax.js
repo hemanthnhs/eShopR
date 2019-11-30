@@ -356,3 +356,21 @@ export function seller_products(){
             });
         });
 }
+
+export function get_seller_metrics(){
+    get('/seller_metrics')
+        .then((resp) => {
+            console.log("resp", resp)
+            // let result = _.reduce(resp.status_metrics, function(acc, value, key) {
+            //     result = {}
+            //     result["label"] = "Order Status" + resp.statuses.get(value.label)
+            //     result["angle"] = value.angle
+            //     acc.push(result)
+            //     return acc;
+            // }, []);
+            store.dispatch({
+                type: 'SELLER_METRICS',
+                data: resp
+            });
+        });
+}

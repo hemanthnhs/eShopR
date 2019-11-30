@@ -1,7 +1,7 @@
 /* This file is for your main application css. */
-
 $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 @import "~bootstrap/scss/bootstrap";
+@import "~react-vis/dist/style";
 
 .nav-categories .dropdown-toggle::after {
   display: none;

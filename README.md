@@ -10,8 +10,10 @@ Hemanth Sai Nimmala, Satya Sudheera Vytla
 Icons from https://material.io/resources/icons/?style=baseline
 https://stackoverflow.com/questions/37671342/how-to-load-image-files-with-webpack-file-loader
 https://react-bootstrap.github.io/
-Reffered http://www.binarywebpark.com/google-oauth-authentication-phoenix-elixir/ for google login
+Referred http://www.binarywebpark.com/google-oauth-authentication-phoenix-elixir/ for google login
 https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
+https://stackoverflow.com/questions/45520237/group-rows-by-day-week-month-till-date-in-elixir
+https://stackoverflow.com/questions/43591942/ecto-query-that-does-a-group-by-month-on-a-datetime-field-and-returns-list-of-tu/43592228
 
 ## Installation Instructions:
 Elastic Search is to be installed on port 9200. For Debian follow the below instructions

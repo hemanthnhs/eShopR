@@ -6,10 +6,11 @@ defmodule EshopRWeb.OrderController do
   alias EshopR.ShoppingCarts
   alias EshopR.ShoppingCarts.ShoppingCart
   alias EshopR.Products
+  alias EshopR.Statuses
 
   action_fallback EshopRWeb.FallbackController
 
-  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :index]
+  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :index, :seller_metrics]
 
   def index(conn, _params) do
     if conn.assigns[:current_user].type == 0 do
@@ -123,9 +124,21 @@ defmodule EshopRWeb.OrderController do
     body = String.replace(body,"#TRACKING","#{tracking}")
     headers = [{:"Access-Control-Allow-Methods", "POST"},{:"Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"},{:"Access-Control-Allow-Origin", "*"}]
     IO.puts("Making API Request")
-    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
-    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
-        send_resp(conn, 200, Jason.encode!(%{tracking: response}))
-#        send_resp(conn, 200, Jason.encode!(%{tracking: "knkn"}))
+#    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
+#    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
+#        send_resp(conn, 200, Jason.encode!(%{tracking: response}))
+    send_resp(conn, 200, Jason.encode!(%{tracking: "knkn"}))
+  end
+
+  def seller_metrics(conn, params) do
+    status_metrics = Orders.compute_status_metrics(conn.assigns[:current_user].id)
+    color_codes = %{1 => "SandyBrown", 2 => "AntiqueWhite", 3 => "Olive", 4 => "SteelBlue", 5 => "SpringGreen"}
+    status_metrics = Enum.reduce status_metrics, [], fn metric, acc ->
+      status = Statuses.get_status!(metric.label)
+      color = color_codes[metric.label]
+      acc ++ [%{label: status.title, angle: metric.angle, subLabel: "#{metric.angle} orders", color: "#{color}"}]
+    end
+    order_metrics = Orders.compute_order_metrics(conn.assigns[:current_user].id)
+    send_resp(conn, 200, Jason.encode!(%{status_metrics: status_metrics, order_metrics: order_metrics}))
   end
 end
