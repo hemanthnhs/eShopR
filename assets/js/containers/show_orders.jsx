@@ -37,7 +37,6 @@ class ShowOrders extends React.Component {
         let order_rows = []
         orders.forEach(function (value, key) {
             //https://stackoverflow.com/questions/12953302/javascript-datetime-string-to-date-object
-            //var date = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
             let items=[]
             if(value.order_items != null){
                 _.each((value.order_items),function (item_key, val) {

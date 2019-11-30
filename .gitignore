@@ -35,4 +35,6 @@ npm-debug.log
 
 prod-env.sh
 
+env.sh
+
 .idea/

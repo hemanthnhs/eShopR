@@ -112,10 +112,20 @@ defmodule EshopRWeb.OrderController do
   end
 
   def tracking_status(conn, %{"tracking_order" => order_id}) do
-    IO.puts("==================---------5788888")
-    #    url = "https://api.aftership.com/v4"
-    #    url = "https://jsonplaceholder.typicode.com/todos/1"
-    #    IO.inspect(HTTPoison.get(url, [{:"aftership-api-key", "05e3a14c-c328-4546-abb0-e8a8739bd748"}], [ ssl: [{:versions, [:'tlsv1.2']}] ]))
-    IO.puts("==================---------5788888")
+    tracking = Orders.get_order!(order_id).tracking
+    user = System.get_env("UPS_USER")
+    url = System.get_env("UPS_URL")
+    key = System.get_env("UPS_KEY")
+    token = System.get_env("UPS_TOKEN")
+    body = String.replace(System.get_env("REQUEST_BODY"),"#USERNAME","#{user}")
+    body = String.replace(body,"#KEY","#{key}")
+    body = String.replace(body,"#TOKEN","#{token}")
+    body = String.replace(body,"#TRACKING","#{tracking}")
+    headers = [{:"Access-Control-Allow-Methods", "POST"},{:"Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"},{:"Access-Control-Allow-Origin", "*"}]
+    IO.puts("Making API Request")
+    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
+    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
+        send_resp(conn, 200, Jason.encode!(%{tracking: response}))
+#        send_resp(conn, 200, Jason.encode!(%{tracking: "knkn"}))
   end
 end

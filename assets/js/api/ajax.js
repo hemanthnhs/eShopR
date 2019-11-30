@@ -291,7 +291,8 @@ export function get_statuses() {
 }
 
 export function update_order_status(id, status_id, tracking_num) {
-    if (status_id = 4) {
+    console.log("status----", status_id)
+    if (status_id == 4) {
         put('/orders/' + id, {id: id, status_id: status_id, tracking: tracking_num})
             .then((resp) => {
                 console.log(resp);
@@ -338,10 +339,11 @@ export function delete_item(id, key) {
         });
 }
 
-export function get_tracking_status(order_id) {
+export function get_tracking_status(order_id, resolve) {
     get('/trackingStatus?tracking_order=' + order_id)
         .then((resp) => {
-            console.log("resp", resp)
+            console.log("Request Successful")
+            resolve(resp);
         });
 }
 

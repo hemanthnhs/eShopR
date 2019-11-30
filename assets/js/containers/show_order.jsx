@@ -1,8 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {get_tracking_status, update_order_status, get_statuses, list_orders} from '../api/ajax';
+import {get_tracking_status, update_order_status, get_statuses, list_orders, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container} from 'react-bootstrap';
+import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container, Spinner} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
 function state2props(state, props) {
@@ -17,7 +17,8 @@ class ShowOrder extends React.Component {
 
         this.state = {
             redirect: null,
-            tracking_num: ""
+            tracking_num: "",
+            tracking_details: null
         }
         list_orders();
         get_statuses();
@@ -27,6 +28,33 @@ class ShowOrder extends React.Component {
         this.setState({redirect: path});
     }
 
+    get_tracking_status(id) {
+        var that = this
+        var promise1 = new Promise(function (resolve, reject) {
+            get_tracking_status(id, resolve);
+        });
+
+        promise1.then(function (resp) {
+            that.setState({tracking_details: resp.tracking})
+        }).catch(function () {
+            that.setState({tracking_details: "error"})
+        })
+    }
+
+    renderTracking(data) {
+        if (data == "error") {
+            return (<div>Unable to retrieve data try again later</div>)
+        }
+        console.log("data", data)
+        let render_ele = []
+        _.each(data, function (activity) {
+            let date = activity.Date
+            let formatted_date = date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8)
+            render_ele.push(<li>({formatted_date})  {activity.Status.Description}</li>)
+        })
+        return (<ul>{render_ele}</ul>)
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
@@ -34,12 +62,14 @@ class ShowOrder extends React.Component {
 
 
         let {id, order, type, status, dispatch} = this.props
-
         if (!order) {
-            return (<div>Getting Order Details</div>)
+            return (<div className={"loading"}>
+                <Spinner animation="grow" role="status" size="md"/>
+                Fetching order information...
+            </div>)
         } else {
-            if(order.status_id == 4 ){
-                get_tracking_status(order.id)
+            if (order.status_id == 4 && !this.state.tracking_details) {
+                this.get_tracking_status(order.id)
             }
             let items = []
             _.each((order.order_items), function (item_key, val) {
@@ -64,13 +94,13 @@ class ShowOrder extends React.Component {
                         <Card.Subtitle className="mb-2"><h3>Order Status: {order.status}</h3></Card.Subtitle>
                         <br/>
                     </Card.Header>
-                    {order.tracking ? <Card.Body>
-                            <Card.Subtitle  className="sub-headings-display">Shipment Status</Card.Subtitle>
+                    {(order.tracking && order.status_id == 4) ? <Card.Body>
+                            <Card.Subtitle className="sub-headings-display">Shipment Status</Card.Subtitle>
                             <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                            Tracking#: {order.tracking}
-                        </Accordion.Toggle>
+                                Tracking#: {order.tracking}
+                            </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
-                                <Card.Subtitle>Tracking Details Here</Card.Subtitle>
+                                <Card.Subtitle>{this.state.tracking_details ? this.renderTracking(this.state.tracking_details) : "Fetching Tracking"}</Card.Subtitle>
                             </Accordion.Collapse>
                         </Card.Body>
                         : null}
