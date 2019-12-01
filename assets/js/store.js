@@ -5,6 +5,8 @@ function login(st0 = {email: "", password: "", errors: null}, action) {
     switch (action.type) {
         case 'CHANGE_LOGIN':
             return Object.assign({}, st0, action.data);
+        case 'CLEAR_LOGIN':
+            return {email: "", password: "", errors: null};
         default:
             return st0;
     }
@@ -137,6 +139,15 @@ function new_address(st0 = {}, action) {
     }
 }
 
+function new_registration(st0 = {type: 0}, action) {
+    switch (action.type) {
+        case 'CHANGE_NEW_REGISTRATION':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function categories(st0 = {}, action) {
     switch (action.type) {
         case 'ADD_CATEGORIES':
@@ -195,6 +206,7 @@ function forms(st0, action) {
         login,
         new_product,
         new_landing_page,
+        new_registration,
         cart_total,
         new_address,
         cart_errors,

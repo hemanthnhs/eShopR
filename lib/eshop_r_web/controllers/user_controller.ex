@@ -4,7 +4,7 @@ defmodule EshopRWeb.UserController do
   alias EshopR.Users
   alias EshopR.Users.User
 
-  plug EshopRWeb.Plugs.RequireAuth when action in [:create, :update, :delete]
+  plug EshopRWeb.Plugs.RequireAuth when action in [:index, :show]
 
   action_fallback EshopRWeb.FallbackController
 
@@ -13,33 +13,20 @@ defmodule EshopRWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Users.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     user = Users.get_user!(id)
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Users.get_user!(id)
-
-    with {:ok, %User{} = user} <- Users.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
-    end
+  def create(conn, %{"data" => user_params}) do
+    user_params = Map.put(user_params, "password_hash", Argon2.add_hash(user_params["password"]).password_hash)
+        with {:ok, %User{} = user} <- Users.create_user(user_params) do
+          send_resp(
+            conn,
+            200,
+            Jason.encode!(%{success: "User created"})
+          )
+        end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Users.get_user!(id)
-
-    with {:ok, %User{}} <- Users.delete_user(user) do
-      send_resp(conn, :no_content, "")
-    end
-  end
 end

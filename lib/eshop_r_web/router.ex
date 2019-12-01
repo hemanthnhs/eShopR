@@ -38,19 +38,11 @@ defmodule EshopRWeb.Router do
     get "/status", StatusController, :index
     get "/trackingStatus", OrderController, :tracking_status
     get "/seller_metrics", OrderController, :seller_metrics
-  end
-
-  scope "/auth", EshopRWeb do
-    pipe_through :browser
-
-    get "/:provider", AuthController, :index
-    get "/:provider/callback", AuthController, :callback
-    delete "/logout", AuthController, :delete
+    post "/newRegistration", UserController, :create
   end
 
   scope "/", EshopRWeb do
     pipe_through :browser
-    get "/googleSignIn", AuthController, :index
     get "/*path", PageController, :index
 
   end

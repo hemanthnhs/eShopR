@@ -56,40 +56,6 @@ defmodule EshopR.Statuses do
   end
 
   @doc """
-  Updates a status.
-
-  ## Examples
-
-      iex> update_status(status, %{field: new_value})
-      {:ok, %Status{}}
-
-      iex> update_status(status, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_status(%Status{} = status, attrs) do
-    status
-    |> Status.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Status.
-
-  ## Examples
-
-      iex> delete_status(status)
-      {:ok, %Status{}}
-
-      iex> delete_status(status)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_status(%Status{} = status) do
-    Repo.delete(status)
-  end
-
-  @doc """
   Returns an `%Ecto.Changeset{}` for tracking status changes.
 
   ## Examples

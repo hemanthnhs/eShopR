@@ -7,24 +7,25 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   display: none;
 }
 
-.navbar{
+.navbar {
   background-color: #f1f1f1;
 }
 
-.display-create-product{
+.display-create-product {
   width: 450px;
   display: inline;
   margin-right: 3rem;
 }
 
-.display-block{
+.display-block {
   display: block;
 }
 
-.attributes-table{
+.attributes-table {
   color: #fff;
   background-color: #7a778a;
 }
+
 .account-menu * {
   left: auto;
   color: white !important;
@@ -52,26 +53,26 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   background-color: #2b2f49;
 }
 
-.product-images{
+.product-images {
   max-height: 700px;
 }
 
-.product-container{
+.product-container {
   margin-top: 30px;
 }
 
-.options{
+.options {
   padding: 5px 15px 5px 15px;
   margin-right: 20px;
   background-color: #47747d;
   border: 1px solid grey
 }
 
-.option-active{
+.option-active {
   border: 2px solid black;
 }
 
-.add-btn{
+.add-btn {
   font-size: x-large;
   margin-right: 10px;
   padding-left: 40px;
@@ -82,7 +83,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border-radius: 0px;
 }
 
-.wishlist-btn{
+.wishlist-btn {
   font-size: x-large;
   padding-left: 40px;
   padding-right: 40px;
@@ -92,29 +93,30 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border-radius: 0px;
 }
 
-.add-btn:hover{
+.add-btn:hover {
   background-color: #247b59 !important;
   border-color: #403f3f3b !important;
   box-shadow: none !important;
 }
 
-.wishlist-btn:hover{
+.wishlist-btn:hover {
   background-color: #ce3700 !important;
   border-color: #403f3f3b !important;
   box-shadow: none !important;
 }
 
-.add-btn:focus, .add-btn:active{
+.add-btn:focus, .add-btn:active {
   background-color: #29946d !important;
   border-color: #403f3f3b !important;
   box-shadow: none !important;
 }
 
-.wishlist-btn:active, .wishlist-btn:focus{
+.wishlist-btn:active, .wishlist-btn:focus {
   background-color: OrangeRed !important;
   border-color: #403f3f3b !important;
   box-shadow: none !important;
 }
+
 /*attribution : https://stackoverflow.com/questions/29313879/shopping-cart-number-of-items-in-cart-css*/
 .display-cart-count {
   font-size: 14px;
@@ -126,6 +128,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   vertical-align: top;
   position: absolute;
 }
+
 .display-address {
   border-style: none;
   width: 320px;
@@ -133,7 +136,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   font-size: 19px;
   background-color: #90767633;
   height: 400px;
-  margin-right:25px;
+  margin-right: 25px;
 }
 
 .display-add-address {
@@ -145,31 +148,33 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   height: 400px;
   font-size: 75px;
   border-color: lightslategray;
-  margin-right:25px;
+  margin-right: 25px;
 }
 
-.display-shipping-address{
+.display-shipping-address {
   background-color: #c7aeae;
-  font-size:18px;
+  font-size: 18px;
 }
-.display-products-placed{
+
+.display-products-placed {
   background-color: #9a9595;
 }
-.dropdown-menu{
+
+.dropdown-menu {
   background: #4f4e52;
   padding-left: 5px;
   padding-right: 50px;
 }
 
-.dropdown-item{
+.dropdown-item {
   color: white;
 }
 
-.dropdown-item .nav-link{
+.dropdown-item .nav-link {
   padding: 0px;
 }
 
-.dropdown-item:hover{
+.dropdown-item:hover {
   background: #5e5d61;
   color: white;
 }
@@ -182,33 +187,37 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border-bottom: none;
 }
 
-.product-listing{
+.product-listing {
   margin: 10px;
   margin-bottom: 50px;
   width: 300px;
   height: 400px;
-  padding:20px;
+  padding: 20px;
   padding-right: 50px;
   padding-left: 35px;
   border-right: 1px solid #d8d8dd;
   text-align: center;
 }
-.display-subTotal{
+
+.display-subTotal {
   text-align: right;
   border-bottom: 1px solid #d8d8dd;
 }
-.display-cart-border{
+
+.display-cart-border {
   border-bottom: 1px solid darkslategray;
   margin-bottom: 10px;
   width: 75%;
 }
-.headings-display{
+
+.headings-display {
   margin-bottom: 2px;
   margin-top: 10px;
   font-size: xx-large;
   color: #080101;
 }
-.display-brand{
+
+.display-brand {
   background-color: #3b7c79;
   border-radius: 0px 50px 50px 0px;
   color: white;
@@ -220,27 +229,30 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   padding-right: 20px;
   padding-left: 20px;
 }
-.display-price{
-  color:black;
+
+.display-price {
+  color: black;
   font-size: larger;
 }
-.display-markedprice{
-  color:grey;
+
+.display-markedprice {
+  color: grey;
   font-size: smaller;
 }
-.display-discount{
-  color:green;
-  font-size:  15px;
+
+.display-discount {
+  color: green;
+  font-size: 15px;
   font-style: italic;
 }
 
-.product-name{
+.product-name {
   font-size: x-large;
   color: darkslategray;
   font-weight: bold;
 }
 
-#search_bar{
+#search_bar {
   border-radius: 50px 0px 0px 50px;
   font-style: italic;
 }
@@ -251,7 +263,7 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border: 1px solid #ced4da;
 }
 
-.search-button{
+.search-button {
   border-radius: 0px 50px 50px 0px;
   background-color: lightskyblue;
 }
@@ -260,11 +272,11 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   margin-left: 2rem;
 }
 
-.cart-container{
+.cart-container {
   width: 85%
 }
 
-.place-order{
+.place-order {
   font-size: large;
   margin-right: 10px;
   padding-left: 30px;
@@ -275,21 +287,21 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   border-radius: 0px;
 }
 
-hr{
+hr {
   margin-left: -13px;
 }
 
-.place-order:hover{
+.place-order:hover {
   background-color: #da811d !important;
   border-color: #403f3f3b !important;
   box-shadow: none !important;
 }
 
-.order-container{
+.order-container {
   margin-top: 25px;
 }
 
-.loading{
+.loading {
   background-color: ghostwhite;
   left: 40%;
   top: 40%;
@@ -304,17 +316,17 @@ hr{
   margin-top: 20px;
 }
 
-.order-listing{
+.order-listing {
   margin-bottom: 30px;
   background: ghostwhite
 }
 
-.order-header{
+.order-header {
   background-color: #4d6884;
   color: white;
 }
 
-.order-detail-btn{
+.order-detail-btn {
   background-color: #075007;
   color: white;
   padding: 10px 20px 10px 20px;
@@ -323,46 +335,50 @@ hr{
   box-shadow: 1px 1px #8888884a;
 }
 
-.order-detail-btn:hover{
+.order-detail-btn:hover {
   background-color: #105f10;
   text-decoration: none;
   color: white;
 }
 
-.sub-headings-display{
+.sub-headings-display {
   margin-bottom: 2px;
   margin-top: 10px;
   font-size: large;
   color: #080101;
 }
 
-.btn-qty{
+.btn-qty {
   width: 35px;
   margin-left: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  border:1px solid black;
+  border: 1px solid black;
 }
 
-.btn-qty:hover{
+.btn-qty:hover {
   background-color: #6c757d;
 }
 
-.empty-cart{
+.empty-cart {
   background-color: ghostwhite;
   padding: 15%;
   border-radius: 25px;
   box-shadow: 1px 1px #888888;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-a:hover{
+a:hover {
   text-decoration: none;
 }
 
-.header-bottom-none{
+.header-bottom-none {
+  margin-bottom: 0px;
+}
+
+.alert {
   margin-bottom: 0px;
 }

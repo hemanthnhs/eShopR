@@ -9,6 +9,7 @@ import CreateProduct from './create_product';
 import CreateLandingPage from './create_landing_page';
 import HeaderBar from '../components/header_bar';
 import LoginPage from './login_page';
+import RegisterPage from './register_page';
 import ShowProduct from './show_product';
 import ShowOrder from './show_order';
 import ShowOrders from './show_orders';
@@ -69,6 +70,10 @@ function Page(props) {
 
                     <Route exact path="/addAddress">
                         <AddAddress />
+                    </Route>
+
+                    <Route exact path="/register">
+                        <RegisterPage />
                     </Route>
 
                     <Route exact path="/order/:id" render={

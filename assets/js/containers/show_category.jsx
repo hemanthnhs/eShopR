@@ -2,13 +2,13 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {list_products} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Row, Spinner} from 'react-bootstrap';
+import {Row, Spinner,Container} from 'react-bootstrap';
 import ProductListing from "./../components/product_listing"
 
 function state2props(state, props) {
     let id = parseInt(props.id);
 
-    return {id: props.id, product: state.products[id]};
+    return {id: props.id};
 }
 
 class ShowCategory extends React.Component {
@@ -19,28 +19,37 @@ class ShowCategory extends React.Component {
         this.state = {
             redirect: null,
             products: null,
+            for_category: null
         }
-
     }
 
     redirect(path) {
         this.setState({redirect: path});
     }
 
-    componentDidMount() {
+    fetchItems(){
         var that = this
         var promise1 = new Promise(function(resolve, reject) {
             list_products(that.props.id, resolve)
         })
 
         promise1.then(function(data) {
-            that.setState({products: data})
+            that.setState({products: data, for_category: that.props.id})
         })
+    }
+
+    componentDidMount() {
+        this.fetchItems();
     }
 
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
+        }
+
+        let {id, dispatch} = this.props
+        if(id != this.state.for_category){
+            this.fetchItems();
         }
 
         if(!this.state.products){
@@ -53,6 +62,9 @@ class ShowCategory extends React.Component {
         }else {
             let products = this.state.products
             let display=[]
+            if(products.length == 0) {
+                return (<Container className={"empty-cart"}> We are adding items...Please check back later. </Container>)
+            }
             _.each(products,function (product) {
                 display.push(<ProductListing product={product} />)
             })

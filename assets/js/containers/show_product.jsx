@@ -81,6 +81,7 @@ class ShowProduct extends React.Component {
 
 
         let {id, product, type, dispatch} = this.props
+
         if (!product) {
             get_product(id)
         }

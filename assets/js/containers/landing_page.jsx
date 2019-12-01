@@ -2,10 +2,11 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {get_landing_page_config} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Col, Row, Spinner, Jumbotron, Container} from 'react-bootstrap';
+import {Col, Row, Spinner, Jumbotron, Container, Alert} from 'react-bootstrap';
+import store from "../store";
 
 function state2props(state) {
-    return {landing_page: state.landing_page};
+    return {landing_page: state.landing_page, type: state.session ? state.session.type : null, success_msg: state.forms.success_redirect};
 }
 
 class LandingPage extends React.Component {
@@ -24,14 +25,39 @@ class LandingPage extends React.Component {
         this.setState({redirect: path});
     }
 
+    componentWillUnmount() {
+        store.dispatch({
+            type: 'SUCCESS_REDIRECT',
+            data: null,
+        });
+    }
+
 
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-        let {landing_page, dispatch} = this.props
+        let {landing_page, type, success_msg, dispatch} = this.props
+        if(type == 2){
+            return (<Container>
+                { success_msg ? <Alert variant="success">
+                        <p>{success_msg}</p>
+                    </Alert>
+                    : null}
+                <Jumbotron>
+                    <h1>Admin Portal</h1>
+                    <p>
+                       Make admin changes and landing page designs to EShopR.
+                    </p>
+                </Jumbotron>
+            </Container>)
+        }
         if (!landing_page) {
             return (<Container>
+                { success_msg ? <Alert variant="success">
+                        <p>{success_msg}</p>
+                    </Alert>
+                    : null}
                 <Jumbotron>
                     <h1>Welcome</h1>
                     <p>
@@ -63,7 +89,13 @@ class LandingPage extends React.Component {
                 }
                 row_data.push(<Row height="10px">{col_data}</Row>)
             }
-            return (<div>{row_data}</div>)
+            return (<div>
+                { success_msg ? <Alert variant="success">
+                        <p>{success_msg}</p>
+                    </Alert>
+                    : null}
+                {row_data}
+            </div>)
         }
     }
 }

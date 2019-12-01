@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {Row, Col, Alert, Container, Button, Form, Spinner, Badge, Link} from 'react-bootstrap';
+import {Row, Col, Alert, Container, Button, Form, Spinner, Badge} from 'react-bootstrap';
 import {list_address, list_cart_items, place_order} from '../api/ajax';
-import store from "../store";
+import {Link} from 'react-router-dom';
 
 function state2props(state, props) {
     return {type: state.session ? state.session.type : null, address: state.address, cart: state.cart, total: state.forms.cart_total};
@@ -42,13 +42,13 @@ class ProcessCheckout extends React.Component {
         })
 
         promise1.then( function(success){
-            store.dispatch({
+            that.props.dispatch({
                 type: 'SUCCESS_REDIRECT',
                 data: "Order(s) placed successfully",
             });
             that.setState({redirect: "/orders"})
                 }).catch( function(errors) {
-            store.dispatch({
+            that.props.dispatch({
                 type: 'CART_ERRORS',
                 data: errors,
             });

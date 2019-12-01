@@ -46,6 +46,7 @@ class SellerLandingPage extends React.Component {
         }
         //https://react-bootstrap.github.io/components/jumbotron/
         let {session, status_metrics, order_metrics, dispatch} = this.props
+
         if (!session.type) {
             return <Redirect to={"/"}/>;
         }
@@ -61,27 +62,32 @@ class SellerLandingPage extends React.Component {
                     <div>
                         <h4>Store Metrics</h4>
                         <hr/>
-                        <Row>
-                            <Col>
-                                <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
-                                    <VerticalGridLines/>
-                                    <HorizontalGridLines/>
-                                    <XAxis/>
-                                    <YAxis title={"#orders"}/>
-                                    <VerticalBarSeries data={order_metrics}/>
-                                </XYPlot>
-                            </Col>
-                            <Col>
-                                < RadialChart
-                                    data={status_metrics}
-                                    width={300}
-                                    height={300}
-                                    colorType="literal"
-                                    labelsAboveChildren={false}
-                                    showLabels={true}
-                                />
-                            </Col>
-                        </Row>
+                        {order_metrics.length == 0 && status_metrics.length == 0 ?
+                            <div>
+                                Your store has no orders yet!
+                            </div> :
+                            <Row>
+                                <Col>
+                                    <XYPlot xType="ordinal" width={300} height={300} xDistance={100}>
+                                        <VerticalGridLines/>
+                                        <HorizontalGridLines/>
+                                        <XAxis/>
+                                        <YAxis title={"#orders"}/>
+                                        <VerticalBarSeries data={order_metrics}/>
+                                    </XYPlot>
+                                </Col>
+                                <Col>
+                                    < RadialChart
+                                        data={status_metrics}
+                                        width={300}
+                                        height={300}
+                                        colorType="literal"
+                                        labelsAboveChildren={false}
+                                        showLabels={true}
+                                    />
+                                </Col>
+                            </Row>
+                        }
                     </div>
                     : null}
             </Container>

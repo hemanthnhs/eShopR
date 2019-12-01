@@ -43,7 +43,6 @@ class HeaderBar extends React.Component {
         let {categories, cart_id, cart_count, type, _dispatch} = this.props
         return (
             <Navbar>
-                {/*TODO Logo*/}
                 <Col sm={2}>
                     <NavLink to="/" activeClassName="selected">
                         <img src={require("../../static/images/logo.png")} with="80px" height="40px"/>

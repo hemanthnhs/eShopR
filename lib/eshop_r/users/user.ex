@@ -18,5 +18,6 @@ defmodule EshopR.Users.User do
     user
     |> cast(attrs, [:email, :password_hash, :firstname, :lastname, :type, :wallet])
     |> validate_required([:email, :password_hash, :firstname, :lastname, :type])
+    |> unique_constraint(:email)
   end
 end

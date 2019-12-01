@@ -16,16 +16,23 @@ defmodule EshopRWeb.AdminConfigController do
   def create(conn, admin_config_params) do
     try do
       admin_config = AdminConfigs.get_admin_config!("LANDING_PAGE")
-      update(conn, %{"id"=>"LANDING_PAGE", "admin_config"=>admin_config_params})
+      updated = update(conn, %{"id" => "LANDING_PAGE", "admin_config" => admin_config_params})
+      send_resp(
+        conn,
+        200,
+        Jason.encode!(%{success: "Config created"})
+      )
     rescue
       Ecto.NoResultsError ->
         {:not_found, "No result found"}
-      with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.create_admin_config(admin_config_params) do
-        send_resp(conn, 200, json(conn, %{success: "Config created"}))
+        with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.create_admin_config(admin_config_params) do
+          send_resp(
+            conn,
+            200,
+            Jason.encode!(%{success: "Config created"})
+          )
+        end
     end
-
-    end
-
   end
 
   def show(conn, %{"id" => id}) do
@@ -35,25 +42,18 @@ defmodule EshopRWeb.AdminConfigController do
     rescue
       Ecto.NoResultsError ->
         send_resp(
-        conn,
-        200,
-        Jason.encode!(%{error: "Landing Page not configured"})
-      )
+          conn,
+          200,
+          Jason.encode!(%{error: "Landing Page not configured"})
+        )
     end
-    end
+  end
 
   def update(conn, %{"id" => id, "admin_config" => admin_config_params}) do
     admin_config = AdminConfigs.get_admin_config!(id)
     with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.update_admin_config(admin_config, admin_config_params) do
-      render(conn, "show.json", admin_config: admin_config)
+      admin_config
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    admin_config = AdminConfigs.get_admin_config!(id)
-
-    with {:ok, %AdminConfig{}} <- AdminConfigs.delete_admin_config(admin_config) do
-      send_resp(conn, :no_content, "")
-    end
-  end
 end

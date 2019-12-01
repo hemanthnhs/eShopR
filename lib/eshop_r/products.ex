@@ -78,22 +78,6 @@ defmodule EshopR.Products do
   end
 
   @doc """
-  Deletes a Product.
-
-  ## Examples
-
-      iex> delete_product(product)
-      {:ok, %Product{}}
-
-      iex> delete_product(product)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_product(%Product{} = product) do
-    Repo.delete(product)
-  end
-
-  @doc """
   Returns an `%Ecto.Changeset{}` for tracking product changes.
 
   ## Examples

@@ -88,6 +88,10 @@ class ShowOrders extends React.Component {
                 </Card>
             )
         })
+        console.log(order_rows)
+        if(order_rows.length == 0) {
+            return (<Container className={"empty-cart"}> No orders yet.. </Container>)
+        }
         return (
             <Container>
                 { order_success ? <Alert variant="success">

@@ -83,6 +83,22 @@ class CreateLandingPage extends React.Component {
         });
     }
 
+    submit_landing_page() {
+        var that = this
+        var promise2 = new Promise(function (resolve2, reject2) {
+            submit_landing_page(resolve2, reject2)
+        })
+
+        promise2.then(function () {
+            that.props.dispatch({
+                type: 'SUCCESS_REDIRECT',
+                data: "Landing Page created successfully",
+            });
+            that.setState({redirect: "/"})
+        })
+
+    }
+
     render() {
         let {type, landing_page, dispatch} = this.props
         if (this.state.redirect) {
@@ -133,7 +149,7 @@ class CreateLandingPage extends React.Component {
                     {row_elements}
                 </Form.Group>
                 <Button variant="primary" type="submit"
-                        onClick={() => submit_landing_page()}>Submit</Button>
+                        onClick={() => this.submit_landing_page()}>Submit</Button>
             </div>
         )
     }

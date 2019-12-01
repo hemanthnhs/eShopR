@@ -21,6 +21,12 @@ class LoginPage extends React.Component {
 
     }
 
+    componentWillUnmount() {
+        this.props.dispatch({
+            type: 'CLEAR_LOGIN',
+        });
+    }
+
     redirect(path) {
         this.setState({redirect: path});
     }
@@ -48,7 +54,6 @@ class LoginPage extends React.Component {
                 <Col md={{ span: 3, offset: 4 }}>
                 <h1>Log In</h1>
                 {error_msg}
-                <Link to="/googleSignIn" target="_blank" className={"btn btn-primary"}>Log with Google</Link>
                 <Form.Group controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control type="text" onChange={

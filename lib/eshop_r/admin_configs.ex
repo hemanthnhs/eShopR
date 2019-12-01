@@ -73,21 +73,6 @@ defmodule EshopR.AdminConfigs do
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a AdminConfig.
-
-  ## Examples
-
-      iex> delete_admin_config(admin_config)
-      {:ok, %AdminConfig{}}
-
-      iex> delete_admin_config(admin_config)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_admin_config(%AdminConfig{} = admin_config) do
-    Repo.delete(admin_config)
-  end
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking admin_config changes.

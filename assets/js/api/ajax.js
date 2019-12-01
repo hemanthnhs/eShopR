@@ -162,6 +162,15 @@ export function list_products(id, resolve) {
 export function submit_create_product(resolve2, reject2) {
     let state = store.getState();
     let data = _.clone(state.forms.new_product);
+    console.log(data.main_category)
+    if (!data.main_category) {
+        reject2("Main category must be selected")
+        return;
+    }
+    if (!data.sub_category) {
+        reject2("Sub category must be selected")
+        return;
+    }
     if (data.files.length == 0) {
         reject2("Upload atleast one product image")
         return;
@@ -194,7 +203,7 @@ export function submit_create_product(resolve2, reject2) {
     });
 }
 
-export function submit_landing_page(form) {
+export function submit_landing_page(resolve, reject) {
     let state = store.getState();
     let data = _.clone(state.forms.new_landing_page);
     // Attribution: https://stackoverflow.com/questions/43704904/how-to-stringify-objects-containing-es5-sets-and-maps
@@ -204,7 +213,12 @@ export function submit_landing_page(form) {
             obj[key] = value
         return obj
     }
-    post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)})
+    post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)}).then((resp) => {
+        console.log("resp", resp)
+        if (resp.success) {
+            resolve()
+        }
+    })
 }
 
 export function submit_add_address(resolve2) {
@@ -362,4 +376,16 @@ export function get_seller_metrics() {
                 data: resp
             });
         });
+}
+
+export function submit_new_registration(resolve2, reject2){
+    let state = store.getState();
+    let data = _.clone(state.forms.new_registration);
+    post('/newRegistration', {data}).then((resp) => {
+        if (resp.success) {
+            resolve2();
+        }else{
+            reject2(resp)
+        }
+    })
 }

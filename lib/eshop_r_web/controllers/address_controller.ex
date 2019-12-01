@@ -27,20 +27,4 @@ defmodule EshopRWeb.AddressController do
     address = Addresses.get_address!(id)
     render(conn, "show.json", address: address)
   end
-
-  def update(conn, %{"id" => id, "address" => address_params}) do
-    address = Addresses.get_address!(id)
-
-    with {:ok, %Address{} = address} <- Addresses.update_address(address, address_params) do
-      render(conn, "show.json", address: address)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    address = Addresses.get_address!(id)
-
-    with {:ok, %Address{}} <- Addresses.delete_address(address) do
-      send_resp(conn, :no_content, "")
-    end
-  end
 end

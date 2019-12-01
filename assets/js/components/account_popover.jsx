@@ -27,6 +27,10 @@ class AccountOverlay extends React.Component {
         this.props.dispatch({
             type: 'LOG_OUT',
         });
+        this.props.dispatch({
+            type: 'SUCCESS_REDIRECT',
+            data: "Logged out successfully..",
+        });
         this.redirect("/")
     }
 
@@ -48,7 +52,17 @@ class AccountOverlay extends React.Component {
                         <Dropdown.Item onClick={() => this.handleClick()}>Logout</Dropdown.Item>
                     </Dropdown.Menu>
                 </div>)
-            } else {
+            }
+            else if(session.type == 2){
+                return (<div>
+                    <Dropdown.Menu show className={"account-menu"}>
+                        <div>{session.user_name}</div>
+                        <Dropdown.Divider/>
+                        <Dropdown.Item onClick={() => this.handleClick()}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                </div>)
+            }
+            else {
                 return (<div>
                     <Dropdown.Menu show className={"account-menu"}>
                         <div>{session.user_name}</div>
@@ -65,16 +79,30 @@ class AccountOverlay extends React.Component {
             //Attribution https://react-bootstrap.github.io/components/cards/
             return (
                 <div>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>User Account</Card.Title>
-                            <Card.Text>
-                                Login to place new orders, track your items.
-                            </Card.Text>
-                            <Link to="/login" className={"btn btn-primary"}>Login</Link>
-                        </Card.Body>
-                    </Card>
-
+                    <Row xs={12}>
+                        <Col xs={6}>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>Existing User</Card.Title>
+                                    <Card.Text>
+                                        Login to place new orders, track your items.
+                                    </Card.Text>
+                                    <Link to="/login" className={"btn btn-primary"}>Login</Link>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col xs={6}>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Title>New User</Card.Title>
+                                    <Card.Text>
+                                        Not a user yet? Sign up here and place your first order
+                                    </Card.Text>
+                                    <Link to="/register" className={"btn btn-primary"}>Register</Link>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>
             );
         }

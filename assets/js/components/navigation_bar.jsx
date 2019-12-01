@@ -44,6 +44,19 @@ class NavigationBar extends React.Component {
                 </Navbar>
             );
         }
+        else if(session && session.type == 2){
+            return (
+                <Navbar className="nav-categories" id="nav-header" bg="dark" variant="dark">
+                    <Nav>
+                        <Nav.Item>
+                            <NavLink to="/createLandingPage" exact activeClassName="active" className="nav-link">
+                                New Landing Page
+                            </NavLink>
+                        </Nav.Item>
+                    </Nav>
+                </Navbar>
+            );
+        }
         else{
             let nav_items = []
             _.map(categories, function (values, main_category) {

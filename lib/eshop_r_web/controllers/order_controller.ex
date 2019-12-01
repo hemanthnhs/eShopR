@@ -4,7 +4,6 @@ defmodule EshopRWeb.OrderController do
   alias EshopR.Orders
   alias EshopR.Orders.Order
   alias EshopR.ShoppingCarts
-  alias EshopR.ShoppingCarts.ShoppingCart
   alias EshopR.Products
   alias EshopR.Statuses
 
@@ -57,8 +56,7 @@ defmodule EshopRWeb.OrderController do
       Enum.each Enum.to_list(seller_ids), fn seller_id ->
         order_items = Enum.reduce shopping_cart, Map.new(), fn cart, acc ->
           if cart.product.owner_id == seller_id do
-            {display_name, display_img} = Enum.at(cart.product.images, 0)
-
+            {_display_name, display_img} = Enum.at(cart.product.images, 0)
             product = Products.get_product!(cart.product.id)
             options = product.options
             {quantity, ""} = Integer.parse(get_in(options, [cart.option_selected]))
@@ -111,14 +109,6 @@ defmodule EshopRWeb.OrderController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    order = Orders.get_order!(id)
-
-    with {:ok, %Order{}} <- Orders.delete_order(order) do
-      send_resp(conn, :no_content, "")
-    end
-  end
-
   def tracking_status(conn, %{"tracking_order" => order_id}) do
     tracking = Orders.get_order!(order_id).tracking
     user = System.get_env("UPS_USER")
@@ -137,7 +127,7 @@ defmodule EshopRWeb.OrderController do
     send_resp(conn, 200, Jason.encode!(%{tracking: "Test response .. Not enabled yet"}))
   end
 
-  def seller_metrics(conn, params) do
+  def seller_metrics(conn, _params) do
     status_metrics = Orders.compute_status_metrics(conn.assigns[:current_user].id)
     color_codes = %{1 => "SandyBrown", 2 => "AntiqueWhite", 3 => "Olive", 4 => "SteelBlue", 5 => "SpringGreen"}
     status_metrics = Enum.reduce status_metrics, [], fn metric, acc ->
