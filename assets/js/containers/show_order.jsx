@@ -1,13 +1,13 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {get_tracking_status, update_order_status, get_statuses, list_orders, add_to_cart} from '../api/ajax';
+import {get_tracking_status, update_order_status, get_statuses, list_orders} from '../api/ajax';
 import {connect} from 'react-redux';
 import {Accordion, Row, Tabs, Tab, Button, Table, Form, Card, Container, Spinner, Col} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
-    return {id: id, order: state.orders.get(id), type: state.session.type, status: state.status};
+    return {id: id, order: state.orders ? state.orders.get(id) : null , type: state.session ? state.session.type : null, status: state.status};
 }
 
 class ShowOrder extends React.Component {
@@ -20,8 +20,10 @@ class ShowOrder extends React.Component {
             tracking_num: "",
             tracking_details: null
         }
-        list_orders();
-        get_statuses();
+        if (props.type != null){
+            list_orders();
+            get_statuses();
+        }
     }
 
     redirect(path) {
@@ -49,8 +51,8 @@ class ShowOrder extends React.Component {
         let render_ele = []
         _.each(data, function (activity) {
             let date = activity.Date
-            let formatted_date = date.substring(0,4)+"-"+date.substring(4,6)+"-"+date.substring(6,8)
-            render_ele.push(<li>({formatted_date})  {activity.Status.Description}</li>)
+            let formatted_date = date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8)
+            render_ele.push(<li>({formatted_date}) {activity.Status.Description}</li>)
         })
         return (<ul>{render_ele}</ul>)
     }
@@ -59,9 +61,10 @@ class ShowOrder extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-
-
         let {id, order, type, status, dispatch} = this.props
+        if (type==null){
+            return <Redirect to={"/"}/>;
+        }
         if (!order) {
             return (<div className={"loading"}>
                 <Spinner animation="grow" role="status" size="md"/>

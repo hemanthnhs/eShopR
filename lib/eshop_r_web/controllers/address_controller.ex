@@ -9,22 +9,17 @@ defmodule EshopRWeb.AddressController do
   plug EshopRWeb.Plugs.RequireAuth when action in [:create, :index]
 
   def index(conn, _params) do
-    addresses = Addresses.list_addresses()
-    IO.puts("index")
-    IO.inspect(addresses)
+    addresses = Addresses.list_addresses(conn.assigns[:current_user].id)
     render(conn, "index.json", addresses: addresses)
   end
 
   def create(conn, %{"data" => address_params}) do
-    IO.puts("create")
-    IO.inspect(address_params)
     address_params = Map.put(address_params, "user_id", conn.assigns[:current_user].id)
-    IO.inspect(address_params)
     with {:ok, %Address{} = address} <- Addresses.create_address(address_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.address_path(conn, :show, address))
-      |> render("show.json", address: address)
+       send_resp(
+       conn,
+       200,
+       Jason.encode!(%{success: "Address added successfully"}))
     end
   end
 

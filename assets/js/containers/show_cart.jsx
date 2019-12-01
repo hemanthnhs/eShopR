@@ -1,15 +1,13 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, update_quantity, delete_item, list_cart_items, place_order, list_products} from '../api/ajax';
+import {update_quantity, delete_item, list_cart_items, place_order, list_products} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Alert, Row, Col, Container, Button, Form, Box, Table, Spinner} from 'react-bootstrap';
-import {submit_login} from '../api/ajax';
-import {Link} from "react-router-dom";
+import {Alert, Row, Container, Button, Table, Spinner} from 'react-bootstrap';
 import store from "../store";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
-    return {id: props.id, cart: state.cart, total: state.forms.cart_total, errors: state.forms.cart_errors};
+    return {id: props.id, type: state.session ? state.session.type : null, cart: state.cart, total: state.forms.cart_total, errors: state.forms.cart_errors};
 }
 
 class ShowCart extends React.Component {
@@ -20,7 +18,9 @@ class ShowCart extends React.Component {
             redirect: null,
         }
 
-        list_cart_items()
+        if (props.type!=null) {
+            list_cart_items()
+        }
     }
 
     componentWillUnmount() {
@@ -80,9 +80,10 @@ class ShowCart extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-
-//<td><Button className={"place-order"} onClick={() => place_order()}>Move to Checkout</Button></td>
-        let {id, cart, total, errors, dispatch} = this.props
+        let {id, type, cart, total, errors, dispatch} = this.props
+        if (type == null){
+            return <Redirect to={"/"}/>;
+        }
         if (!cart) {
             return (<div className={"loading"}>
                 <Spinner animation="grow" role="status" size="md"/>

@@ -24,7 +24,9 @@ class HeaderBar extends React.Component {
             this.setState(s => ({target, show_login: !s.show_login}));
         };
 
-        list_cart_items()
+        if(props.type == 0){
+            list_cart_items()
+        }
 
         this.state = {
             show_login: false,
@@ -66,12 +68,6 @@ class HeaderBar extends React.Component {
                         <label className="display-cart-count">{cart_count}</label>
                     </NavLink>
                 </Col> : null}
-                {type == 0 ?
-                <Col md={{span: 1}}>
-                    {/*Wishlist*/}
-                    <img src={require("../../static/images/wishlist.svg")} width="40px" height="40px"/>
-                </Col>
-                    : null}
                 {type != 0 ? <span className={"offset-3"}></span> : null}
                 <Col md={{span: 1}}>
                     <ButtonToolbar>

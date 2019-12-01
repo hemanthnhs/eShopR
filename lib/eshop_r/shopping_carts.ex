@@ -112,4 +112,8 @@ defmodule EshopR.ShoppingCarts do
   def check_if_exist(cartid, product_id, option_selected) do
     Repo.exists?(from(c in ShoppingCart, where: c.cartid == ^cartid and c.product_id == ^product_id and c.option_selected == ^option_selected))
   end
+
+  def remove_items(id) do
+    from(c in ShoppingCart, where: c.cartid == ^id) |> Repo.delete_all
+  end
 end

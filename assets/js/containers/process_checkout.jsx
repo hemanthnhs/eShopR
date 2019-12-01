@@ -1,13 +1,12 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {Card, Row, Col, Container, Button, Form, Table, Spinner, Badge} from 'react-bootstrap';
-import {delete_item, list_address, list_cart_items, place_order, update_quantity} from '../api/ajax';
-import {NavLink} from "react-router-dom";
+import {Row, Col, Alert, Container, Button, Form, Spinner, Badge, Link} from 'react-bootstrap';
+import {list_address, list_cart_items, place_order} from '../api/ajax';
 import store from "../store";
 
 function state2props(state, props) {
-    return {address: state.forms.address, cart: state.cart, total: state.forms.cart_total};
+    return {type: state.session ? state.session.type : null, address: state.address, cart: state.cart, total: state.forms.cart_total};
 }
 
 class ProcessCheckout extends React.Component {
@@ -18,10 +17,13 @@ class ProcessCheckout extends React.Component {
         this.state = {
             redirect: null,
             option_selected: 0,
+            alert: null
         }
 
-        list_address();
-        list_cart_items()
+        if (props.type != null) {
+            list_address();
+            list_cart_items()
+        }
 
     }
 
@@ -30,6 +32,10 @@ class ProcessCheckout extends React.Component {
     }
 
     place_order(address_selected){
+        if(!this.state.option_selected){
+            this.setState({alert: "Please select atleast one address"})
+            return;
+        }
         var that = this
         var promise1 = new Promise(function(resolve, reject) {
             place_order(resolve,reject, address_selected)
@@ -37,8 +43,8 @@ class ProcessCheckout extends React.Component {
 
         promise1.then( function(success){
             store.dispatch({
-                type: 'CART_ERRORS',
-                data: errors,
+                type: 'SUCCESS_REDIRECT',
+                data: "Order(s) placed successfully",
             });
             that.setState({redirect: "/orders"})
                 }).catch( function(errors) {
@@ -64,7 +70,7 @@ class ProcessCheckout extends React.Component {
                         &nbsp;&nbsp;&nbsp;
                     </Col>
                     <Col md={3}>
-                        ${val.quantity * val.selling_price}
+                        {val.quantity} x ${val.selling_price}
                     </Col>
                 </Row>
             )
@@ -76,8 +82,10 @@ class ProcessCheckout extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} errors={this.state.errors}/>;
         }
-
-        let {address, cart, total, dispatch} = this.props
+        let {type, address, cart, total, dispatch} = this.props
+        if (!type && type != 0){
+            return <Redirect to={"/"}/>;
+        }
         let address_rows = []
         if (!cart) {
             return (<div className={"loading"}>
@@ -94,7 +102,8 @@ class ProcessCheckout extends React.Component {
                         click to update +</div></Link>)
                 } else {
                     var that = this;
-                    _.forEach(address, function (val, key) {
+                    address.forEach(function (val, key) {
+
                         let eachAdress = val.full_name + " " + val.street
                         address_rows.push(<fieldset><Form.Group><Form.Check type="radio" label={eachAdress}
                                                                             name="formHorizontalRadios"
@@ -106,6 +115,10 @@ class ProcessCheckout extends React.Component {
 
                 return (
                     <Container>
+                        { this.state.alert ? <Alert variant="danger">
+                                <p>{this.state.alert}</p>
+                            </Alert>
+                            : null}
                         <div>
                             <Form.Label><h4>Choose your shipping Address</h4></Form.Label>
                             <hr/>

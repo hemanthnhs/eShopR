@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import {Navbar, Nav, Col, Button, NavDropdown} from 'react-bootstrap';
 
 function state2props(state) {
-    console.log(state)
     return {categories: state.categories, session: state.session};
 }
 

@@ -1,16 +1,14 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, get_product, add_to_cart} from '../api/ajax';
+import {get_product, add_to_cart} from '../api/ajax';
 import {connect} from 'react-redux';
 import {Carousel, Row, Col, Alert, Button, Table, Form, Spinner, Badge, Container} from 'react-bootstrap';
-import {submit_login} from '../api/ajax';
-import {Link} from "react-router-dom";
 import store from "../store";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
 
-    return {id: props.id, product: state.products[id]};
+    return {id: props.id, product: state.products[id], type: state.session ? state.session.type : null};
 }
 
 class ShowProduct extends React.Component {
@@ -34,11 +32,13 @@ class ShowProduct extends React.Component {
         let optionElements = []
         var that = this
         _.forEach(options, function (value, key) {
-            optionElements.push(<Button
-                className={"options " + (that.state.option_selected == key ? "option-active" : null)}
-                onClick={() => that.setState({option_selected: key})}>{key}</Button>)
+            if (value != 0) {
+                optionElements.push(<Button
+                    className={"options " + (that.state.option_selected == key ? "option-active" : null)}
+                    onClick={() => that.setState({option_selected: key})}>{key}</Button>)
+            }
         })
-        return (<div>{optionElements}</div>)
+        return (optionElements)
     }
 
     renderAttributes(attributes) {
@@ -80,7 +80,7 @@ class ShowProduct extends React.Component {
         }
 
 
-        let {id, product, dispatch} = this.props
+        let {id, product, type, dispatch} = this.props
         if (!product) {
             get_product(id)
         }
@@ -92,6 +92,7 @@ class ShowProduct extends React.Component {
             </div>)
         } else {
             let images = []
+            let optionsRendered = this.renderOptions(product.options)
             _.forEach(product.images, function (image, name) {
                 images.push(<Carousel.Item><img className={"product-images"} src={image}/></Carousel.Item>)
             })
@@ -129,28 +130,31 @@ class ShowProduct extends React.Component {
                                 {this.renderAttributes(product.attributes)}
                             </Form.Group>
                         </Row>
+                        { optionsRendered.length!=0 ?
+                            <div>
                         <Row>
                             <Form.Group controlId="options">
                                 <h5><Form.Label>Select a size:</Form.Label></h5>
-                                {this.renderOptions(product.options)}
+                                {optionsRendered}
                             </Form.Group>
                         </Row>
-
-                        <Form.Group controlId="actions">
-                            <Row>
-                                {this.state.alert}
-                            </Row>
-                            <Row>
-                                <Button className="add-btn" onClick={() => this.addToCart(product.id)}>Add to
-                                    Cart</Button>
-                                <Button className="wishlist-btn">Wishlist item</Button>
-                            </Row>
-                        </Form.Group>
+                        {type == 0 ?
+                            <Form.Group controlId="actions">
+                                <Row>
+                                    {this.state.alert}
+                                </Row>
+                                <Row>
+                                    <Button className="add-btn" onClick={() => this.addToCart(product.id)}>Add to
+                                        Cart</Button>
+                                </Row>
+                            </Form.Group> : (type == 1) ? <div>Viewing as seller</div> :
+                                <div>Log in to add to your cart</div>}
+                            </div> : "Out of stock"}
                     </Col>
                 </Row>
-                <hr />
+                <hr/>
                 <Row>
-                    Here attributes
+                    {product.description}
                 </Row>
 
             </Container>)

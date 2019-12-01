@@ -74,7 +74,6 @@ export function get(path) {
 export function list_categories() {
     get('/categories')
         .then((resp) => {
-            console.log(resp)
             store.dispatch({
                 type: 'ADD_CATEGORIES',
                 data: resp.data,
@@ -85,7 +84,6 @@ export function list_categories() {
 export function get_product(id) {
     get('/products/' + id)
         .then((resp) => {
-            console.log(resp)
             store.dispatch({
                 type: 'ADD_PRODUCT',
                 data: resp.data,
@@ -99,7 +97,6 @@ export function submit_login(form) {
 
     post('/sessions', data)
         .then((resp) => {
-            console.log(resp);
             if (resp.token) {
                 localStorage.setItem('session', JSON.stringify(resp));
                 store.dispatch({
@@ -141,7 +138,6 @@ export function add_to_cart(data, resolve) {
 export function list_cart_items() {
     let state = store.getState();
     get('/viewCart').then((resp) => {
-        console.log("cart", resp)
         if (resp.data) {
             store.dispatch({
                 type: 'ADD_TO_CART',
@@ -163,14 +159,14 @@ export function list_products(id, resolve) {
     });
 }
 
-export function submit_create_product(resolve2,reject2) {
+export function submit_create_product(resolve2, reject2) {
     let state = store.getState();
     let data = _.clone(state.forms.new_product);
     if (data.files.length == 0) {
+        reject2("Upload atleast one product image")
         return;
     }
     data.options = parseOptions(data.options)
-    console.log("-", data.options)
     data.attributes = parseAttributes(data.attributes)
     let parsedImages = {}
     var promise1 = new Promise(function (resolve, reject) {
@@ -188,15 +184,11 @@ export function submit_create_product(resolve2,reject2) {
 
     promise1.then(function () {
         data["images"] = parsedImages
-        console.log("data", data)
         post('/createProduct', {data}).then((resp) => {
-            console.log("fhgjkj")
             if (resp.success) {
-                console.log("success")
                 resolve2(resp.success)
-            }else{
-                console.log("faol")
-                reject2(resp)
+            } else {
+                reject2("Provide all the fields information and try again.")
             }
         });
     });
@@ -212,40 +204,39 @@ export function submit_landing_page(form) {
             obj[key] = value
         return obj
     }
-    post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)}).then((resp) => {
-        if (resp.data) {
-            console.log("Submitted")
-        }
-    });
+    post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)})
 }
 
-export function submit_add_address(form) {
+export function submit_add_address(resolve2) {
     let state = store.getState();
-    let data = _.clone(state.forms.address);
-    console.log("address data")
-    console.log(data)
+    let data = _.clone(state.forms.new_address);
     post('/addAddress', {data}).then((resp) => {
-        if (resp.data) {
-            console.log("Submitted")
+        if (resp.success) {
+            resolve2();
         }
-    });
+    })
 }
 
-export function get_landing_page_config(){
+export function get_landing_page_config() {
     get('/adminconfigs/LANDING_PAGE')
         .then((resp) => {
-            console.log(resp)
-            store.dispatch({
-                type: 'LANDING_PAGE_CONFIG',
-                data: JSON.parse(resp.data.value),
-            });
+            if (resp.data) {
+                store.dispatch({
+                    type: 'LANDING_PAGE_CONFIG',
+                    data: JSON.parse(resp.data.value),
+                });
+            } else {
+                store.dispatch({
+                    type: 'LANDING_PAGE_CONFIG',
+                    data: null,
+                });
+            }
         });
 }
 
 export function search(query, resolve) {
     get('/search?query=' + query)
         .then((resp) => {
-            console.log(resp)
             resolve(resp.data)
         });
 }
@@ -253,7 +244,6 @@ export function search(query, resolve) {
 export function list_orders() {
     get('/orders')
         .then((resp) => {
-            console.log(resp)
             store.dispatch({
                 type: 'ORDERS_DATA',
                 data: resp.data,
@@ -264,10 +254,12 @@ export function list_orders() {
 export function place_order(resolve, reject, address_selected) {
     post('/placeOrder', {address_id: address_selected})
         .then((resp) => {
-            console.log("resp", resp)
             if (resp.success) {
+                store.dispatch({
+                    type: 'CLEAR_CART',
+                });
                 resolve(resp.success)
-            }else{
+            } else {
                 reject(resp)
             }
         });
@@ -276,7 +268,6 @@ export function place_order(resolve, reject, address_selected) {
 export function list_address() {
     get('/manageAddress')
         .then((resp) => {
-            console.log(resp)
             store.dispatch({
                 type: 'ADDRESS_DATA',
                 data: resp.data,
@@ -288,7 +279,6 @@ export function list_address() {
 export function get_statuses() {
     get('/status')
         .then((resp) => {
-            console.log(resp)
             store.dispatch({
                 type: 'ORDER_STATUS',
                 data: resp.data,
@@ -297,24 +287,26 @@ export function get_statuses() {
 }
 
 export function update_order_status(id, status_id, tracking_num) {
-    console.log("status----", status_id)
     if (status_id == 4) {
-        put('/orders/' + id, {id: id, status_id: status_id, tracking: tracking_num})
-            .then((resp) => {
-                console.log(resp);
+        put('/orders/' + id, {id: id, status_id: status_id, tracking: tracking_num}).then((resp) => {
+            store.dispatch({
+                type: 'ORDERS_DATA',
+                data: [resp.data],
             });
+        })
     } else {
-        put('/orders/' + id, {id: id, status_id: status_id})
-            .then((resp) => {
-                console.log(resp);
+        put('/orders/' + id, {id: id, status_id: status_id}).then((resp) => {
+            store.dispatch({
+                type: 'ORDERS_DATA',
+                data: [resp.data],
             });
+        })
     }
 }
 
 export function update_quantity(id, cartid, product_id, option_selected, quantity) {
     put('/shoppingcarts/' + id, {quantity: quantity})
         .then((resp) => {
-            console.log("l", resp)
             if (resp.data) {
                 store.dispatch({
                     type: 'ADD_TO_CART',
@@ -331,7 +323,6 @@ export function update_quantity(id, cartid, product_id, option_selected, quantit
 export function delete_item(id, key) {
     del('/shoppingcarts/' + id, {})
         .then((resp) => {
-            console.log("RESP", resp)
             if (resp.success) {
                 store.dispatch({
                     type: 'REMOVE_ITEM',
@@ -353,7 +344,7 @@ export function get_tracking_status(order_id, resolve) {
         });
 }
 
-export function seller_products(){
+export function seller_products() {
     get('/products')
         .then((resp) => {
             store.dispatch({
@@ -363,17 +354,9 @@ export function seller_products(){
         });
 }
 
-export function get_seller_metrics(){
+export function get_seller_metrics() {
     get('/seller_metrics')
         .then((resp) => {
-            console.log("resp", resp)
-            // let result = _.reduce(resp.status_metrics, function(acc, value, key) {
-            //     result = {}
-            //     result["label"] = "Order Status" + resp.statuses.get(value.label)
-            //     result["angle"] = value.angle
-            //     acc.push(result)
-            //     return acc;
-            // }, []);
             store.dispatch({
                 type: 'SELLER_METRICS',
                 data: resp

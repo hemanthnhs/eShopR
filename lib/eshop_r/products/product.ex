@@ -22,8 +22,11 @@ defmodule EshopR.Products.Product do
 
   @doc false
   def changeset(product, attrs) do
+#    Attribution https://elixirforum.com/t/validate-number-comparing-two-fields/9589/2
     product
     |> cast(attrs, [:name, :brand, :description, :highlights, :images, :attributes, :tags, :options, :owner_id, :marked_price, :selling_price, :main_category, :sub_category])
-#    |> validate_required([:name, :description, :images, :attributes, :tags, :catalogue, :marked_price, :selling_price])
+    |> validate_required([:name, :brand, :images, :main_category, :sub_category , :attributes, :options, :marked_price, :selling_price])
+    |> validate_number(:marked_price, greater_than: 0)
+    |> validate_number(:selling_price, greater_than: 0)
   end
 end

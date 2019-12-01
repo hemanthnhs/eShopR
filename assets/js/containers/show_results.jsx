@@ -30,7 +30,6 @@ class ShowSearchResults extends React.Component {
     }
 
     componentDidMount() {
-        console.log("CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
         var that = this
         var promise1 = new Promise(function(resolve, reject) {
             search(that.props.query, resolve)

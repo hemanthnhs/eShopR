@@ -14,13 +14,6 @@ defmodule EshopRWeb.AdminConfigController do
   end
 
   def create(conn, admin_config_params) do
-    IO.puts("gere")
-    IO.inspect(admin_config_params)
-    #admin_config = AdminConfigs.get_admin_config!("LANDING_PAGE")
-    IO.puts("config")
-    IO.puts("confid-==============================================")
-
-
     try do
       admin_config = AdminConfigs.get_admin_config!("LANDING_PAGE")
       update(conn, %{"id"=>"LANDING_PAGE", "admin_config"=>admin_config_params})
@@ -36,13 +29,21 @@ defmodule EshopRWeb.AdminConfigController do
   end
 
   def show(conn, %{"id" => id}) do
-    admin_config = AdminConfigs.get_admin_config!(id)
-    render(conn, "show.json", admin_config: admin_config)
-  end
+    try do
+      admin_config = AdminConfigs.get_admin_config!(id)
+      render(conn, "show.json", admin_config: admin_config)
+    rescue
+      Ecto.NoResultsError ->
+        send_resp(
+        conn,
+        200,
+        Jason.encode!(%{error: "Landing Page not configured"})
+      )
+    end
+    end
 
   def update(conn, %{"id" => id, "admin_config" => admin_config_params}) do
     admin_config = AdminConfigs.get_admin_config!(id)
-
     with {:ok, %AdminConfig{} = admin_config} <- AdminConfigs.update_admin_config(admin_config, admin_config_params) do
       render(conn, "show.json", admin_config: admin_config)
     end

@@ -128,6 +128,15 @@ function new_product(st0 = {
     }
 }
 
+function new_address(st0 = {}, action) {
+    switch (action.type) {
+        case 'CHANGE_NEW_ADDRESS':
+            return Object.assign({}, st0, action.data);
+        default:
+            return st0;
+    }
+}
+
 function categories(st0 = {}, action) {
     switch (action.type) {
         case 'ADD_CATEGORIES':
@@ -187,9 +196,10 @@ function forms(st0, action) {
         new_product,
         new_landing_page,
         cart_total,
-        address,
+        new_address,
         cart_errors,
-        cart_success
+        cart_success,
+        success_redirect
     });
     return reducer(st0, action);
 }
@@ -234,6 +244,8 @@ function cart(st0 = null, action) {
             var st1 = new Map(st0);
             st1.delete(action.data)
             return st1;
+        case 'CLEAR_CART':
+            return new Map()
         default:
             return st0;
     }
@@ -242,6 +254,15 @@ function cart(st0 = null, action) {
 function cart_total(st0 = 0, action){
     switch (action.type) {
         case 'CART_PRICE':
+            return action.data;
+        default:
+            return st0;
+    }
+}
+
+function success_redirect(st0 = null, action){
+    switch (action.type) {
+        case 'SUCCESS_REDIRECT':
             return action.data;
         default:
             return st0;
@@ -266,9 +287,12 @@ function cart_success(st0 = null, action){
     }
 }
 
-function orders(st0 = new Map(), action) {
+function orders(st0 = null, action) {
     switch (action.type) {
         case 'ORDERS_DATA':
+            if(!st0){
+                st0 = new Map()
+            }
             let st1 = new Map(st0);
             for (let obj of action.data) {
                 st1.set(obj.id, obj);
@@ -282,8 +306,12 @@ function orders(st0 = new Map(), action) {
 function address(st0 = new Map(), action) {
     switch (action.type) {
         case 'ADDRESS_DATA':
-            return Object.assign({}, st0, action.data);
-        default:
+            let st1 = new Map(st0);
+            for (let obj of action.data) {
+                st1.set(obj.id, obj);
+            }
+            return st1;
+            default:
             return st0;
     }
 }
@@ -314,6 +342,7 @@ function root_reducer(st0, action) {
     let reducer = combineReducers({
         seller_metrics,
         forms,
+        address,
         products,
         seller_products,
         session,

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Switch, Route, NavLink, Link} from 'react-router-dom';
-import {Navbar, Nav, Col, Button} from 'react-bootstrap';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Provider, connect} from 'react-redux';
 import LandingPage from './landing_page';
 import SellerLandingPage from './seller_landing_page';

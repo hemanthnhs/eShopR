@@ -38,9 +38,7 @@ defmodule EshopR.Orders do
   end
 
   def compute_order_metrics(id) do
-#    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: fragment("date_part('month', ?)", o.inserted_at),select: %{x: fragment("date_part('month', ?)", o.inserted_at), y: count(o.id)}))
     Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: to_char(o.inserted_at, "dd Mon YYYY"),select: %{x: to_char(o.inserted_at, "dd Mon YYYY"), y: count(o.id)}))
-#    Repo.all(from(o in Order, where: o.seller_id == ^id, group_by: o.inserted_at,select: %{x: o.inserted_at, y: count(o.inserted_at)}))
   end
 
   @doc """
@@ -57,7 +55,12 @@ defmodule EshopR.Orders do
       ** (Ecto.NoResultsError)
 
   """
-  def get_order!(id), do: Repo.get!(Order, id)
+  def get_order!(id) do
+    order = Repo.get!(Order, id)
+    order = Repo.preload order, [:status, :address]
+    order
+
+  end
 
   @doc """
   Creates a order.

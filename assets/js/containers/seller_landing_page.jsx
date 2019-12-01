@@ -30,7 +30,9 @@ class SellerLandingPage extends React.Component {
         this.state = {
             redirect: null,
         }
-        get_seller_metrics()
+        if(props.session.type){
+            get_seller_metrics()
+        }
     }
 
     redirect(path) {
@@ -44,6 +46,9 @@ class SellerLandingPage extends React.Component {
         }
         //https://react-bootstrap.github.io/components/jumbotron/
         let {session, status_metrics, order_metrics, dispatch} = this.props
+        if (!session.type) {
+            return <Redirect to={"/"}/>;
+        }
         return (
             <Container>
                 <Jumbotron>

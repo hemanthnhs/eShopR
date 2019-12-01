@@ -17,7 +17,7 @@ defmodule EshopR.Addresses.Address do
   @doc false
   def changeset(address, attrs) do
     address
-    |> cast(attrs, [:street, :city, :state, :country, :pincode, :full_name])
+    |> cast(attrs, [:street, :city, :state, :country, :pincode, :full_name, :user_id])
     |> validate_required([:street, :city, :state, :country, :pincode, :full_name])
   end
 end

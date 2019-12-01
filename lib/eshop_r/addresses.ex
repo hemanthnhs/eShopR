@@ -17,8 +17,8 @@ defmodule EshopR.Addresses do
       [%Address{}, ...]
 
   """
-  def list_addresses do
-    Repo.all(Address)
+  def list_addresses(id) do
+    Repo.all(from(a in Address, where: a.user_id == ^id))
   end
 
   @doc """

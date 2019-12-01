@@ -25,8 +25,9 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
   color: #fff;
   background-color: #7a778a;
 }
-.account-menu {
+.account-menu * {
   left: auto;
+  color: white !important;
   right: -103px;
 }
 
@@ -128,21 +129,23 @@ $body-bg: white; // With scss, Bootstrap lets us override colors and stuff.
 .display-address {
   border-style: none;
   width: 320px;
-  text-align: center;
+  text-align: left;
   font-size: 19px;
-  background-color: #90767633
-
+  background-color: #90767633;
+  height: 400px;
+  margin-right:25px;
 }
+
 .display-add-address {
   border-style: dashed;
   border-width: 2px;
   width: 320px;
   text-align: center;
   background-color: #f1f1f1;
-  padding-top: 130px;
-  padding-bottom: 130px;
+  height: 400px;
   font-size: 75px;
   border-color: lightslategray;
+  margin-right:25px;
 }
 
 .display-shipping-address{

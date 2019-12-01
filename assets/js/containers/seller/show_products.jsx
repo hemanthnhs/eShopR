@@ -1,12 +1,13 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {Card, Row, Col, Spinner, Table, Container} from 'react-bootstrap';
+import {Card, Row, Col, Spinner, Table, Container, Alert} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 import {seller_products} from '../../api/ajax';
+import store from "../../store";
 
 function state2props(state, props) {
-    return {products: state.seller_products};
+    return {products: state.seller_products, success: state.forms.success_redirect};
 }
 
 class ShowSellerProducts extends React.Component {
@@ -20,6 +21,13 @@ class ShowSellerProducts extends React.Component {
 
         seller_products();
 
+    }
+
+    componentWillUnmount() {
+        store.dispatch({
+            type: 'PRODUCT_SUCCESS',
+            data: null,
+        });
     }
 
     redirect(path) {
@@ -55,7 +63,7 @@ class ShowSellerProducts extends React.Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-        let {products, dispatch} = this.props;
+        let {products, success, dispatch} = this.props;
         if(!products){
             return (<div className={"loading"}>
                 <Spinner animation="grow" role="status" size="md"/>
@@ -66,6 +74,10 @@ class ShowSellerProducts extends React.Component {
             return (<Container className={"empty-cart"}> No Items in your store yet.. </Container>)
         }
         return (<Container>
+            {success ? <Alert variant="success">
+                    <p>{success}</p>
+                </Alert>
+                : null}
             <Table>
                 <thead>
                 <tr>

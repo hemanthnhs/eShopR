@@ -2,12 +2,11 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {submit_landing_page} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Form, Button, Col, Alert, Table} from 'react-bootstrap';
-import {Link} from "react-router-dom";
+import {Form, Button} from 'react-bootstrap';
 
 function state2props(state) {
     return {
-        landing_page: state.forms.new_landing_page,
+        type: state.session ? state.session.type : null, landing_page: state.forms.new_landing_page,
     };
 }
 
@@ -39,14 +38,12 @@ class CreateLandingPage extends React.Component {
     file_changed(row, col, ev) {
         let input = ev.target;
         let file = null;
-        console.log("dnjsd =======================================")
         if (input.files.length > 0) {
             file = input.files[0];
         }
         var that = this
         let reader = new FileReader();
         reader.addEventListener("load", () => {
-            console.log("dnjsd  ", row, "==", col, "==", reader.result)
             that.props.dispatch({
                 type: 'CHANGE_LANDING_DATA',
                 data: {banner_img: reader.result},
@@ -87,9 +84,12 @@ class CreateLandingPage extends React.Component {
     }
 
     render() {
-        let {landing_page, dispatch} = this.props
+        let {type, landing_page, dispatch} = this.props
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
+        }
+        if (!type){
+            return <Redirect to={"/"}/>;
         }
         let row_elements = []
         var that = this

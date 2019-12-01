@@ -89,6 +89,7 @@ defmodule EshopRWeb.OrderController do
         attrs = Map.put(attrs, "address_id", order_params["address_id"])
         order = Orders.create_order(attrs)
       end
+      ShoppingCarts.remove_items(conn.assigns[:current_user].id)
       send_resp(
         conn,
         200,
@@ -104,8 +105,8 @@ defmodule EshopRWeb.OrderController do
 
   def update(conn, order_params) do
     order = Orders.get_order!(order_params["id"])
-
     with {:ok, %Order{} = order} <- Orders.update_order(order, order_params) do
+      order = Orders.get_order!(order_params["id"])
       render(conn, "show.json", order: order)
     end
   end
@@ -133,7 +134,7 @@ defmodule EshopRWeb.OrderController do
 #    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
 #    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
 #        send_resp(conn, 200, Jason.encode!(%{tracking: response}))
-    send_resp(conn, 200, Jason.encode!(%{tracking: "knkn"}))
+    send_resp(conn, 200, Jason.encode!(%{tracking: "Test response .. Not enabled yet"}))
   end
 
   def seller_metrics(conn, params) do

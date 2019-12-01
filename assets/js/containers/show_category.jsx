@@ -1,10 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_products, get_product, add_to_cart} from '../api/ajax';
+import {list_products} from '../api/ajax';
 import {connect} from 'react-redux';
-import {Carousel, Row, Col, Container, Button} from 'react-bootstrap';
-import {submit_login} from '../api/ajax';
-import {Link} from "react-router-dom";
+import {Row, Spinner} from 'react-bootstrap';
 import ProductListing from "./../components/product_listing"
 
 function state2props(state, props) {
@@ -46,7 +44,12 @@ class ShowCategory extends React.Component {
         }
 
         if(!this.state.products){
-            return <div>Getting Products...</div>
+            return (
+                <div className={"loading"}>
+                    <Spinner animation="grow" role="status" size="md"/>
+                    Fetching products from our catalogue
+                </div>
+            );
         }else {
             let products = this.state.products
             let display=[]

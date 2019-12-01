@@ -1,12 +1,12 @@
 import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
-import {Card, Row, Col, Container, Button, Form, Table} from 'react-bootstrap';
-import {NavLink} from "react-router-dom";
+import {Container, Button, Form, Table} from 'react-bootstrap';
 import {submit_add_address} from "../api/ajax";
+import store from "../store";
 
 function state2props(state, props) {
-    return {address: state.forms.address}
+    return {type: state.session ? state.session.type : null, address: state.forms.address}
 }
 
 class AddAddress extends React.Component {
@@ -22,7 +22,7 @@ class AddAddress extends React.Component {
 
     changed(data) {
         this.props.dispatch({
-            type: 'ADDRESS_DATA',
+            type: 'CHANGE_NEW_ADDRESS',
             data: data,
         });
     }
@@ -31,11 +31,28 @@ class AddAddress extends React.Component {
         this.setState({redirect: path});
     }
 
+    submit_add_address() {
+        var that = this
+        var promise2 = new Promise(function (resolve2, reject2) {
+            submit_add_address(resolve2, reject2)
+        })
+
+        promise2.then(function (result) {
+            store.dispatch({
+                type: 'SUCCESS_REDIRECT',
+                data: "Address added successfully",
+            });
+            that.setState({redirect: "/manageAddress"})
+        })
+    }
+
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect}/>;
         }
-
+        if (this.props.type == null){
+            return <Redirect to={"/"}/>;
+        }
         return (<Container>
             <h3>New Address</h3>
             <hr/>
@@ -82,7 +99,7 @@ class AddAddress extends React.Component {
                 </tr>
             </Table>
             <Button variant="primary" type="submit"
-                    onClick={() => submit_add_address()}>Submit</Button>
+                    onClick={() => this.submit_add_address()}>Submit</Button>
         </Container>)
 
     }
