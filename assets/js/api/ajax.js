@@ -162,7 +162,6 @@ export function list_products(id, resolve) {
 export function submit_create_product(resolve2, reject2) {
     let state = store.getState();
     let data = _.clone(state.forms.new_product);
-    console.log(data.main_category)
     if (!data.main_category) {
         reject2("Main category must be selected")
         return;
@@ -214,7 +213,6 @@ export function submit_landing_page(resolve, reject) {
         return obj
     }
     post('/adminconfigs', {key: "LANDING_PAGE", value: JSON.stringify(data)}).then((resp) => {
-        console.log("resp", resp)
         if (resp.success) {
             resolve()
         }

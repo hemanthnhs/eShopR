@@ -1,0 +1,16 @@
+[Unit]
+Description=EShopR
+
+[Service]
+Type=simple
+User=eshop_r
+Group=eshop_r
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=5003"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/eshop_r/eShopR
+ExecStart=bash /home/eshop_r/eShopR/start.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -47,7 +47,6 @@ class ShowOrder extends React.Component {
         if (data == "error") {
             return (<div>Unable to retrieve data try again later</div>)
         }
-        console.log("data", data)
         let render_ele = []
         _.each(data, function (activity) {
             let date = activity.Date
@@ -76,8 +75,6 @@ class ShowOrder extends React.Component {
             }
             let items = []
             _.each((order.order_items), function (item_key, val) {
-                console.log("item")
-                console.log(order)
                 items.push(<tr>
                     <td><img
                         height={200} width={150}

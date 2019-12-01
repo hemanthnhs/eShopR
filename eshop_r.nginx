@@ -1,0 +1,21 @@
+upstream eshop_r_app {
+    server localhost:5003;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name project2.cs5610f19.website;
+
+    location / {
+        proxy_pass http://eshop_r_app;
+    }
+
+    location /socket {
+        proxy_pass http://eshop_r_app;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
