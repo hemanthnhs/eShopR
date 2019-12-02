@@ -14,28 +14,29 @@ Is your app deployed and working?
 Yes, The app is properly deployed and working
 
 For each team member, what work did that person do on the project?  
-Both of us worked and collaborated on major parts of the assignment
-(Designing the schema, developing views). The major contributions of
-each team member are as follows: Hemanth Integrated and used
-elasticsearch-elixir library and developed search operation to get
-relevant items Developed Visualization metrics using React-vis and
-modelled data from the server Developed and designed LandingPage
-designer to support campaigns and offers Implemented order processing
-logic to validate the stock, update inventory and split the orders
-based on sellers. Developed Categories, Search Pages and separated the
-common display component Worked on registration of the user and add to
-cart functionality with options and validations required. Developed
-Order management page for the sellers to process the order as per
-workflow. Developed API interaction to fetch the tracking information
-from external service to fetch the tracking. Satya Developed component
-to display API response of the tracking to show the tracking
-information. Implemented Address and designed address page for new and
-existing address. Designed cart checkout page to reflect items and
-address selection Showing the orders of the user(i.e buyer/seller)
-Developed product page to show the product information and images.
-Developed the navigation bar to show categories and their sub
+Both of us worked and collaborated on major parts of the
+assignment(Designing the schema, developing views). The major
+contributions of each team member are as follows:   Hemanth  
+1.Integrated and used elasticsearch-elixir library and developed
+search operation to get relevant items.   2.Developed Visualization
+metrics using React-vis and modelled data from the server.
+3.Developed and designed LandingPage designer to support campaigns and
+offers.   4.Implemented order processing logic to validate the stock,
+update inventory and split the orders based on sellers.   5.Developed
+Categories, Search Pages and separated the common display component.
+6.Worked on registration of user and add to cart functionality with
+options and validations required.   7.Developed Order management page
+for the sellers to process the order as per workflow.   8.Developed
+API interaction to fetch the tracking information from external
+service to fetch the tracking.   Satya   1.Developed component to
+display API response of the tracking to show the tracking information.
+2.Implemented Address and designed address page for new and existing
+address.   3.Designed cart checkout page to reflect items and address
+selection Showing the orders of the user(i.e buyer/seller).
+4.Developed product page to show the product information and images.
+5.Developed the navigation bar to show categories and their sub
 categories Worked on the login, product creation page, quantity
-updation and delete of cart item. Developed Landing page rendering
+updation and delete of cart item.   6.Developed Landing page rendering
 based on the config.
 
 
