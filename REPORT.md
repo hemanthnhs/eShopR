@@ -1,15 +1,17 @@
 Meta:
 
-Who was on your team? Team : Hemanth Sai Nimmala, Satya Sudheera Vytla
+Who was on your team?
+Team : Hemanth Sai Nimmala, Satya Sudheera Vytla
 
 What’s the URL of your deployed app?
 http://project2.cs5610f19.website/
 
 What’s the URL of your github repository with the code for your
-deployed app? https://github.com/hemanthnhs/eShopR
+deployed app?
+https://github.com/hemanthnhs/eShopR
 
-Is your app deployed and working? Yes, The app is properly deployed
-and working
+Is your app deployed and working?
+Yes, The app is properly deployed and working
 
 For each team member, what work did that person do on the project?
 Both of us worked and collaborated on major parts of the assignment
