@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_products} from '../api/ajax';
+import {list_products} from '../../api/ajax';
 import {connect} from 'react-redux';
 import {Row, Spinner,Container} from 'react-bootstrap';
-import ProductListing from "./../components/product_listing"
+import ProductListing from "../../components/product_listing"
 
 function state2props(state, props) {
     let id = parseInt(props.id);

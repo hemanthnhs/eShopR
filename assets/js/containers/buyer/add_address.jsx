@@ -2,8 +2,8 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
 import {Container, Button, Form, Table} from 'react-bootstrap';
-import {submit_add_address} from "../api/ajax";
-import store from "../store";
+import {submit_add_address} from "../../api/ajax";
+import store from "../../store";
 
 function state2props(state, props) {
     return {type: state.session ? state.session.type : null, address: state.forms.address}

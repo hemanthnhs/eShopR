@@ -41,7 +41,11 @@ defmodule EshopRWeb.ProductController do
       products = Products.get_products(hit_ids)
       render(conn, "index.json", products: products)
     end
-
+    send_resp(
+      conn,
+      200,
+      Jason.encode!(%{error: "Something went wrong try again"})
+    )
   end
 
   def update(conn, %{"id" => id, "product" => product_params}) do

@@ -2,7 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
 import {Row, Col, Alert, Container, Button, Form, Spinner, Badge} from 'react-bootstrap';
-import {list_address, list_cart_items, place_order} from '../api/ajax';
+import {list_address, list_cart_items, place_order} from '../../api/ajax';
 import {Link} from 'react-router-dom';
 
 function state2props(state, props) {

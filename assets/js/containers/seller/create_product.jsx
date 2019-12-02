@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {list_categories, submit_create_product} from '../api/ajax';
+import {list_categories, submit_create_product} from '../../api/ajax';
 import {connect} from 'react-redux';
 import {Form, Button, Container, Alert, Table} from 'react-bootstrap';
-import store from "../store";
+import store from "../../store";
 
 function state2props(state) {
     return {
@@ -147,7 +147,7 @@ class CreateProduct extends React.Component {
                 <Form onSubmit={(e) => {
                     e.preventDefault();
                 }}>
-                    <Table className="offset-2">
+                    <Table>
                         <tr>
                             <td><Form.Label>Product Details</Form.Label></td>
                             <td>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {get_seller_metrics} from '../api/ajax';
+import {get_seller_metrics} from '../../api/ajax';
 import {connect} from 'react-redux';
 import {Container, Row, Col, Jumbotron} from 'react-bootstrap';
 import {

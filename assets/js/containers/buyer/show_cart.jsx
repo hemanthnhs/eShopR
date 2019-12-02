@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {update_quantity, delete_item, list_cart_items, place_order, list_products} from '../api/ajax';
+import {update_quantity, delete_item, list_cart_items, place_order, list_products} from '../../api/ajax';
 import {connect} from 'react-redux';
 import {Alert, Row, Container, Button, Table, Spinner} from 'react-bootstrap';
-import store from "../store";
+import store from "../../store";
 
 function state2props(state, props) {
     let id = parseInt(props.id);
@@ -59,7 +59,7 @@ class ShowCart extends React.Component {
                     }}>-</Button>
                 </td>
                     : <td>Out of stock</td>}
-                <td><img src={require("./../../static/images/clear_cart.svg")} onClick={() => {
+                <td><img src={require("../../../static/images/clear_cart.svg")} onClick={() => {
                     delete_item(val.id, key)
                 }}/></td>
                 <td>${val.selling_price}</td>

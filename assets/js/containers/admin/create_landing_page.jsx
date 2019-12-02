@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router';
-import {submit_landing_page} from '../api/ajax';
+import {submit_landing_page} from '../../api/ajax';
 import {connect} from 'react-redux';
 import {Form, Button} from 'react-bootstrap';
 

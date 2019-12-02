@@ -2,9 +2,9 @@ import React from 'react';
 import {Redirect} from 'react-router';
 import {connect} from 'react-redux';
 import {Row, Container, Form, Table, Alert} from 'react-bootstrap';
-import {list_address} from '../api/ajax';
+import {list_address} from '../../api/ajax';
 import {Link} from "react-router-dom";
-import store from "../store";
+import store from "../../store";
 
 function state2props(state, props) {
     return {type: state.session ? state.session.type : null, address: state.address, address_success: state.forms.success_redirect};

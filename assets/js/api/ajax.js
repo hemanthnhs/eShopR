@@ -246,9 +246,12 @@ export function get_landing_page_config() {
         });
 }
 
-export function search(query, resolve) {
+export function search(query, resolve, reject) {
     get('/search?query=' + query)
         .then((resp) => {
+            if(resp.error){
+                reject()
+            }
             resolve(resp.data)
         });
 }
