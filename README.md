@@ -1,15 +1,15 @@
-#Project Name: e-ShopR
+# Project Name: e-ShopR
 
 Please access the application at project2.cs5610f19.website
 
-##Project Description :
+## Project Description :
 e-ShopR is an e-commerce application to buy and sell products online, facilitating buyers to track their order status, 
 share the product listings on social media, facilitating sellers to process the orders and view order metrics.
 
 ## Github Repo
 https://github.com/hemanthnhs/eShopR
 
-####Team Members:
+#### Team Members:
 Hemanth Sai Nimmala   
 Satya Sudheera Vytla
 
@@ -41,7 +41,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   * Jobs and users are pre loaded, find the credentials below
   * Sheets are not pre loaded. 
 
-##Sample Data
+## Sample Data
 The users can register as buyer and seller. We have created few accounts using seed as follows.
 
 Password for all accounts: "password"
@@ -57,7 +57,7 @@ seller2@example.com
 Admin email:  
 admin1@example.com
 
-##Major Attributions:
+## Major Attributions:
 Icons from opensource resource https://material.io/resources/icons/?style=baseline    
 Major code reference from Nats Github: https://github.com/NatTuck/lens   
 Nats Notes: http://www.ccs.neu.edu/home/ntuck/courses/2019/09/cs5610    
@@ -78,7 +78,7 @@ Elastic search library snippets from https://github.com/danielberkompas/elastics
 http://www.ubazu.com/elixir-elasticsearch-integration-index-data  
 https://lodash.com/docs/4.17.15  
 
-##Other Attributions:
+## Other Attributions:
 https://stackoverflow.com/questions/37671342/how-to-load-image-files-with-webpack-file-loader  
 UPS Reference Docs  
 Referred http://www.binarywebpark.com/google-oauth-authentication-phoenix-elixir/ for google login
@@ -94,11 +94,11 @@ https://hexdocs.pm/httpoison/HTTPoison.html
 https://www.geeksforgeeks.org/javascript-promises/
 https://stackoverflow.com/questions/39458201/understanding-javascript-promise-object
 
-##Note:
+## Note:
 This application should not be stress tested as few components use external API's for reference. If continous hits
 appear as a part of tracking, please notify the developer.
 
-##Design Decisions:
+## Design Decisions:
 The application is completely SPA, however few items are maintained in state instead of redux store and are fetched from
 either the constructor or component Lifecycle methods (or render in some cases). This is intentional
 design as considering the appropriate usecases. For example show_categories i.e while displaying the products
