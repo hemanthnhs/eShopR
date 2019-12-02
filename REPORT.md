@@ -1,19 +1,19 @@
 Meta:
 
-Who was on your team?
+Who was on your team?  
 Team : Hemanth Sai Nimmala, Satya Sudheera Vytla
 
-What’s the URL of your deployed app?
+What’s the URL of your deployed app?  
 http://project2.cs5610f19.website/
 
 What’s the URL of your github repository with the code for your
-deployed app?
+deployed app?  
 https://github.com/hemanthnhs/eShopR
 
-Is your app deployed and working?
+Is your app deployed and working?  
 Yes, The app is properly deployed and working
 
-For each team member, what work did that person do on the project?
+For each team member, what work did that person do on the project?  
 Both of us worked and collaborated on major parts of the assignment
 (Designing the schema, developing views). The major contributions of
 each team member are as follows: Hemanth Integrated and used
@@ -41,7 +41,7 @@ based on the config.
 
 App:
 
-What does your project 2 app do?
+What does your project 2 app do?  
 
 For project 2 we built an e-commerce shopping website known as EShopR.
 EShopR application allows sellers and buyers to come on one platform
@@ -57,7 +57,7 @@ same. An admin can decide and design the front page with banners which
 serves as the face of our website and run campaigns.
 
 How do users interact with your application? What can they accomplish
-by doing so?
+by doing so?  
 
 There can be 3 types of users as mentioned earlier. They are Seller,
 Buyer, Admin. When the incoming user is a Seller, upon his/her login,
@@ -138,7 +138,7 @@ way the admin can keep updating the face of the application as per the
 need.
 
 For each project requirement above, how does your app meet that
-requirement?
+requirement?  
 
 All the project requirements are met and explanation about the
 additional features/requirements are described later in question 5.
@@ -176,7 +176,7 @@ kept in an env file that is not available in our git accounts as it is
 a sensitive data and structure to disclose.
 
 What’s the complex part of your app? How did you design that component
-and why?
+and why?  
 
 The complex part of our application was to create a main page
 dynamically which serves as a face of our application. We wanted the
@@ -214,7 +214,7 @@ seller’s ID. We check what all products ordered by the buyer belongs
 to which seller. This will help to better manage the orders for both
 seller to process the order and buyer to track the order.
  
-What additional features did you implement?
+What additional features did you implement?  
 
 We built this ecommerce application as a Single Page Application with
 Redux and React-Router.  We made use of Store to hold the application
@@ -251,7 +251,7 @@ faster in fetching the results for the text inputted by a user. These
 results for displayed to the user.
  
 What interesting stuff does your app include beyond the project
-requirements?
+requirements?  
 
 Some of the interesting things our app does is to allow the admin to
 design the front page look of our website. We do provide a static
@@ -274,7 +274,7 @@ overview of their daily receiving orders and number of orders pending
 on their side.
 
 What was the most significant challenge you encountered and how did
-you solve it?
+you solve it?  
 
 One of the challenges encountered is to make a decision on how to
 handle orders which include items from different sellers. When
