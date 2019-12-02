@@ -351,12 +351,18 @@ export function delete_item(id, key) {
         });
 }
 
-export function get_tracking_status(order_id, resolve) {
+export function get_tracking_status(order_id, resolve, reject) {
     get('/trackingStatus?tracking_order=' + order_id)
         .then((resp) => {
-            console.log("Request Successful")
-            resolve(resp);
-        });
+            console.log("Request Successful", resp)
+            if(resp.tracking){
+                resolve(resp);
+            }else{
+                console.log("Warning: Do not stress test this. Either the service is not enabled or some error has" +
+                    " occured. If continous hits appear notify developer")
+                reject("Tracking failed")
+            }
+        })
 }
 
 export function seller_products() {

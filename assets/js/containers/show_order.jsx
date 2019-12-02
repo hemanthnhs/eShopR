@@ -31,9 +31,12 @@ class ShowOrder extends React.Component {
     }
 
     get_tracking_status(id) {
+        if(this.state.tracking_details == "error"){
+            return;
+        }
         var that = this
         var promise1 = new Promise(function (resolve, reject) {
-            get_tracking_status(id, resolve);
+            get_tracking_status(id, resolve, reject);
         });
 
         promise1.then(function (resp) {

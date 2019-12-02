@@ -55,6 +55,10 @@ class ShowProduct extends React.Component {
     }
 
     addToCart(product_id) {
+        if(this.state.option_selected==null){
+            this.setState({alert: <Alert variant="danger">Select a option to add the item</Alert>})
+            return;
+        }
         var that = this
         var promise1 = new Promise(function (resolve, reject) {
             add_to_cart({product_id: product_id, option_selected: that.state.option_selected, quantity: 1}, resolve)

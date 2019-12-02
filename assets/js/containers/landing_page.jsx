@@ -4,6 +4,7 @@ import {get_landing_page_config} from '../api/ajax';
 import {connect} from 'react-redux';
 import {Col, Row, Spinner, Jumbotron, Container, Alert} from 'react-bootstrap';
 import store from "../store";
+import {Link} from 'react-router-dom';
 
 function state2props(state) {
     return {landing_page: state.landing_page, type: state.session ? state.session.type : null, success_msg: state.forms.success_redirect};
@@ -85,7 +86,7 @@ class LandingPage extends React.Component {
                 for (let j = 1; j <= landing_page.row_data[i].num_of_cols; j++) {
                     let col = landing_page.row_data[i].col_data[j]
                     let width = (col.width / widthSum) * 100
-                    col_data.push(<img width={width + "%"} src={col.banner_img}/>)
+                    col_data.push(<Link to={col.navigate_to}><img width={width + "%"} src={col.banner_img}/></Link>)
                 }
                 row_data.push(<Row height="10px">{col_data}</Row>)
             }

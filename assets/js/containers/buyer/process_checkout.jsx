@@ -96,10 +96,12 @@ class ProcessCheckout extends React.Component {
             if (cart.size == 0) {
                 return (<Container className={"empty-cart"}> No items added to cart.. </Container>)
             } else {
-                if (!address) {
-                    address_rows.push(<Link to={"/addAddress"}><div className="display-add-address">No address
+                if (address.size == 0) {
+                    address_rows.push(<div>
+                        No address
                         updated
-                        click to update +</div></Link>)
+                        click to update
+                        <Link to={"/addAddress"}><div className="display-add-address cart-new-address">+</div></Link></div>)
                 } else {
                     var that = this;
                     address.forEach(function (val, key) {
