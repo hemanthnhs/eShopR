@@ -120,11 +120,12 @@ defmodule EshopRWeb.OrderController do
     body = String.replace(body,"#TOKEN","#{token}")
     body = String.replace(body,"#TRACKING","#{tracking}")
     headers = [{:"Access-Control-Allow-Methods", "POST"},{:"Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"},{:"Access-Control-Allow-Origin", "*"}]
+    IO.puts("-------------------------------------------")
     IO.puts("Making API Request")
-#    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
-#    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
-#        send_resp(conn, 200, Jason.encode!(%{tracking: response}))
-    send_resp(conn, 200, Jason.encode!(%{tracking: "Test response .. Not enabled yet"}))
+    response = HTTPoison.post!(url, Jason.encode!(Jason.decode!(body)), headers)
+    response = Jason.decode!(response.body)["TrackResponse"]["Shipment"]["Package"]["Activity"]
+    send_resp(conn, 200, Jason.encode!(%{tracking: response}))
+#    send_resp(conn, 200, Jason.encode!(%{tracking: "Test response .. Not enabled yet"}))
   end
 
   def seller_metrics(conn, _params) do

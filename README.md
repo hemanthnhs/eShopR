@@ -95,7 +95,8 @@ https://www.geeksforgeeks.org/javascript-promises/
 https://stackoverflow.com/questions/39458201/understanding-javascript-promise-object
 
 ##Note:
-This application should not be stress tested as few components use external API's for reference.
+This application should not be stress tested as few components use external API's for reference. If continous hits
+appear as a part of tracking, please notify the developer.
 
 ##Design Decisions:
 The application is completely SPA, however few items are maintained in state instead of redux store and are fetched from
